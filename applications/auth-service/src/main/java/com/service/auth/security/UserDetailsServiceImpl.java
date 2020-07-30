@@ -36,8 +36,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        System.out.println("KJNDGGNKGJNFDGJNDGDGKJ EMAIL ===== " + email);
-
         // hard coding the users. All passwords have to be encoded. Must retrieve from database later
         final List<AppUser> users = Arrays.asList(
           new AppUser(1, "lucasrc17@live.com", encoder.encode("senha123"))
