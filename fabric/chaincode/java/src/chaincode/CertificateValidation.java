@@ -1,14 +1,11 @@
 package chaincode;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Getter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

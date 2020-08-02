@@ -1,25 +1,27 @@
 package com.service.video.controllers;
 
+import com.service.common.service.DeleteBucketFile;
+import com.service.common.service.UploadBucketFile;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/videos")
 public class VideoController {
     @Autowired
-    private RestTemplate restTemplate;
+    private UploadBucketFile uploadBucketFile;
 
-    @GetMapping("")
-    public String test() {
-        return "teste com video ";
+    @Autowired
+    private DeleteBucketFile deleteBucketFile;
+
+    @PostMapping("upload")
+    public String uploadFile(@RequestPart(value = "file") MultipartFile file) {
+        return this.uploadBucketFile.uploadFile(file, "videos");
     }
 
-    @GetMapping("image-test")
-    public String testImage() {
-        return restTemplate.getForObject("http://image-service/images", String.class);
+    @DeleteMapping("delete")
+    public String deleteFile(@RequestPart(value = "url") String fileUrl) {
+        return this.deleteBucketFile.deleteFileFromS3Bucket(fileUrl, "videos");
     }
-
 }

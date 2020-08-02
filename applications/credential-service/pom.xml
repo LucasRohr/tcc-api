@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.tcc</groupId>
-    <artifactId>credentialservice</artifactId>
+    <artifactId>credential</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -40,6 +40,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.service</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

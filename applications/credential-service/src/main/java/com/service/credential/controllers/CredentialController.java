@@ -1,4 +1,4 @@
-package com.service.document.controllers;
+package com.service.credential.controllers;
 
 import com.service.common.service.DeleteBucketFile;
 import com.service.common.service.UploadBucketFile;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/documents")
-public class DocumentController {
+@RequestMapping("/credentials")
+public class CredentialController {
     @Autowired
     private UploadBucketFile uploadBucketFile;
 
@@ -17,11 +17,11 @@ public class DocumentController {
 
     @PostMapping("upload")
     public String uploadFile(@RequestPart(value = "file") MultipartFile file) {
-        return this.uploadBucketFile.uploadFile(file, "documents");
+        return this.uploadBucketFile.uploadFile(file, "credentials");
     }
 
     @DeleteMapping("delete")
     public String deleteFile(@RequestPart(value = "url") String fileUrl) {
-        return this.deleteBucketFile.deleteFileFromS3Bucket(fileUrl, "documents");
+        return this.deleteBucketFile.deleteFileFromS3Bucket(fileUrl, "credentials");
     }
 }

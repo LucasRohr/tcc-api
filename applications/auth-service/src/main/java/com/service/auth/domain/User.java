@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-// TO DO: connect with database table
+// TO DO: connect with database table and move to common service
 public class User {
     private String id;
 

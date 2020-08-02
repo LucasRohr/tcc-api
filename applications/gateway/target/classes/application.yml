@@ -9,6 +9,10 @@ server:
 spring:
   application:
     name: gateway
+  servlet:
+    multipart:
+      maxFileSize: 20MB
+      maxRequestSize: 20MB
 
 security:
   requireSsl: true
