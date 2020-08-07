@@ -1,10 +1,10 @@
 server:
   port: 8763
-#  ssl:
-#    keyStoreType: PKCS12
-#    keyStore: classpath:keystore.p12
-#    keyStorePassword: password
-#    keyAlias: tomcat
+  ssl:
+    keyStoreType: PKCS12
+    keyStore: classpath:keystore.p12
+    keyStorePassword: password
+    keyAlias: tomcat
 
 spring:
   application:
@@ -14,8 +14,8 @@ spring:
       maxFileSize: 20MB
       maxRequestSize: 20MB
 
-#security:
-#  requireSsl: true
+security:
+  requireSsl: true
 
 eureka:
   client:
@@ -25,9 +25,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
-#    nonSecurePortEnabled: false
-#    securePortEnabled: true
-#    securePort: ${server.port}
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
     statusPageUrl: http://localhost:${server.port}/info
     healthCheckUrl: http://localhost:${server.port}/health
     homePageUrl: http://localhost:${server.port}/
@@ -63,7 +63,7 @@ zuul:
 Access-Control-Allow-Origin: '*'
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE,PATCH
-Access-Control-Allow-Headers: Authorization,ip,idUsuario,usuario,maquina,Access-Control-Allow-Origin,authorization,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range
+Access-Control-Allow-Headers: Authorization,Access-Control-Allow-Origin,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range
 Access-Control-Expose-Headers: X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Range,Range
 
 hystrix:
