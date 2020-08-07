@@ -47,7 +47,7 @@ public class GetBucketFile {
     public String getFileFromBucket(String fileUrl, String folderName, String fileExtension) throws IOException, CryptoException {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
         String pureFileName = fileName.substring(0, fileName.lastIndexOf("."));
-        File outputFile = new File("/home/lucas/" + pureFileName + fileExtension);
+        File outputFile = new File(System.getenv("FILE_PATH") + pureFileName + fileExtension);
 
         String privateKey = "some private key";
 
