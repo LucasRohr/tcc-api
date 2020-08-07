@@ -6,6 +6,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.service.common.exceptions.CryptoException;
+import com.service.common.helpers.CryptoUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,14 +42,14 @@ public class UploadBucketFile {
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
+        FileOutputStream fileOutputStream = new FileOutputStream(convFile);
+        fileOutputStream.write(file.getBytes());
+        fileOutputStream.close();
         return convFile;
     }
 
-    private String generateFileName(MultipartFile multiPart) {
-        return new Date().getTime() + "-" + multiPart.getOriginalFilename().replace(" ", "_");
+    private String generateFileName(File file) {
+        return new Date().getTime() + "-" + file.getName().replace(" ", "_");
     }
 
     private void uploadFileTos3bucket(String fileName, File file) {
@@ -55,14 +57,27 @@ public class UploadBucketFile {
                 .withCannedAcl(CannedAccessControlList.BucketOwnerFullControl));
     }
 
+    private File encryptFile(File file) throws CryptoException {
+        //TO DO: use blockchain user private key
+        String privateKey = "some private key";
+        String pureFileName = file.getName().substring(0, file.getName().lastIndexOf(".") );
+        String filePath = "/home/lucas/" + pureFileName + ".enc";
+
+        File outputFile = new File(filePath);
+        CryptoUtils.encrypt(privateKey, file, outputFile);
+        return outputFile;
+    }
+
     public String uploadFile(MultipartFile multipartFile, String fileFolder) {
         String fileUrl = "";
 
         try {
             File file = convertMultiPartToFile(multipartFile);
-            String fileName = fileFolder + "/" + generateFileName(multipartFile);
+            File encryptFile = encryptFile(file);
+
+            String fileName = fileFolder + "/" + generateFileName(encryptFile);
             fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
-            uploadFileTos3bucket(fileName, file);
+            uploadFileTos3bucket(fileName, encryptFile);
             file.delete();
         } catch (Exception e) {
             e.printStackTrace();
