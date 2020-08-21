@@ -14,6 +14,7 @@
         <module name="document" />
         <module name="chaincode" />
         <module name="video" />
+        <module name="user" />
         <module name="gateway" />
         <module name="credentialservice" />
       </profile>
@@ -27,6 +28,7 @@
       <module name="gateway" target="1.8" />
       <module name="image" target="1.8" />
       <module name="tccserver" target="1.8" />
+      <module name="user" target="11" />
       <module name="video" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -39,6 +41,7 @@
       <module name="gateway" options="-parameters" />
       <module name="image" options="-parameters" />
       <module name="tccserver" options="-parameters" />
+      <module name="user" options="-parameters" />
       <module name="video" options="-parameters" />
     </option>
   </component>
