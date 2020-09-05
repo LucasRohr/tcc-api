@@ -37,7 +37,7 @@ public class SendSmsService {
         http.setRequestMethod("POST");
         http.setDoOutput(true);
 
-        String json = "{\"type\":\"" + 9 + "\",\"key\":\"" + apiKey + "\",\"msg\":\"" + message + "\",\"number\":\"" + smsRequest.getTelephone() + "\"}";
+        String json = "{\"type\":\"" + smsType + "\",\"key\":\"" + apiKey + "\",\"msg\":\"" + message + "\",\"number\":\"" + smsRequest.getTelephone() + "\"}";
         byte[] output = json.getBytes(StandardCharsets.UTF_8);
         int length = output.length;
 
@@ -48,18 +48,6 @@ public class SendSmsService {
         try(OutputStream os = http.getOutputStream()) {
             os.write(output);
         }
-
-//        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-//
-//        JSONObject smsJson = new JSONObject();
-//        smsJson.put("key", apiKey);
-//        smsJson.put("type", smsType);
-//        smsJson.put("msg", message);
-//        smsJson.put("number", smsRequest.getTelephone());
-//
-//        HttpEntity<String> request = new HttpEntity<String>(smsJson.toString(), httpHeaders);
-//
-//        restTemplate.postForEntity(smsApiUrl, request, String.class);
     }
 
 }
