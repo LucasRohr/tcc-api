@@ -54,6 +54,9 @@ zuul:
     credentialService:
       path: /credential-service/**
       serviceId: credential-service
+    messageService:
+      path: /message-service/**
+      serviceId: message-service
     authService:
       path: /auth/**
       serviceId: auth-service
