@@ -1,0 +1,9 @@
+mail:
+  smtp:
+    starttls:
+      enable: false
+      required: false
+    auth: false
+    connectiontimeout: 5000
+    timeout: 5000
+    writetimeout: 5000

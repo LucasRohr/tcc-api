@@ -9,6 +9,8 @@
       <module fileurl="file://$PROJECT_DIR$/applications/document-service/document.iml" filepath="$PROJECT_DIR$/applications/document-service/document.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/gateway/gateway.iml" filepath="$PROJECT_DIR$/applications/gateway/gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/image-service/image.iml" filepath="$PROJECT_DIR$/applications/image-service/image.iml" />
+      <module fileurl="file://$PROJECT_DIR$/applications/logs-service/logs-service.iml" filepath="$PROJECT_DIR$/applications/logs-service/logs-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/applications/message-service/message-service.iml" filepath="$PROJECT_DIR$/applications/message-service/message-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/tcc-api.iml" filepath="$PROJECT_DIR$/.idea/tcc-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/tccserver/tccserver.iml" filepath="$PROJECT_DIR$/applications/tccserver/tccserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/user-service/user.iml" filepath="$PROJECT_DIR$/applications/user-service/user.iml" />

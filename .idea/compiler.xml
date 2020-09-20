@@ -13,8 +13,10 @@
         <module name="tccserver" />
         <module name="document" />
         <module name="chaincode" />
+        <module name="logs-service" />
         <module name="video" />
         <module name="user" />
+        <module name="message-service" />
         <module name="gateway" />
         <module name="credentialservice" />
       </profile>
@@ -27,6 +29,8 @@
       <module name="document" target="1.8" />
       <module name="gateway" target="1.8" />
       <module name="image" target="1.8" />
+      <module name="logs-service" target="1.8" />
+      <module name="message-service" target="1.8" />
       <module name="tccserver" target="1.8" />
       <module name="user" target="11" />
       <module name="video" target="1.8" />
@@ -40,6 +44,8 @@
       <module name="document" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="image" options="-parameters" />
+      <module name="logs-service" options="-parameters" />
+      <module name="message-service" options="-parameters" />
       <module name="tccserver" options="-parameters" />
       <module name="user" options="-parameters" />
       <module name="video" options="-parameters" />

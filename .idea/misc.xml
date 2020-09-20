@@ -13,6 +13,8 @@
         <option value="$PROJECT_DIR$/applications/document-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/credential-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/message-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/logs-service/pom.xml" />
       </list>
     </option>
   </component>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+
+        .heir-invite-container {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 25px;
+            border-radius: 4px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .app-info-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 6px 0;
+            border-bottom: 1px solid #C4C4C4;
+        }
+
+        h1 {
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 34px;
+            color: #2888E0;
+            font-family: Merryweather;
+            margin-left: 14px;
+        }
+
+        p, b {
+            font-size: 24px;
+            line-height: 28px;
+            text-align: left;
+            margin-bottom: 14px;
+            font-family: Noto Sans;
+        }
+
+        span {
+            font-size: 24px;
+            line-height: 28px;
+            text-align: left;
+            margin-bottom: 28px;
+            font-family: Noto Sans;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        img {
+            width: 45px;
+            height: 45px
+        }
+
+        .normal-link {
+            text-decoration: underline;
+            color: #2888E0;
+            font-size: 24px;
+            line-height: 28px;
+            font-family: Noto Sans;
+        }
+
+        .button-link {
+            width: 40%;
+            height: 80px;
+            padding: 18px 80px;
+            cursor: pointer;
+            background-color: #2888E0;
+            color: #FFFFFF;
+            border-radius: 4px;
+            border: none;
+            font-size: 26px;
+            margin-top: 20px;
+        }
+
+        svg {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div th:style="heir-invite-container" >
+        <div class="app-info-container" >
+            <h1>Herança Digital</h1>
+        </div>
+
+        <span> Olá! </span>
+
+        <p>
+            Bem-vindo(a) ao Sistema de Herança Digital.
+            Você está recebendo um convite para ser um herdeiro da herança digital de [(${ownerName})].
+        </p>
+
+        <p>
+            Por favor, confirme este desejo antecipadamente com esta pessoa antes de seguir no processo de herança.
+            Para confirmar, acesse nossa plataforma clicando no botão abaixo.
+        </p>
+
+        <br/>
+
+        <b>
+            Você será diretamente direcionado para a criação de um usuário. Após, você deverá criar uma conta ligada à herança em questão para recebê-la no futuro.
+        </b>
+
+        <br/>
+        <br/>
+
+        <span>
+            Acesse mais detalhes em nossa plataforma.<br/>
+            Att, equipe Herança Digital.
+        </span>
+
+        <br/>
+        <br/>
+
+        <span>
+            <a th:style="normal-link" th:href="|http://localhost:3000/registro?code=${linkCode}|" target="_blank">Clique aqui</a> para acessar a plataforma.
+            <br/>
+            Ou clique no botão abaixo:
+        </span>
+
+        <br/>
+        <br/>
+
+        <a th:href="|http://localhost:3000/registro?code=${linkCode}|" target="_blank" >
+            <button class="button-link" >
+                Acessar plataforma
+            </button>
+        </a>
+    </div>
+</body>
+</html>
