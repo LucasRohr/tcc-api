@@ -1,12 +1,14 @@
-package com.user.service.domain.entity;
+package com.service.common.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "users")
 public class User {
 

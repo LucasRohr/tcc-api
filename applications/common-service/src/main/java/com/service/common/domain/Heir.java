@@ -1,4 +1,4 @@
-package com.user.service.domain.entity;
+package com.service.common.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

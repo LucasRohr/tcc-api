@@ -1,6 +1,6 @@
 spring:
   application:
-    name: common-service
+    name: invite-service
 
   jpa:
     database: POSTGRESQL
@@ -16,7 +16,7 @@ spring:
     password: ${DATABASE_PASSWORD}
 
 server:
-  port: 9200
+  port: 9400
 
 eureka:
   client:
