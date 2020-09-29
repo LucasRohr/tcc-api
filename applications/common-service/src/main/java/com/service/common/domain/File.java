@@ -22,6 +22,7 @@ public class File {
     @Column(nullable = false)
     private String name;
 
+    @Column(length = 200)
     private String description;
 
     @Column(nullable = false, name = "bucket_url")
@@ -32,7 +33,7 @@ public class File {
     private FileTypeEnum type;
 
     @Column(nullable = false)
-    private String mime_type;
+    private String mimeType;
 
     @Column(nullable = false, name = "created_at")
     private Instant createdAt;

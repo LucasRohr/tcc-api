@@ -19,7 +19,6 @@
         <module name="common" />
         <module name="tccserver" />
         <module name="chaincode" />
-        <module name="user" />
         <module name="gateway" />
       </profile>
     </annotationProcessing>
