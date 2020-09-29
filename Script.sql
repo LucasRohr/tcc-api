@@ -33,9 +33,9 @@ create table if not exists notifications (
 create table if not exists accounts_notification (
 	id bigserial not null unique primary key,
 	is_read boolean not null default false,
-	account_id bigint not null,
+	receiver_id bigint not null,
 	notification_id bigint not null,
-	foreign key (account_id) references accounts(id),
+	foreign key (receiver_id) references accounts(id),
 	foreign key (notification_id) references notifications(id)
 );
 
@@ -46,7 +46,9 @@ create table if not exists owners (
 	foreign key (account_id) references accounts(id)
 );
 
-create type heir_status as enum('active', 'accepted', 'disinherited');
+create type heir_status as enum(
+	'active', 'accepted', 'disinherited'
+);
 
 create table if not exists heirs (
 	id bigserial not null unique primary key,
@@ -57,15 +59,28 @@ create table if not exists heirs (
 	foreign key (account_id) references accounts(id)
 );
 
-create type file_type as enum('document', 'image', 'video');
+create type invite_status as enum (
+	'pending', 'accepted', 'rejected'
+);
+
+create table if not exists invites (
+	id bigserial not null unique primary key,
+	status invite_status not null default 'pending',
+	owner_id bigint not null,
+	receiver_id bigint not null
+);
+
+create type file_type as enum(
+	'document', 'image', 'video'
+);
 
 create table if not exists files (
 	id bigserial not null unique primary key,
 	"name" varchar(60) not null,
 	description varchar(200),
-	url varchar(100) not null,
+	bucket_url varchar(100) not null,
 	"type" file_type not null,
-	"extension" varchar(6) not null,
+	mime_type varchar(6) not null,
 	owner_id bigint not null,
 	created_at timestamp not null,
 	updated_at timestamp not null,
