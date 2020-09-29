@@ -1,4 +1,4 @@
-package com.service.notification.domain.entity;
+package com.service.notification.domain;
 
 import com.service.common.domain.Account;
 import lombok.Data;
@@ -20,8 +20,8 @@ public class AccountNotification {
     private Boolean isRead;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name="account_id")
-    private Account account;
+    @JoinColumn(nullable = false, name="receiver_id")
+    private Account receiver;
 
     @ManyToOne
     @JoinColumn(nullable = false, name="notification_id")

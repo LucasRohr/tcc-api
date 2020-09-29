@@ -1,4 +1,4 @@
-package com.service.invite.domain.entity;
+package com.service.invite.domain;
 
 import com.service.common.domain.Heir;
 import com.service.common.domain.Owner;

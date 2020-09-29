@@ -18,21 +18,18 @@ public class File {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 60)
     @Column(nullable = false)
     private String name;
 
-    @Size(max = 200)
     private String description;
 
-    @Size(max = 100)
-    @Column(nullable = false)
-    private String url;
+    @Column(nullable = false, name = "bucket_url")
+    private String bucketUrl;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private FileTypeEnum type;
 
-    @Size(max = 6)
     @Column(nullable = false)
     private String mime_type;
 
