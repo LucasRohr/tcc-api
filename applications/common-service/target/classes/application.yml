@@ -2,6 +2,19 @@ spring:
   application:
     name: common-service
 
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/tcc
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
 server:
   port: 9200
 

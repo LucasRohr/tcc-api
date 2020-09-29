@@ -12,10 +12,13 @@
         <option value="$PROJECT_DIR$/applications/common-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/document-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/credential-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/user-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/message-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/logs-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/invite-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/notification-service/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>
