@@ -65,7 +65,7 @@ public class JwtEmailAndPasswordAuthenticationFilter extends UsernamePasswordAut
                 .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
                 .compact();
 
-
         response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
+        response.addHeader(jwtConfig.getHeader(), auth.getName());
     }
 }

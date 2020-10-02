@@ -4,6 +4,7 @@ create table if not exists "users" (
 	email varchar(60) not null unique,
 	is_active boolean not null default true,
 	"token" varchar(255) unique,
+	login_token varchar(255) unique,
 	"password" varchar(100) not null,
 	created_at timestamp not null,
 	updated_at timestamp not null
@@ -100,4 +101,3 @@ create table if not exists logs (
 	content text,
 	created_at timestamp not null
 );
-

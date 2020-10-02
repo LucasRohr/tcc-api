@@ -31,7 +31,7 @@ public class File {
     @Column(nullable = false)
     private FileTypeEnum type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "mime_type")
     private String mimeType;
 
     @Column(nullable = false, name = "created_at")

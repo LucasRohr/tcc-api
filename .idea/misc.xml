@@ -16,6 +16,7 @@
         <option value="$PROJECT_DIR$/applications/logs-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/invite-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/notification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/user-service/pom.xml" />
       </list>
     </option>
   </component>

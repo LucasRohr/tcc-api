@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: image-service
+    name: image-com.service.user.service
 
 eureka:
   client:

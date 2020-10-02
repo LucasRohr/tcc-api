@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: logs-service
+    name: logs-com.service.user.service
 
   jpa:
     database: POSTGRESQL

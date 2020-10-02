@@ -1,14 +1,16 @@
 package com.service.message.service.email;
 
+import com.service.common.domain.User;
 import com.service.message.component.link_code.RandomCode;
 import com.service.message.controller.requests.EmailRequest;
-import com.service.message.controller.requests.HeirInviteEmailRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import com.service.user.service.GetUserByEmailService;
+import com.service.user.service.UpdateUserService;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -24,21 +26,29 @@ public class SendLoginAuthEmailService {
     @Autowired
     TemplateEngine htmlTemplateEngine;
 
+    @Autowired
+    private GetUserByEmailService getUserByEmailService;
+
+    @Autowired
+    private UpdateUserService updateUserService;
+
     public void sendEmail(EmailRequest emailRequest) throws MessagingException, IOException {
         Context ctx = prepareContext(emailRequest);
 
         MimeMessage mimeMessage = this.mailSender.createMimeMessage();
-
         MimeMessageHelper message = prepareMessage(mimeMessage, emailRequest);
 
         String htmlContent = this.htmlTemplateEngine.process(emailRequest.getType().getTemplateName(), ctx);
         message.setText(htmlContent, true);
 
-        System.out.println(mimeMessage);
 
         this.mailSender.send(mimeMessage);
-
         this.htmlTemplateEngine.clearTemplateCache();
+
+        User user = getUserByEmailService.getUserByEmail(emailRequest.getEmail());
+        user.setLoginToken(ctx.getVariable("authToken").toString());
+
+        updateUserService.updateUser(user);
     }
 
     private Context prepareContext(EmailRequest emailRequest) {

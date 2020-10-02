@@ -12,6 +12,7 @@
     <file url="file://$PROJECT_DIR$/applications/message-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/applications/notification-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/applications/tccserver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/applications/user-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/applications/video-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/fabric/chaincode/java/src" charset="UTF-8" />
   </component>
