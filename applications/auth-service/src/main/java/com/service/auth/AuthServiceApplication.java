@@ -6,7 +6,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.service.auth", "com.service.user", "com.service.common"})
+@ComponentScan(basePackages = {"com.service.user", "com.service.common", "com.service.auth"})
 @EnableEurekaClient
 public class AuthServiceApplication {
 

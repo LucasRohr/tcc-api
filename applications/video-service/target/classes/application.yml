@@ -1,6 +1,6 @@
 spring:
   application:
-    name: video-com.service.user.service
+    name: video-service
   servlet:
     multipart:
       maxFileSize: 20MB

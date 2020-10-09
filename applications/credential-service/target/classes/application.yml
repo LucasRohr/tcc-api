@@ -1,6 +1,6 @@
 spring:
   application:
-    name: credential-com.service.user.service
+    name: credential-service
 
 server:
   port: 8500

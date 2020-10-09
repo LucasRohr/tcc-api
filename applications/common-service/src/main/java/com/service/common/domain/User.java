@@ -23,7 +23,7 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     @Column
     private String token;
@@ -39,4 +39,12 @@ public class User {
 
     @Column(nullable = false, name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public User(String name, String email, String password, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

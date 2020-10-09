@@ -1,9 +1,14 @@
 #!/bin/bash
 
 CHANNEL_NAME="$1"
-CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/java/"
+
+CERTIFICATE_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/certificate-chaincode/java"
+USER_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/user-chaincode/java"
+
 CHAINCODE_LANGUAGE="java"
-CHAINCODE_NAME="certificatevalidationcc"
+
+CERTIFICATE_CHAINCODE_NAME="certificatevalidationcc"
+USER_CHAINCODE_NAME="usercc"
 
 COUNTER=1
 MAX_RETRY=10
@@ -32,15 +37,27 @@ joinChannel () {
 	done
 }
 
-installChaincodeOnAllPeers () {
+installCertificateChaincodeOnAllPeers () {
 	for peer in 0 1 2 3; do
-	installChaincode $peer
+	installCertificateChaincode $peer
 	done
 }
 
-instantiateChaincodeOnAllPeers(){
+instantiateCertificateChaincodeOnAllPeers(){
 	for peer in 0 1; do
-	instantiateChaincode $peer
+	instantiateCertificateChaincode $peer
+	done
+}
+
+installUserChaincodeOnAllPeers () {
+	for peer in 0 1 2 3; do
+	installUserChaincode $peer
+	done
+}
+
+instantiateUserChaincodeOnAllPeers(){
+	for peer in 0 1; do
+	instantiateUserChaincode $peer
 	done
 }
 
@@ -53,8 +70,14 @@ joinChannel
 echo "Updating anchor peers for org1..."
 updateAnchorPeers 0
 
-echo "Installing chaincode on all peers..."
-installChaincodeOnAllPeers
+echo "Installing certificate chaincode on all peers..."
+installCertificateChaincodeOnAllPeers
 
-echo "Instantiating chaincode on all peers..."
-instantiateChaincodeOnAllPeers
+echo "Instantiating certificate chaincode on all peers..."
+instantiateCertificateChaincodeOnAllPeers
+
+echo "Installing user chaincode on all peers..."
+installUserChaincodeOnAllPeers
+
+echo "Instantiating user chaincode on all peers..."
+instantiateUserChaincodeOnAllPeers

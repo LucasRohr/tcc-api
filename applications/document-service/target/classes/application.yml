@@ -1,6 +1,6 @@
 spring:
   application:
-    name: document-com.service.user.service
+    name: document-service
   servlet:
     multipart:
       maxFileSize: 15MB

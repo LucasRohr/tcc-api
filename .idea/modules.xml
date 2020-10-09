@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/applications/auth-service/auth.iml" filepath="$PROJECT_DIR$/applications/auth-service/auth.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fabric/chaincode/java/chaincode.iml" filepath="$PROJECT_DIR$/fabric/chaincode/java/chaincode.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/common-service/common.iml" filepath="$PROJECT_DIR$/applications/common-service/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/credential-service/credentialservice.iml" filepath="$PROJECT_DIR$/applications/credential-service/credentialservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/document-service/document.iml" filepath="$PROJECT_DIR$/applications/document-service/document.iml" />
@@ -17,6 +16,7 @@
       <module fileurl="file://$PROJECT_DIR$/applications/notification-service/notification-service.iml" filepath="$PROJECT_DIR$/applications/notification-service/notification-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/tcc-api.iml" filepath="$PROJECT_DIR$/.idea/tcc-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/tccserver/tccserver.iml" filepath="$PROJECT_DIR$/applications/tccserver/tccserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fabric/chaincode/user-chaincode/java/user-chaincode.iml" filepath="$PROJECT_DIR$/fabric/chaincode/user-chaincode/java/user-chaincode.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/user-service/user-service.iml" filepath="$PROJECT_DIR$/applications/user-service/user-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/video-service/video.iml" filepath="$PROJECT_DIR$/applications/video-service/video.iml" />
     </modules>

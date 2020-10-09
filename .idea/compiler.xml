@@ -15,13 +15,13 @@
         <module name="logs-service" />
         <module name="video" />
         <module name="user-service" />
+        <module name="user-chaincode" />
         <module name="notification-com.service.user.service" />
         <module name="message-service" />
         <module name="notification-service" />
         <module name="credentialservice" />
         <module name="common" />
         <module name="tccserver" />
-        <module name="chaincode" />
         <module name="gateway" />
       </profile>
     </annotationProcessing>
@@ -40,6 +40,7 @@
       <module name="notification-com.service.user.service" target="1.8" />
       <module name="notification-service" target="1.8" />
       <module name="tccserver" target="1.8" />
+      <module name="user-chaincode" target="1.8" />
       <module name="user-service" target="1.8" />
       <module name="video" target="1.8" />
     </bytecodeTargetLevel>
