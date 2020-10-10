@@ -1,4 +1,4 @@
-package com.service.common.domain.fabric;
+package com.service.common.domain.fabric.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +13,4 @@ public class UserAsset {
     private String cpf;
 
     private LocalDateTime birthday;
-
-    private String privateKey;
-
-    private String storageHash;
 }

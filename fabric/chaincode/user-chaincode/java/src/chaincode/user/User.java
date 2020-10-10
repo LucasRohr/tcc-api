@@ -18,8 +18,4 @@ class User implements Serializable {
 	private String cpf;
 
 	private LocalDateTime birthday;
-
-	private String privateKey;
-
-	private String storageHash;
 }

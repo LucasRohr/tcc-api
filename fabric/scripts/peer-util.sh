@@ -117,3 +117,32 @@ instantiateUserChaincode() {
   verifyResult $res "Chaincode instantiation on peer${PEER}.org1 on channel '$CHANNEL_NAME' failed"
   echo "===================== Chaincode is instantiated on peer${PEER}.org1 on channel '$CHANNEL_NAME' ===================== "
 }
+
+installAccountChaincode() {
+  PEER=$1
+  setGlobals $PEER
+
+  set -x
+  peer chaincode install -n ACCOUNT_CHAINCODE_NAME -v 1.0 -l $CHAINCODE_LANGUAGE -p ${ACCOUNT_CC_SRC_PATH} >&log.txt
+  res=$?
+  set +x
+  cat log.txt
+
+  verifyResult $res "Chaincode installation on peer${PEER}.org1 has failed"
+  echo "===================== Chaincode is installed on peer${PEER}.org1 ===================== "
+}
+
+
+instantiateAccountChaincode() {
+  PEER=$1
+  setGlobals $PEER
+
+  set -x
+  peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n ACCOUNT_CHAINCODE_NAME -l $CHAINCODE_LANGUAGE -v 1.0 -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer')" >&log.txt
+  res=$?
+  set +x
+  cat log.txt
+
+  verifyResult $res "Chaincode instantiation on peer${PEER}.org1 on channel '$CHANNEL_NAME' failed"
+  echo "===================== Chaincode is instantiated on peer${PEER}.org1 on channel '$CHANNEL_NAME' ===================== "
+}

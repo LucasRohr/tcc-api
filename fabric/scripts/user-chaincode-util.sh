@@ -3,7 +3,7 @@
 source scripts/peer-util.sh
 
 CHANNEL_NAME="mychannel"
-CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/java/"
+CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/user-chaincode/java/"
 CHAINCODE_LANGUAGE="java"
 CHAINCODE_NAME="usercc"
 CHAINCODE_VERSION=$1

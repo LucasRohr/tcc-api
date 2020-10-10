@@ -1,4 +1,4 @@
-package com.service.common.service.fabric;
+package com.service.common.service.fabric.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.common.component.chaincode.BaseChaincode;
@@ -6,7 +6,7 @@ import com.service.common.component.chaincode.BaseChaincodeFunction;
 import com.service.common.component.chaincode.user.UserAssetChaincode;
 import com.service.common.component.chaincode.user.functions.GetUserAssetByIdFunction;
 import com.service.common.component.fabric.ChannelClient;
-import com.service.common.domain.fabric.UserAsset;
+import com.service.common.domain.fabric.user.UserAsset;
 import com.service.common.exceptions.InvalidProposalResponseException;
 import lombok.extern.slf4j.Slf4j;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
@@ -38,8 +38,6 @@ public class GetUserAssetByIdService {
                 .findFirst()
                 .orElseThrow(InvalidProposalResponseException::new)
                 .getMessage());
-
-        System.out.println("RESPONSE = " + response);
 
         return objectMapper.readValue(response, UserAsset.class);
     }

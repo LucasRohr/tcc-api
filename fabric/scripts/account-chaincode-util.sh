@@ -3,9 +3,9 @@
 source scripts/peer-util.sh
 
 CHANNEL_NAME="mychannel"
-CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/certificate-chaincode/java/"
+CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/account-chaincode/java/"
 CHAINCODE_LANGUAGE="java"
-CHAINCODE_NAME="certificatevalidationcc"
+CHAINCODE_NAME="accountcc"
 CHAINCODE_VERSION=$1
 
 for PEER in 0 1 2 3; do

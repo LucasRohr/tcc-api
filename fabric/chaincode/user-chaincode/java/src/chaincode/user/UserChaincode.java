@@ -9,6 +9,7 @@ import org.hyperledger.fabric.shim.ResponseUtils;
 import org.hyperledger.fabric.shim.ledger.KeyValue;
 import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
 
+import javax.xml.ws.Response;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,9 +36,9 @@ public class UserChaincode extends ChaincodeBase {
 
 		switch (stub.getFunction()) {
 			case "createUserAsset":
-				createUser(stub, params);
+				return createUser(stub, params);
 			case "queryByUserAssetId":
-				queryByUserId(stub, params);
+				return queryByUserId(stub, params);
 			default:
 				return ResponseUtils.newErrorResponse(String.format("No such function %s exist", stub.getFunction()));
 		}
@@ -65,15 +66,12 @@ public class UserChaincode extends ChaincodeBase {
 		final String cpf = params.get(1);
 		final LocalDateTime birthday = LocalDateTime.parse(params.get(2));
 		final String privateKey = params.get(3);
-		final String storageHash = params.get(4);
 
 		return User
 				.builder()
 				.userId(userId)
 				.cpf(cpf)
 				.birthday(birthday)
-				.privateKey(privateKey)
-				.storageHash(storageHash)
 				.build();
 	}
 

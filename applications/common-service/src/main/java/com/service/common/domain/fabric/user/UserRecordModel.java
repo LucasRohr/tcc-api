@@ -1,4 +1,4 @@
-package com.service.common.domain.fabric;
+package com.service.common.domain.fabric.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,14 +17,11 @@ public class UserRecordModel {
 
     private LocalDateTime birthday;
 
-    private String privateKey;
-
     public String[] toArguments() {
         return Stream.of(
                 this.userId.toString(),
                 this.cpf,
-                this.birthday.toString(),
-                this.privateKey
+                this.birthday.toString()
         ).toArray(String[]::new);
     }
 }

@@ -1,0 +1,11 @@
+{
+  "index": {
+    "fields": [
+      "accountId"
+    ]
+  },
+  "ddoc": "account_id_doc",
+  "name": "account_id_index",
+  "type": "json"
+}
+

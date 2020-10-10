@@ -2,8 +2,8 @@ package com.service.user.service;
 
 import com.service.common.domain.Account;
 import com.service.common.domain.User;
-import com.service.common.domain.fabric.UserAsset;
-import com.service.common.service.fabric.GetUserAssetByIdService;
+import com.service.common.domain.fabric.user.UserAsset;
+import com.service.common.service.fabric.user.GetUserAssetByIdService;
 import com.service.user.dto.UserInformation;
 import com.service.common.repository.AccountRepository;
 import com.service.common.repository.UserRepository;

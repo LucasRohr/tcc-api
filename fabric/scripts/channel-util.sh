@@ -4,11 +4,13 @@ CHANNEL_NAME="$1"
 
 CERTIFICATE_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/certificate-chaincode/java"
 USER_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/user-chaincode/java"
+ACCOUNT_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/account-chaincode/java"
 
 CHAINCODE_LANGUAGE="java"
 
 CERTIFICATE_CHAINCODE_NAME="certificatevalidationcc"
 USER_CHAINCODE_NAME="usercc"
+ACCOUNT_CHAINCODE_NAME="accountcc"
 
 COUNTER=1
 MAX_RETRY=10
@@ -37,6 +39,8 @@ joinChannel () {
 	done
 }
 
+# === CERTIFICATE ===
+
 installCertificateChaincodeOnAllPeers () {
 	for peer in 0 1 2 3; do
 	installCertificateChaincode $peer
@@ -48,6 +52,8 @@ instantiateCertificateChaincodeOnAllPeers(){
 	instantiateCertificateChaincode $peer
 	done
 }
+
+# === USER ===
 
 installUserChaincodeOnAllPeers () {
 	for peer in 0 1 2 3; do
@@ -61,6 +67,20 @@ instantiateUserChaincodeOnAllPeers(){
 	done
 }
 
+# === ACCOUNT ===
+
+installAccountChaincodeOnAllPeers () {
+	for peer in 0 1 2 3; do
+	installAccountChaincode $peer
+	done
+}
+
+instantiateAccountChaincodeOnAllPeers(){
+	for peer in 0 1; do
+	instantiateAccountChaincode $peer
+	done
+}
+
 echo "Creating channel..."
 createChannel
 
@@ -70,14 +90,26 @@ joinChannel
 echo "Updating anchor peers for org1..."
 updateAnchorPeers 0
 
+# === CERTIFICATE ===
+
 echo "Installing certificate chaincode on all peers..."
 installCertificateChaincodeOnAllPeers
 
 echo "Instantiating certificate chaincode on all peers..."
 instantiateCertificateChaincodeOnAllPeers
 
+# === USER ===
+
 echo "Installing user chaincode on all peers..."
 installUserChaincodeOnAllPeers
 
 echo "Instantiating user chaincode on all peers..."
 instantiateUserChaincodeOnAllPeers
+
+# === ACCOUNT ===
+
+echo "Installing account chaincode on all peers..."
+installAccountChaincodeOnAllPeers
+
+echo "Instantiating account chaincode on all peers..."
+instantiateAccountChaincodeOnAllPeers

@@ -81,9 +81,6 @@ public class FabricConfig {
         channel.addPeer(peer0);
 
         channel.addOrderer(orderer);
-        channel.addPeer(peer1);
-		channel.addPeer(peer2);
-		channel.addPeer(peer3);
         channel.initialize();
 
         return channelClient;

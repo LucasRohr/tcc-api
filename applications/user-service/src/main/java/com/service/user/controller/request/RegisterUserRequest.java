@@ -26,4 +26,6 @@ public class RegisterUserRequest {
 
     private AccountTypes firstAccountType;
 
+    private Long ownerId;
+
 }
