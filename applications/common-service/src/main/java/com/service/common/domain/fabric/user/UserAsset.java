@@ -3,8 +3,6 @@ package com.service.common.domain.fabric.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
 @NoArgsConstructor
 public class UserAsset {
@@ -12,5 +10,5 @@ public class UserAsset {
 
     private String cpf;
 
-    private LocalDateTime birthday;
+    private Long birthday;
 }

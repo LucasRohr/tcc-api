@@ -1,6 +1,6 @@
 package com.service.user.dto;
 
-import com.service.common.domain.Account;
+import com.service.user.controller.response.AccountResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,20 +17,13 @@ public class UserInformation {
 
     private String email;
 
+    private String name;
+
     private String cpf;
 
     private LocalDateTime birthday;
 
     private String token;
 
-    private List<Account> accounts;
-
-    public UserInformation(Long id, String email, String cpf, LocalDateTime birthday, String token) {
-        this.id = id;
-        this.email = email;
-        this.cpf = cpf;
-        this.birthday = birthday;
-        this.token = token;
-    }
-
+    private List<AccountResponse> accounts;
 }

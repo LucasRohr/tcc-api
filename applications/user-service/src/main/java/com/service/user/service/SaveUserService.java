@@ -3,14 +3,20 @@ package com.service.user.service;
 import com.service.common.domain.Account;
 import com.service.common.domain.User;
 import com.service.common.domain.fabric.user.UserRecordModel;
+import com.service.common.helpers.CryptoUtils;
 import com.service.common.repository.UserRepository;
 import com.service.common.service.fabric.user.SaveUserAssetService;
+import com.service.user.component.ValidateIfUserAlreadyExistsComponent;
 import com.service.user.config.PasswordEncoder;
 import com.service.user.controller.request.RegisterUserRequest;
+import com.service.user.exceptions.UserAlreadyExistsException;
 import com.service.user.service.account.SaveAccountService;
+import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
+import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 
 @Service
@@ -28,7 +34,13 @@ public class SaveUserService {
     @Autowired
     private SaveAccountService saveAccountService;
 
-    public void saveUser(RegisterUserRequest registerUserRequest) throws Exception {
+    @Autowired
+    private ValidateIfUserAlreadyExistsComponent validateIfUserAlreadyExistsComponent;
+
+    public void saveUser(RegisterUserRequest registerUserRequest)
+            throws UserAlreadyExistsException, NoSuchAlgorithmException, ProposalException, InvalidArgumentException {
+        validateIfUserAlreadyExistsComponent.validateUser(registerUserRequest.getEmail());
+
         User user = new User(
                 registerUserRequest.getName(),
                 registerUserRequest.getEmail(),
@@ -43,14 +55,17 @@ public class SaveUserService {
                 registerUserRequest.getAccount(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                savedUser
+                savedUser,
+                registerUserRequest.getFirstAccountType()
         );
+
+        System.out.println(newAccount.toString());
 
         saveAccountService.saveAccount(newAccount, registerUserRequest.getFirstAccountType(), registerUserRequest.getOwnerId());
 
         UserRecordModel userRecordModel = new UserRecordModel(
                 savedUser.getId(),
-                registerUserRequest.getCpf(),
+                CryptoUtils.encryptSimpleString(registerUserRequest.getCpf()),
                 registerUserRequest.getBirthday()
         );
 

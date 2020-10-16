@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source scripts/peer-util.sh
+source peer-util.sh
 
 CHANNEL_NAME="mychannel"
 CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/user-chaincode/java/"
@@ -9,7 +9,7 @@ CHAINCODE_NAME="usercc"
 CHAINCODE_VERSION=$1
 
 for PEER in 0 1 2 3; do
-	installChaincode $PEER $CHAINCODE_VERSION
+	installUserChaincode $PEER $CHAINCODE_VERSION
 done
 
 peer chaincode upgrade -o orderer.example.com:7050 \

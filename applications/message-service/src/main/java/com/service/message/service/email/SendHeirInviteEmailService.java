@@ -32,8 +32,6 @@ public class SendHeirInviteEmailService {
         String htmlContent = this.htmlTemplateEngine.process(heirInviteEmailRequest.getType().getTemplateName(), ctx);
         message.setText(htmlContent, true);
 
-        System.out.println(mimeMessage);
-
         this.mailSender.send(mimeMessage);
 
         this.htmlTemplateEngine.clearTemplateCache();

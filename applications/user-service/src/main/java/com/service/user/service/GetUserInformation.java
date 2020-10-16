@@ -3,7 +3,9 @@ package com.service.user.service;
 import com.service.common.domain.Account;
 import com.service.common.domain.User;
 import com.service.common.domain.fabric.user.UserAsset;
+import com.service.common.helpers.CryptoUtils;
 import com.service.common.service.fabric.user.GetUserAssetByIdService;
+import com.service.user.controller.response.AccountResponse;
 import com.service.user.dto.UserInformation;
 import com.service.common.repository.AccountRepository;
 import com.service.common.repository.UserRepository;
@@ -13,8 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GetUserInformation {
@@ -34,16 +40,33 @@ public class GetUserInformation {
 
         UserAsset userAsset = getUserAssetByIdService.getUserAssetById(id);
 
-        UserInformation userInformation = new UserInformation(
+        LocalDateTime birthday =
+                Instant.ofEpochMilli(userAsset.getBirthday()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+        List<AccountResponse> accountsList = accounts.stream().map(
+                (account) -> {
+                    final AccountResponse accountResponse = new AccountResponse(
+                            account.getId(),
+                            account.getName(),
+                            account.getUpdatedAt(),
+                            account.getUser().getId(),
+                            account.getType()
+                    );
+
+                    return accountResponse;
+                }
+        ).collect(Collectors.toList());
+
+        System.out.println(userAsset.getCpf() + "  JESUS DKJSKJSDJKFDKJFDJKSFJK");
+
+        return new UserInformation(
                 id,
                 user.get().getEmail(),
-                userAsset.getCpf(),
-                userAsset.getBirthday(),
-                user.get().getToken()
+                user.get().getName(),
+                CryptoUtils.decryptSimpleString(userAsset.getCpf()),
+                birthday,
+                user.get().getToken(),
+                accountsList
         );
-
-        userInformation.setAccounts(accounts);
-
-        return userInformation;
     }
 }

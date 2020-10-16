@@ -11,6 +11,8 @@ import com.service.common.domain.fabric.user.UserRecordModel;
 import lombok.extern.slf4j.Slf4j;
 import org.hyperledger.fabric.sdk.ChaincodeResponse;
 import org.hyperledger.fabric.sdk.ProposalResponse;
+import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
+import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -27,7 +29,7 @@ public class SaveAccountAssetService {
         this.channelClient = channelClient;
     }
 
-    public List<String> createTransaction(AccountRecordModel recordModel) throws Exception {
+    public List<String> createTransaction(AccountRecordModel recordModel) throws ProposalException, InvalidArgumentException {
         final String[] arguments = recordModel.toArguments();
         final BaseChaincodeFunction baseChaincodeFunction = new SaveUserAssetFunction(arguments);
         final BaseChaincode baseChaincode = new AccountAssetChaincode(baseChaincodeFunction);

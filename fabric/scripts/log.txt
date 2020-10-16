@@ -1,0 +1,1 @@
+peer-util.sh: linha 97: peer: comando não encontrado

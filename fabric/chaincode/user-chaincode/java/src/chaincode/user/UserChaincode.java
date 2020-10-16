@@ -10,7 +10,6 @@ import org.hyperledger.fabric.shim.ledger.KeyValue;
 import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
 
 import javax.xml.ws.Response;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -64,8 +63,7 @@ public class UserChaincode extends ChaincodeBase {
 	private User mapParamsToUser(List<String> params) {
 		final Long userId = Long.parseLong(params.get(0));
 		final String cpf = params.get(1);
-		final LocalDateTime birthday = LocalDateTime.parse(params.get(2));
-		final String privateKey = params.get(3);
+		final Long birthday = Long.parseLong(params.get(2));
 
 		return User
 				.builder()

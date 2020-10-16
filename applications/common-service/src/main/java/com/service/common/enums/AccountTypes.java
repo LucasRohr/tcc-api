@@ -1,4 +1,4 @@
-package com.service.user.enums;
+package com.service.common.enums;
 
 public enum AccountTypes {
     OWNER,

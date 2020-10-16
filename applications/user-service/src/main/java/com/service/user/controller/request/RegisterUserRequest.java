@@ -1,6 +1,6 @@
 package com.service.user.controller.request;
 
-import com.service.user.enums.AccountTypes;
+import com.service.common.enums.AccountTypes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

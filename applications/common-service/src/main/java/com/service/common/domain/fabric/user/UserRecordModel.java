@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.stream.Stream;
 
 @Getter
@@ -18,10 +20,13 @@ public class UserRecordModel {
     private LocalDateTime birthday;
 
     public String[] toArguments() {
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(this.birthday, ZoneId.systemDefault());
+        Long birthday = zonedDateTime.toInstant().toEpochMilli();
+
         return Stream.of(
                 this.userId.toString(),
                 this.cpf,
-                this.birthday.toString()
+                birthday.toString()
         ).toArray(String[]::new);
     }
 }

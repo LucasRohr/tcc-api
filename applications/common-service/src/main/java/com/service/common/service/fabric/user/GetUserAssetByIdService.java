@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -39,7 +42,9 @@ public class GetUserAssetByIdService {
                 .orElseThrow(InvalidProposalResponseException::new)
                 .getMessage());
 
-        return objectMapper.readValue(response, UserAsset.class);
+        final List<UserAsset> userAssets = Arrays.asList(objectMapper.readValue(response, UserAsset[].class));
+
+        return userAssets.get(0);
     }
 
     private String[] mapArguments(Long userId) {

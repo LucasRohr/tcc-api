@@ -6,6 +6,7 @@ import com.service.user.controller.request.SendLoginTokenRequest;
 import com.service.user.controller.request.ValidateLoginTokenRequest;
 import com.service.user.dto.UserInformation;
 import com.service.user.controller.response.LoginTokenValidationResponse;
+import com.service.user.exceptions.UserAlreadyExistsException;
 import com.service.user.service.*;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
@@ -15,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @RestController
@@ -36,8 +38,10 @@ public class UserController {
     private SaveUserService saveUserService;
 
     @ResponseStatus(HttpStatus.CREATED)
+    @ExceptionHandler({ UserAlreadyExistsException.class })
     @PostMapping("register")
-    public void registerUser(@RequestBody @Validated RegisterUserRequest registerUserRequest) throws Exception {
+    public void registerUser(@RequestBody @Validated RegisterUserRequest registerUserRequest)
+            throws UserAlreadyExistsException, NoSuchAlgorithmException, ProposalException, InvalidArgumentException {
         saveUserService.saveUser(registerUserRequest);
     }
 
