@@ -1,9 +1,16 @@
 #!/bin/bash
 
 CHANNEL_NAME="$1"
-CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/java/"
+
+CERTIFICATE_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/certificate-chaincode/java"
+USER_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/user-chaincode/java"
+ACCOUNT_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/account-chaincode/java"
+
 CHAINCODE_LANGUAGE="java"
-CHAINCODE_NAME="certificatevalidationcc"
+
+CERTIFICATE_CHAINCODE_NAME="certificatevalidationcc"
+USER_CHAINCODE_NAME="usercc"
+ACCOUNT_CHAINCODE_NAME="accountcc"
 
 COUNTER=1
 MAX_RETRY=10
@@ -32,15 +39,45 @@ joinChannel () {
 	done
 }
 
-installChaincodeOnAllPeers () {
+# === CERTIFICATE ===
+
+installCertificateChaincodeOnAllPeers () {
 	for peer in 0 1 2 3; do
-	installChaincode $peer
+	installCertificateChaincode $peer
 	done
 }
 
-instantiateChaincodeOnAllPeers(){
+instantiateCertificateChaincodeOnAllPeers(){
 	for peer in 0 1; do
-	instantiateChaincode $peer
+	instantiateCertificateChaincode $peer
+	done
+}
+
+# === USER ===
+
+installUserChaincodeOnAllPeers () {
+	for peer in 0 1 2 3; do
+	installUserChaincode $peer
+	done
+}
+
+instantiateUserChaincodeOnAllPeers(){
+	for peer in 0 1; do
+	instantiateUserChaincode $peer
+	done
+}
+
+# === ACCOUNT ===
+
+installAccountChaincodeOnAllPeers () {
+	for peer in 0 1 2 3; do
+	installAccountChaincode $peer
+	done
+}
+
+instantiateAccountChaincodeOnAllPeers(){
+	for peer in 0 1; do
+	instantiateAccountChaincode $peer
 	done
 }
 
@@ -53,8 +90,26 @@ joinChannel
 echo "Updating anchor peers for org1..."
 updateAnchorPeers 0
 
-echo "Installing chaincode on all peers..."
-installChaincodeOnAllPeers
+# === CERTIFICATE ===
 
-echo "Instantiating chaincode on all peers..."
-instantiateChaincodeOnAllPeers
+echo "Installing certificate chaincode on all peers..."
+installCertificateChaincodeOnAllPeers
+
+echo "Instantiating certificate chaincode on all peers..."
+instantiateCertificateChaincodeOnAllPeers
+
+# === USER ===
+
+echo "Installing user chaincode on all peers..."
+installUserChaincodeOnAllPeers
+
+echo "Instantiating user chaincode on all peers..."
+instantiateUserChaincodeOnAllPeers
+
+# === ACCOUNT ===
+
+echo "Installing account chaincode on all peers..."
+installAccountChaincodeOnAllPeers
+
+echo "Instantiating account chaincode on all peers..."
+instantiateAccountChaincodeOnAllPeers

@@ -7,22 +7,26 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="invite-com.service.user.service" />
         <module name="image" />
         <module name="invite-service" />
         <module name="auth" />
         <module name="document" />
         <module name="logs-service" />
         <module name="video" />
+        <module name="user-service" />
+        <module name="user-chaincode" />
+        <module name="notification-com.service.user.service" />
         <module name="message-service" />
         <module name="notification-service" />
         <module name="credentialservice" />
         <module name="common" />
         <module name="tccserver" />
-        <module name="chaincode" />
         <module name="gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="account-chaincode" target="1.5" />
       <module name="auth" target="1.8" />
       <module name="chaincode" target="1.8" />
       <module name="common" target="1.8" />
@@ -30,14 +34,15 @@
       <module name="document" target="1.8" />
       <module name="gateway" target="1.8" />
       <module name="image" target="1.8" />
-      <module name="invite" target="1.8" />
+      <module name="invite-com.service.user.service" target="1.8" />
       <module name="invite-service" target="1.8" />
       <module name="logs-service" target="1.8" />
       <module name="message-service" target="1.8" />
-      <module name="notification" target="1.8" />
+      <module name="notification-com.service.user.service" target="1.8" />
       <module name="notification-service" target="1.8" />
       <module name="tccserver" target="1.8" />
-      <module name="user" target="11" />
+      <module name="user-chaincode" target="1.8" />
+      <module name="user-service" target="1.8" />
       <module name="video" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -49,14 +54,14 @@
       <module name="document" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="image" options="-parameters" />
-      <module name="invite" options="-parameters" />
+      <module name="invite-com.service.user.service" options="-parameters" />
       <module name="invite-service" options="-parameters" />
       <module name="logs-service" options="-parameters" />
       <module name="message-service" options="-parameters" />
-      <module name="notification" options="-parameters" />
+      <module name="notification-com.service.user.service" options="-parameters" />
       <module name="notification-service" options="-parameters" />
       <module name="tccserver" options="-parameters" />
-      <module name="user" options="-parameters" />
+      <module name="user-service" options="-parameters" />
       <module name="video" options="-parameters" />
     </option>
   </component>

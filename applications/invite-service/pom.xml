@@ -6,10 +6,10 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.3.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from com.service.common.repository -->
 	</parent>
-	<groupId>com.service</groupId>
-	<artifactId>invite-service</artifactId>
+	<groupId>com..service</groupId>
+	<artifactId>invite</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>invite</name>
 	<description>Demo project for Spring Boot</description>
@@ -56,7 +56,7 @@
 
 		<dependency>
 			<groupId>com.service</groupId>
-			<artifactId>common</artifactId>
+			<artifactId>user</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>

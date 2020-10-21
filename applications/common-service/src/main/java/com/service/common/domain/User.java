@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -23,17 +23,28 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     @Column
     private String token;
+
+    @Column(name = "login_token")
+    private String loginToken;
 
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false, name = "created_at")
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false, name = "updated_at")
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
+
+    public User(String name, String email, String password, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }
