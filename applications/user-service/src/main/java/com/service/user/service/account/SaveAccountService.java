@@ -35,9 +35,9 @@ public class SaveAccountService {
         KeyPair accountKeys = CryptoUtils.generateKeyPair();
 
         if(accountType == AccountTypes.OWNER) {
-            saveOwnerService.saveOwner(savedAccount, accountKeys);
+            saveOwnerService.saveOwner(savedAccount);
         } else {
-            saveHeirService.saveHeir(savedAccount, accountKeys, ownerId);
+            saveHeirService.saveHeir(savedAccount, ownerId);
         }
 
         AccountRecordModel accountRecord = new AccountRecordModel(

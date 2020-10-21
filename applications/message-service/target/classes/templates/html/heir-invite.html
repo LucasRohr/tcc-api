@@ -127,7 +127,7 @@
         <br/>
 
         <span>
-            <a th:style="normal-link" th:href="|http://localhost:3000/registro?code=${linkCode}|" target="_blank">Clique aqui</a> para acessar a plataforma.
+            <a th:style="normal-link" th:href="|${link}|" target="_blank">Clique aqui</a> para acessar a plataforma.
             <br/>
             Ou clique no botão abaixo:
         </span>
@@ -135,7 +135,7 @@
         <br/>
         <br/>
 
-        <a th:href="|http://localhost:3000/registro?code=${linkCode}|" target="_blank" >
+        <a th:href="|${link}|" target="_blank" >
             <button class="button-link" >
                 Acessar plataforma
             </button>

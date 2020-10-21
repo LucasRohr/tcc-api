@@ -43,9 +43,12 @@ public class SendHeirInviteEmailService {
         Context ctx = new Context();
         RandomCode randomCode = new RandomCode();
         String linkCode = randomCode.nextString();
+        String link = heirInviteEmailRequest.isReceiverExists()
+                ? "http://localhost:3000/convites-herdeiro"
+                : "http://localhost:3000/registro?code=" + linkCode + "&invite=" + heirInviteEmailRequest.getInviteId();
 
         ctx.setVariable("ownerName", heirInviteEmailRequest.getOwnerName());
-        ctx.setVariable("linkCode", linkCode);
+        ctx.setVariable("link", link);
 
         return ctx;
     }

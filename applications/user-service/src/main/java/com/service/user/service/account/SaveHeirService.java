@@ -9,7 +9,6 @@ import com.service.common.repository.OwnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -22,7 +21,7 @@ public class SaveHeirService {
     @Autowired
     private OwnerRepository ownerRepository;
 
-    public void saveHeir(Account account, KeyPair ownerKeys, Long ownerId) {
+    public void saveHeir(Account account, Long ownerId) {
         Optional<Owner> owner = ownerRepository.findById(ownerId);
 
         Heir heir = new Heir(
