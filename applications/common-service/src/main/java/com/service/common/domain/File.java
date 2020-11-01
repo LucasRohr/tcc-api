@@ -43,10 +43,4 @@ public class File {
     @ManyToOne
     @JoinColumn(nullable = false, name = "owner_id")
     private Owner owner;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="files_heirs",
-            joinColumns = { @JoinColumn(name = "file_id") },
-            inverseJoinColumns = { @JoinColumn(name = "heir_id") })
-    private List<Heir> heirs;
 }

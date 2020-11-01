@@ -29,16 +29,9 @@ public class Heir {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="files_heirs",
-            joinColumns = { @JoinColumn(name = "heir_id") },
-            inverseJoinColumns = { @JoinColumn(name = "file_id") })
-    private List<File> files;
-
     public Heir(HeirStatusEnum status, Owner owner, Account account, List<File> files) {
         this.status = status;
         this.owner = owner;
         this.account = account;
-        this.files = files;
     }
 }

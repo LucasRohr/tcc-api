@@ -57,8 +57,6 @@ public class GetUserInformation {
                 }
         ).collect(Collectors.toList());
 
-        System.out.println(userAsset.getCpf() + "  JESUS DKJSKJSDJKFDKJFDJKSFJK");
-
         return new UserInformation(
                 id,
                 user.get().getEmail(),
