@@ -2,6 +2,7 @@ package com.service.invite.domain;
 
 import com.service.common.domain.Heir;
 import com.service.common.domain.Owner;
+import com.service.common.domain.User;
 import com.service.invite.enums.InviteStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,20 @@ public class Invite {
     private Owner owner;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "receiver_id")
-    private Heir receiver;
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
+
+    @Column()
+    private String inviteCode;
+
+    public Invite(Owner owner, InviteStatus status) {
+        this.owner = owner;
+        this.status = status;
+    }
+
+    public Invite(Owner owner, User receiver, InviteStatus status) {
+        this.owner = owner;
+        this.receiver = receiver;
+        this.status = status;
+    }
 }

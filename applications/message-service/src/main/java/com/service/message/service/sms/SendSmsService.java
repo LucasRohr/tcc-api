@@ -19,17 +19,20 @@ public class SendSmsService {
 
     private static final int smsType = 9;
 
-    private static final String apiKey = "FCSETRIF7T8XUWVGDH9QWQDH82P8OSFP3GDH3N9GQW6Y4WL94LDO5TWNFIMHKY5A9LEYJ5X4EGP1MYQCO3WTLCDIY0ZNLER0ILXO1IEI22PRRN03LJB5AIT8LEM5KO5W";
+    private static final String apiKey =
+            "FCSETRIF7T8XUWVGDH9QWQDH82P8OSFP3GDH3N9GQW6Y4WL94LDO5TWNFIMHKY5A9LEYJ5X4EGP1MYQCO3WTLCDIY0ZNLER0ILXO1IEI22PRRN03LJB5AIT8LEM5KO5W";
 
     private HttpHeaders httpHeaders = new HttpHeaders();
 
     public void sendSms(SmsRequest smsRequest) throws SmsException, IOException {
         RandomCode randomCode = new RandomCode();
         String linkCode = randomCode.nextString();
+        String link = smsRequest.isReceiverExists() ?
+                "http://localhost:3000/convites-herdeiro"
+                : "http://localhost:3000/registro?code=" + linkCode + "&invite=" + smsRequest.getInviteId();
 
         String message = "Convite da herança digital de " + smsRequest.getOwnerName() + "." +
-                "\\nMais detalhes no link.\\nAt, equipe Herança Digital.\\n\\n" +
-                "http://localhost:3000/registro?code=" + linkCode;
+                "\\nMais detalhes no link.\\nAt, equipe Herança Digital.\\n\\n" + link;
 
         URL url = new URL(smsApiUrl);
         URLConnection con = url.openConnection();
@@ -37,7 +40,7 @@ public class SendSmsService {
         http.setRequestMethod("POST");
         http.setDoOutput(true);
 
-        String json = "{\"type\":\"" + smsType + "\",\"key\":\"" + apiKey + "\",\"msg\":\"" + message + "\",\"number\":\"" + smsRequest.getTelephone() + "\"}";
+        String json = "{\"type\":\"" + smsType + "\",\"key\":\"" + apiKey + "\",\"msg\":\"" + message + "\",\"number\":\"" + smsRequest.getPhone() + "\"}";
         byte[] output = json.getBytes(StandardCharsets.UTF_8);
         int length = output.length;
 

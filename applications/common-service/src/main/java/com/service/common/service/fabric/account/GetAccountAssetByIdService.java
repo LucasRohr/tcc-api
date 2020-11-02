@@ -5,10 +5,8 @@ import com.service.common.component.chaincode.BaseChaincode;
 import com.service.common.component.chaincode.BaseChaincodeFunction;
 import com.service.common.component.chaincode.account.AccountAssetChaincode;
 import com.service.common.component.chaincode.account.functions.GetAccountAssetByIdFunction;
-import com.service.common.component.chaincode.user.UserAssetChaincode;
-import com.service.common.component.chaincode.user.functions.GetUserAssetByIdFunction;
 import com.service.common.component.fabric.ChannelClient;
-import com.service.common.domain.fabric.user.UserAsset;
+import com.service.common.domain.fabric.account.AccountAsset;
 import com.service.common.exceptions.InvalidProposalResponseException;
 import lombok.extern.slf4j.Slf4j;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
@@ -30,7 +28,7 @@ public class GetAccountAssetByIdService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public UserAsset getUserAssetById(Long accountId) throws ProposalException, InvalidArgumentException, IOException {
+    public AccountAsset getUserAssetById(Long accountId) throws ProposalException, InvalidArgumentException, IOException {
         final String[] arguments = mapArguments(accountId);
         final BaseChaincodeFunction baseChaincodeFunction = new GetAccountAssetByIdFunction(arguments);
         final BaseChaincode baseChaincode = new AccountAssetChaincode(baseChaincodeFunction);
@@ -41,7 +39,7 @@ public class GetAccountAssetByIdService {
                 .orElseThrow(InvalidProposalResponseException::new)
                 .getMessage());
 
-        return objectMapper.readValue(response, UserAsset.class);
+        return objectMapper.readValue(response, AccountAsset.class);
     }
 
     private String[] mapArguments(Long accountId) {

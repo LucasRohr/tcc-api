@@ -86,3 +86,23 @@ create table if not exists logs (
 	content text,
 	created_at timestamp not null
 );
+
+
+-- remover depois
+
+
+ALTER TABLE invites ALTER COLUMN receiver_id DROP NOT NULL
+
+ALTER TABLE invites
+ADD COLUMN invite_code varchar(6);
+
+
+INSERT into heirs (status, owner_id, account_id) values ('active', 9, 9)
+
+insert into files ("name" , description, bucket_url, "type", mime_type, owner_id, created_at, updated_at) values
+	('arquivo', '', '', 'image', 'png', 9, '2001-08-13T03:00:00', '2001-08-13T03:00:00')
+
+insert into files_heirs (file_id, heir_id) values (1, 1)
+
+
+

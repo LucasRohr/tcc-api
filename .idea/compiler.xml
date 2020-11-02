@@ -30,6 +30,7 @@
       <module name="auth" target="1.8" />
       <module name="chaincode" target="1.8" />
       <module name="common" target="1.8" />
+      <module name="credential-chaincode" target="1.5" />
       <module name="credentialservice" target="1.8" />
       <module name="document" target="1.8" />
       <module name="gateway" target="1.8" />
