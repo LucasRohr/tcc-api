@@ -59,8 +59,6 @@ public class SaveUserService {
                 registerUserRequest.getFirstAccountType()
         );
 
-        System.out.println(newAccount.toString());
-
         saveAccountService.saveAccount(newAccount, registerUserRequest.getFirstAccountType(), registerUserRequest.getOwnerId());
 
         UserRecordModel userRecordModel = new UserRecordModel(

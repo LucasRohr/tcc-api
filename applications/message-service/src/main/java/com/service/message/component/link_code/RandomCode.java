@@ -14,7 +14,7 @@ import java.util.Random;
 @AllArgsConstructor
 public class RandomCode {
 
-    private static final int linkLength = 10;
+    private static final int linkLength = 6;
 
     public static final String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

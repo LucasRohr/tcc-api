@@ -17,11 +17,13 @@
         <option value="$PROJECT_DIR$/applications/user-service/pom.xml" />
         <option value="$PROJECT_DIR$/fabric/user-chaincode/pom.xml" />
         <option value="$PROJECT_DIR$/fabric/chaincode/account-chaincode/pom.xml" />
+        <option value="$PROJECT_DIR$/fabric/chaincode/credential-chaincode/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/fabric/chaincode/account-chaincode/java/pom.xml" />
+        <option value="$PROJECT_DIR$/fabric/chaincode/credential-chaincode/java/pom.xml" />
       </set>
     </option>
   </component>

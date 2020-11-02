@@ -60,6 +60,8 @@ updateAnchorPeers() {
   sleep $DELAY
 }
 
+# === CERTIFICATE ===
+
 installCertificateChaincode() {
   PEER=$1
   setGlobals $PEER
@@ -88,6 +90,8 @@ instantiateCertificateChaincode() {
   verifyResult $res "Chaincode instantiation on peer${PEER}.org1 on channel '$CHANNEL_NAME' failed"
   echo "===================== Chaincode is instantiated on peer${PEER}.org1 on channel '$CHANNEL_NAME' ===================== "
 }
+
+# === USER ===
 
 installUserChaincode() {
   PEER=$1
@@ -118,6 +122,8 @@ instantiateUserChaincode() {
   echo "===================== Chaincode is instantiated on peer${PEER}.org1 on channel '$CHANNEL_NAME' ===================== "
 }
 
+# === ACCOUNT ===
+
 installAccountChaincode() {
   PEER=$1
   setGlobals $PEER
@@ -139,6 +145,37 @@ instantiateAccountChaincode() {
 
   set -x
   peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n ACCOUNT_CHAINCODE_NAME -l $CHAINCODE_LANGUAGE -v 1.0 -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer')" >&log.txt
+  res=$?
+  set +x
+  cat log.txt
+
+  verifyResult $res "Chaincode instantiation on peer${PEER}.org1 on channel '$CHANNEL_NAME' failed"
+  echo "===================== Chaincode is instantiated on peer${PEER}.org1 on channel '$CHANNEL_NAME' ===================== "
+}
+
+# === CREDENTIAL ===
+
+installCredentialChaincode() {
+  PEER=$1
+  setGlobals $PEER
+
+  set -x
+  peer chaincode install -n CREDENTIAL_CHAINCODE_NAME -v 1.0 -l $CHAINCODE_LANGUAGE -p ${CREDENTIAL_CC_SRC_PATH} >&log.txt
+  res=$?
+  set +x
+  cat log.txt
+
+  verifyResult $res "Chaincode installation on peer${PEER}.org1 has failed"
+  echo "===================== Chaincode is installed on peer${PEER}.org1 ===================== "
+}
+
+
+instantiateCredentialChaincode() {
+  PEER=$1
+  setGlobals $PEER
+
+  set -x
+  peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n CREDENTIAL_CHAINCODE_NAME -l $CHAINCODE_LANGUAGE -v 1.0 -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer')" >&log.txt
   res=$?
   set +x
   cat log.txt
