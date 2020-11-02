@@ -1,3 +1,6 @@
+server:
+  port: 9600
+
 spring:
   application:
     name: invite-service
@@ -14,9 +17,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/tcc
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
-
-server:
-  port: 9400
 
 eureka:
   client:

@@ -14,8 +14,6 @@
         <option value="$PROJECT_DIR$/applications/credential-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/message-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/logs-service/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/invite-service/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/notification-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/user-service/pom.xml" />
         <option value="$PROJECT_DIR$/fabric/user-chaincode/pom.xml" />
         <option value="$PROJECT_DIR$/fabric/chaincode/account-chaincode/pom.xml" />
