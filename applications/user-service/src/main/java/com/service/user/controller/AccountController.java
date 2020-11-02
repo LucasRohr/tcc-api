@@ -3,8 +3,7 @@ package com.service.user.controller;
 import com.service.common.dto.HeirAccountResponseDto;
 import com.service.user.controller.request.CreateHeirRequest;
 import com.service.user.service.account.BuildHeirAccountService;
-import com.service.user.service.account.GetAllOwnerHeirsService;
-import com.service.user.service.account.SaveAccountService;
+import com.service.user.service.account.GetOwnerHeirsService;
 import com.service.user.service.account.UpdateAccountLastUpdatedAtService;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
@@ -23,7 +22,7 @@ public class AccountController {
     private UpdateAccountLastUpdatedAtService updateAccountLastUpdatedAtService;
 
     @Autowired
-    private GetAllOwnerHeirsService getAllOwnerHeirsService;
+    private GetOwnerHeirsService getAllOwnerHeirsService;
 
     @Autowired
     private BuildHeirAccountService buildHeirAccountService;

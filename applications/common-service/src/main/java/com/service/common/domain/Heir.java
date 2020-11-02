@@ -29,6 +29,9 @@ public class Heir {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    @OneToMany(mappedBy = "heir")
+    private List<FileHeir> fileHeirs;
+
     public Heir(HeirStatusEnum status, Owner owner, Account account, List<File> files) {
         this.status = status;
         this.owner = owner;

@@ -12,7 +12,9 @@ import java.util.List;
 public interface HeirRepository extends JpaRepository<Heir, Long> {
 
     @Query("SELECT h FROM Heir h " +
-            "WHERE h.owner.id = ?1 AND h.status = 'ACTIVE'")
+            "WHERE h.owner.id = ?1 AND h.status = 'ACCEPTED'")
     List<Heir> getOwnerHeirs(Long ownerId);
 
+    @Query("SELECT h FROM Heir h WHERE h.owner.id = ?1")
+    List<Heir> getAllOwnerHeirs(Long ownerId);
 }
