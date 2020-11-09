@@ -14,7 +14,6 @@ import java.util.List;
 public class Heir {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -25,20 +24,16 @@ public class Heir {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
-    @ManyToOne()
-    @JoinColumn(name = "account_id")
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY)
     private Account account;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="files_heirs",
-            joinColumns = { @JoinColumn(name = "heir_id") },
-            inverseJoinColumns = { @JoinColumn(name = "file_id") })
-    private List<File> files;
+    @OneToMany(mappedBy = "heir")
+    private List<FileHeir> fileHeirs;
 
     public Heir(HeirStatusEnum status, Owner owner, Account account, List<File> files) {
         this.status = status;
         this.owner = owner;
         this.account = account;
-        this.files = files;
     }
 }

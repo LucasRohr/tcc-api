@@ -12,14 +12,13 @@ import javax.persistence.*;
 public class Owner {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private Boolean isAlive;
 
-    @ManyToOne()
-    @JoinColumn(name = "account_id")
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY)
     private Account account;
 
     public Owner(Boolean isAlive, Account account) {

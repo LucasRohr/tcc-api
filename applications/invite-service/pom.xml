@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.3.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from com.service.common.repository -->
+		<relativePath/> <!-- lookup parent port: 9600from com.service.common.repository -->
 	</parent>
 	<groupId>com..service</groupId>
 	<artifactId>invite</artifactId>
@@ -64,7 +64,7 @@
 		<dependency>
 			<groupId>io.grpc</groupId>
 			<artifactId>grpc-netty</artifactId>
-			<version>1.25.0</version>
+			<version>1.29.0</version>
 		</dependency>
 	</dependencies>
 

@@ -1,3 +1,6 @@
+server:
+  port: 9700
+
 spring:
   main:
     allow-bean-definition-overriding: true
@@ -16,9 +19,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/tcc
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
-
-server:
-  port: 9600
 
 eureka:
   client:
