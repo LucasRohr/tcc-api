@@ -8,10 +8,10 @@
       <module fileurl="file://$PROJECT_DIR$/applications/document-service/document.iml" filepath="$PROJECT_DIR$/applications/document-service/document.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/gateway/gateway.iml" filepath="$PROJECT_DIR$/applications/gateway/gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/image-service/image.iml" filepath="$PROJECT_DIR$/applications/image-service/image.iml" />
-      <module fileurl="file://$PROJECT_DIR$/applications/invite-service/invite-com.service.user.service.iml" filepath="$PROJECT_DIR$/applications/invite-service/invite-com.service.user.service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/applications/invite-service/invite-service.iml" filepath="$PROJECT_DIR$/applications/invite-service/invite-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/applications/invite-service/invite.iml" filepath="$PROJECT_DIR$/applications/invite-service/invite.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/logs-service/logs-service.iml" filepath="$PROJECT_DIR$/applications/logs-service/logs-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/message-service/message-service.iml" filepath="$PROJECT_DIR$/applications/message-service/message-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/applications/notification-service/notification.iml" filepath="$PROJECT_DIR$/applications/notification-service/notification.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/notification-service/notification-com.service.user.service.iml" filepath="$PROJECT_DIR$/applications/notification-service/notification-com.service.user.service.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/notification-service/notification-service.iml" filepath="$PROJECT_DIR$/applications/notification-service/notification-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/tcc-api.iml" filepath="$PROJECT_DIR$/.idea/tcc-api.iml" />
