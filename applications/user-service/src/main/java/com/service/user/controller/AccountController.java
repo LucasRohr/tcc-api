@@ -2,7 +2,9 @@ package com.service.user.controller;
 
 import com.service.common.dto.HeirAccountResponseDto;
 import com.service.user.controller.request.CreateHeirRequest;
+import com.service.user.dto.HeirDeactivationRequest;
 import com.service.user.service.account.BuildHeirAccountService;
+import com.service.user.service.account.DeactivateHeirService;
 import com.service.user.service.account.GetOwnerHeirsService;
 import com.service.user.service.account.UpdateAccountLastUpdatedAtService;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
@@ -27,6 +29,9 @@ public class AccountController {
     @Autowired
     private BuildHeirAccountService buildHeirAccountService;
 
+    @Autowired
+    private DeactivateHeirService deactivateHeirService;
+
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("last-update")
     public void sendLoginToken(@RequestParam("account_id") Long accountId) {
@@ -37,6 +42,12 @@ public class AccountController {
     @GetMapping("owner/heirs")
     public List<HeirAccountResponseDto> getOwnerHeirs(@RequestParam("owner_id") Long ownerId) {
         return getAllOwnerHeirsService.getHeirs(ownerId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("owner/heir-remove")
+    public boolean deactivateHeir(@RequestBody HeirDeactivationRequest request) {
+        return deactivateHeirService.deactivateHeir(request);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

@@ -38,26 +38,24 @@ create table if not exists accounts_notification (
 );
 
 create table if not exists owners (
-	id bigserial not null unique primary key,
-	is_alive boolean not null default true,
-	account_id bigint not null,
-	foreign key (account_id) references accounts(id)
+	account_id bigint primary key references accounts(id),
+	is_alive boolean not null default true
 );
 
 create table if not exists heirs (
-	id bigserial not null unique primary key,
+	account_id bigint primary key references accounts(id),
 	status varchar(15) not null default 'active',
 	owner_id bigint not null,
-	account_id bigint not null,
-	foreign key (owner_id) references owners(id),
-	foreign key (account_id) references accounts(id)
+	foreign key (owner_id) references owners(account_id)
 );
 
 create table if not exists invites (
 	id bigserial not null unique primary key,
 	status varchar(15) not null default 'pending',
+	invite_code varchar(6),
 	owner_id bigint not null,
-	receiver_id bigint not null
+	receiver_id bigint,
+	foreign key (owner_id) references owners(id)
 );
 
 create table if not exists files (
@@ -86,23 +84,3 @@ create table if not exists logs (
 	content text,
 	created_at timestamp not null
 );
-
-
--- remover depois
-
-
-ALTER TABLE invites ALTER COLUMN receiver_id DROP NOT NULL
-
-ALTER TABLE invites
-ADD COLUMN invite_code varchar(6);
-
-
-INSERT into heirs (status, owner_id, account_id) values ('active', 9, 9)
-
-insert into files ("name" , description, bucket_url, "type", mime_type, owner_id, created_at, updated_at) values
-	('arquivo', '', '', 'image', 'png', 9, '2001-08-13T03:00:00', '2001-08-13T03:00:00')
-
-insert into files_heirs (file_id, heir_id) values (1, 1)
-
-
-

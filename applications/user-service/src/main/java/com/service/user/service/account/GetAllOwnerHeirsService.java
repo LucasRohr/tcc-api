@@ -20,10 +20,9 @@ public class GetAllOwnerHeirsService {
 
         System.out.println("\n ===================================== \n");
 
-        System.out.println(list.getClass());
         list.forEach(heir -> {
             HeirAccountResponseDto dto = new HeirAccountResponseDto(
-                    heir.getAccount().getId(),
+                    heir.getId(),
                     heir.getAccount().getUser().getName(),
                     heir.getAccount().getName(),
                     heir.getAccount().getUser().getEmail(),

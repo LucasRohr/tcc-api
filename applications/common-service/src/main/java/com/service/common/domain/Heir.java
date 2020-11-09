@@ -14,7 +14,6 @@ import java.util.List;
 public class Heir {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -25,8 +24,8 @@ public class Heir {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
-    @ManyToOne()
-    @JoinColumn(name = "account_id")
+    @MapsId
+    @OneToOne(fetch = FetchType.LAZY)
     private Account account;
 
     @OneToMany(mappedBy = "heir")
