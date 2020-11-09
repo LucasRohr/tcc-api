@@ -17,12 +17,7 @@ public class GetOwnerHeirsService {
 
     public List<HeirAccountResponseDto> getHeirs(Long ownerId) {
         List<Heir> list =  heirRepository.getOwnerHeirs(ownerId);
-
         List<HeirAccountResponseDto> listDto = new ArrayList<>();
-
-        System.out.println("\n ===================================== \n");
-
-        System.out.println(list.getClass());
         list.forEach(heir -> {
             HeirAccountResponseDto dto = new HeirAccountResponseDto(
                     heir.getAccount().getId(),
@@ -32,11 +27,7 @@ public class GetOwnerHeirsService {
                     (long) heir.getFileHeirs().size()
             );
             listDto.add(dto);
-            System.out.println(heir.toString());
         });
-
-        System.out.println("\n ===================================== \n");
-
         return listDto;
     }
 

@@ -14,9 +14,7 @@ public class DeactivateHeirService {
     private HeirRepository heirRepository;
 
     public boolean deactivateHeir(HeirDeactivationRequest request) {
-        System.out.println(request);
         Heir heir = heirRepository.getHeirByIdAndOwner(request.getOwnerId(), request.getHeirId());
-        System.out.println(heir);
         if(heir != null) {
             heir.setStatus(HeirStatusEnum.DISINHERITED);
             heirRepository.save(heir);
