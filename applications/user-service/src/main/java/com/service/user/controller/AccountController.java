@@ -57,4 +57,10 @@ public class AccountController {
         buildHeirAccountService.buildAccount(createHeirRequest);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("owner/credential-heirs")
+    public List<HeirAccountResponseDto> getHeirsForCredentialCreation(@RequestParam("owner_id") Long ownerId) {
+        return getAllOwnerHeirsService.getHeirs(ownerId);
+    }
+
 }

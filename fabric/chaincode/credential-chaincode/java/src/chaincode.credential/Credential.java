@@ -27,4 +27,6 @@ class Credential implements Serializable {
 	private List<Long> heirsIds;
 
 	private Boolean isActive;
+
+	private Long createdAt;
 }
