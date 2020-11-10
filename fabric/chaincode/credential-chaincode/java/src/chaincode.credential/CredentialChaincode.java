@@ -68,6 +68,7 @@ public class CredentialChaincode extends ChaincodeBase {
 		final String login = params.get(4);
 		final String password = params.get(5);
 		final Long ownerId = Long.parseLong(params.get(6));
+		final Long createdAt = Long.parseLong(params.get(7));
 
 		final List<Long> heirsIds = Arrays.stream(
 				params.get(7).split(",")).map(Long::valueOf
@@ -86,6 +87,7 @@ public class CredentialChaincode extends ChaincodeBase {
 				.ownerId(ownerId)
 				.heirsIds(heirsIds)
 				.isActive(isActive)
+				.createdAt(createdAt)
 				.build();
 	}
 

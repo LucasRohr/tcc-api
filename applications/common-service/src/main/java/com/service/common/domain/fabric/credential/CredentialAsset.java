@@ -25,4 +25,6 @@ public class CredentialAsset {
     private List<Long> heirsIds;
 
     private Boolean isActive;
+
+    private Long createdAt;
 }

@@ -14,7 +14,6 @@
         <module name="video" />
         <module name="user-service" />
         <module name="user-chaincode" />
-        <module name="notification-com.service.user.service" />
         <module name="message-service" />
         <module name="notification-service" />
         <module name="credentialservice" />

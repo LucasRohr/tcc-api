@@ -18,6 +18,7 @@
         <option value="$PROJECT_DIR$/fabric/user-chaincode/pom.xml" />
         <option value="$PROJECT_DIR$/fabric/chaincode/account-chaincode/pom.xml" />
         <option value="$PROJECT_DIR$/fabric/chaincode/credential-chaincode/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/invite-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -27,5 +28,5 @@
       </set>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8.0_242" project-jdk-type="JavaSDK" />
 </project>

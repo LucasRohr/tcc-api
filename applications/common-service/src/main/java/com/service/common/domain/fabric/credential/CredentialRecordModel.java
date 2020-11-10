@@ -29,6 +29,8 @@ public class CredentialRecordModel {
 
     private Boolean isActive;
 
+    private Long createdAt;
+
     public String[] toArguments() {
         return Stream.of(
                 this.credentialId.toString(),
@@ -39,7 +41,8 @@ public class CredentialRecordModel {
                 this.password,
                 this.ownerId.toString(),
                 this.heirsIds.toString(),
-                this.isActive.toString()
+                this.isActive.toString(),
+                this.createdAt.toString()
         ).toArray(String[]::new);
     }
 }
