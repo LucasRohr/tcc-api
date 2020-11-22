@@ -18,7 +18,6 @@
         <option value="$PROJECT_DIR$/fabric/user-chaincode/pom.xml" />
         <option value="$PROJECT_DIR$/fabric/chaincode/account-chaincode/pom.xml" />
         <option value="$PROJECT_DIR$/fabric/chaincode/credential-chaincode/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/invite-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

@@ -1,11 +1,15 @@
-package com.service.common.domain.fabric.credential;
+package com.service.credential.controllers.response;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
+import java.util.List;
+
+@Data
 @NoArgsConstructor
-public class CredentialAsset {
+@AllArgsConstructor
+public class CredentialResponseWithouPassword {
     private Long credentialId;
 
     private String name;
@@ -16,11 +20,9 @@ public class CredentialAsset {
 
     private String login;
 
-    private String password;
-
     private Long credentialOwnerId;
 
-    private String heirsIds;
+    private List<Long> heirsIds;
 
     private Boolean isActive;
 

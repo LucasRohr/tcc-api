@@ -30,14 +30,22 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(
                     HttpMethod.POST,
                     jwtConfig.getUri(),
-                    "/user-service/users/register",
-                    "/invite-service/invites/*"
+                    "/user-service/users/register"
                     ).permitAll()
+            .antMatchers(
+                    HttpMethod.PUT,
+                    "/invite-service/invites/*"
+            ).permitAll()
+            .antMatchers(
+                    HttpMethod.GET,
+                    "/invite-service/invites/*"
+            ).permitAll()
             .anyRequest().authenticated();
     }
 
     @Bean
-    public JwtConfig jwtConfig() {
+    public JwtConfig jwtConfig()
+    {
         return new JwtConfig();
     }
 }

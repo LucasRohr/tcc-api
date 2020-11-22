@@ -1,9 +1,10 @@
 package com.service.credential.controllers;
 
-import com.service.common.domain.fabric.credential.CredentialAsset;
 import com.service.credential.controllers.request.CredentialCreationRequest;
+import com.service.credential.controllers.response.CredentialResponseWithouPassword;
 import com.service.credential.services.CreateCredentialService;
-import com.service.credential.services.GetOwnerCredentialsService;
+import com.service.credential.services.GetCredentialPasswordService;
+import com.service.credential.services.GetCredentialsWithoutPasswordService;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,10 @@ public class CredentialController {
     private CreateCredentialService createCredentialService;
 
     @Autowired
-    private GetOwnerCredentialsService getOwnerCredentialsService;
+    private GetCredentialsWithoutPasswordService getCredentialsWithoutPasswordService;
+
+    @Autowired
+    private GetCredentialPasswordService getCredentialPasswordService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("creation")
@@ -34,9 +38,29 @@ public class CredentialController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("owner-credentials")
-    public List<CredentialAsset> getOwnerCredential(@RequestParam("owner_id") Long ownerId)
+    public List<CredentialResponseWithouPassword> getOwnerCredential(@RequestParam("owner_id") Long ownerId)
             throws ProposalException, IOException, InvalidArgumentException {
-        return getOwnerCredentialsService.getOwnerCredentials(ownerId);
+        return getCredentialsWithoutPasswordService.getCredentials(ownerId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("credential-auth")
+    public String getCredentialPassword(
+            @RequestParam("owner_id") Long ownerId,
+            @RequestParam("credential_id") Long credentialId
+    )
+            throws ProposalException, IOException, InvalidArgumentException {
+        return getCredentialPasswordService.getPassword(ownerId, credentialId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("credential-remove")
+    public String removeCredential(
+            @RequestParam("owner_id") Long ownerId,
+            @RequestParam("credential_id") Long credentialId
+    )
+            throws ProposalException, IOException, InvalidArgumentException {
+        return getCredentialPasswordService.getPassword(ownerId, credentialId);
     }
 
 }

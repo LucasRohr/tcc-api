@@ -3,7 +3,6 @@ package chaincode.credential;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @Builder
@@ -22,9 +21,9 @@ class Credential implements Serializable {
 
 	private String password;
 
-	private Long ownerId;
+	private Long credentialOwnerId;
 
-	private List<Long> heirsIds;
+	private String heirsIds;
 
 	private Boolean isActive;
 
