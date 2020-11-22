@@ -36,17 +36,19 @@ public class CreateCredentialService {
         CredentialRecordModel credentialRecordModel = new CredentialRecordModel(
                 credentialCreationRequest.getCredentialId() != null
                         ? credentialCreationRequest.getCredentialId()
-                        : (credentialAssets.size() + 1),
+                        : credentialAssets.size() + 1,
                 credentialCreationRequest.getName(),
                 credentialCreationRequest.getDescription(),
                 credentialCreationRequest.getLink(),
                 credentialCreationRequest.getLogin(),
                 credentialCreationRequest.getPassword(),
                 credentialCreationRequest.getOwnerId(),
-                credentialCreationRequest.getHeirsIds(),
+                credentialCreationRequest.getHeirsIds().toString(),
                 true,
                 createdAt
         );
+
+        System.out.println("credentialRecordModel ARRAYYYY "  + credentialCreationRequest.getHeirsIds().toString());
 
         saveCredentialAssetService.createTransaction(credentialRecordModel);
     }
