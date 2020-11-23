@@ -25,7 +25,7 @@ public class CreateCredentialService {
     @Autowired
     private SaveCredentialAssetService saveCredentialAssetService;
 
-    public void createCredential(CredentialCreationRequest credentialCreationRequest)
+    public void createCredential(CredentialCreationRequest credentialCreationRequest, boolean isActive)
             throws ProposalException, IOException, InvalidArgumentException {
         ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
         Long createdAt = zonedDateTime.toInstant().toEpochMilli();
@@ -44,11 +44,9 @@ public class CreateCredentialService {
                 credentialCreationRequest.getPassword(),
                 credentialCreationRequest.getOwnerId(),
                 credentialCreationRequest.getHeirsIds().toString(),
-                true,
+                isActive,
                 createdAt
         );
-
-        System.out.println("credentialRecordModel ARRAYYYY "  + credentialCreationRequest.getHeirsIds().toString());
 
         saveCredentialAssetService.createTransaction(credentialRecordModel);
     }

@@ -1,10 +1,12 @@
 package com.service.credential.controllers;
 
 import com.service.credential.controllers.request.CredentialCreationRequest;
+import com.service.credential.controllers.request.CredentialRemoveRequest;
+import com.service.credential.controllers.request.HeirsUpdateRequest;
+import com.service.credential.controllers.response.CredentialHeirResponse;
+import com.service.credential.controllers.response.CredentialResponse;
 import com.service.credential.controllers.response.CredentialResponseWithouPassword;
-import com.service.credential.services.CreateCredentialService;
-import com.service.credential.services.GetCredentialPasswordService;
-import com.service.credential.services.GetCredentialsWithoutPasswordService;
+import com.service.credential.services.*;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +31,20 @@ public class CredentialController {
     @Autowired
     private GetCredentialPasswordService getCredentialPasswordService;
 
+    @Autowired
+    private RemoveCredentialService removeCredentialService;
+
+    @Autowired
+    private GetHeirsForCredentialService getHeirsForCredentialService;
+
+    @Autowired
+    private UpdateCredentialHeirsService updateCredentialHeirsService;
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("creation")
     public void createCredential(@RequestBody @Validated CredentialCreationRequest credentialCreationRequest)
             throws ProposalException, IOException, InvalidArgumentException {
-        createCredentialService.createCredential(credentialCreationRequest);
+        createCredentialService.createCredential(credentialCreationRequest, true);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -54,13 +65,26 @@ public class CredentialController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("credential-remove")
-    public String removeCredential(
+    @PutMapping("credential-remove")
+    public void removeCredential(@RequestBody CredentialRemoveRequest credentialRemoveRequest)
+            throws ProposalException, IOException, InvalidArgumentException {
+         removeCredentialService.removeCredential(credentialRemoveRequest);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("owner/available-heirs")
+    public List<CredentialHeirResponse> getHeirs(
             @RequestParam("owner_id") Long ownerId,
             @RequestParam("credential_id") Long credentialId
-    )
+    ) throws ProposalException, IOException, InvalidArgumentException {
+        return getHeirsForCredentialService.getHeirs(ownerId, credentialId);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping("heirs-update")
+    public void updateHeirs(@RequestBody @Validated HeirsUpdateRequest heirsUpdateRequest)
             throws ProposalException, IOException, InvalidArgumentException {
-        return getCredentialPasswordService.getPassword(ownerId, credentialId);
+        updateCredentialHeirsService.updateHeirs(heirsUpdateRequest);
     }
 
 }

@@ -43,39 +43,51 @@ public class GetOwnerCredentialsService {
         );
 
         allCredentials.forEach(credentialAsset -> {
-            String heirsIdsString = credentialAsset.getHeirsIds()
-                    .replace("[", "").replace("]", "");
-
-            List<Long> heirsIds = Arrays.stream(heirsIdsString.split(","))
-                    .map(Long::parseLong).collect(Collectors.toList());
-
-            CredentialResponse responseCredential = new CredentialResponse(
-                    credentialAsset.getCredentialId(),
-                    credentialAsset.getName(),
-                    credentialAsset.getDescription(),
-                    credentialAsset.getLink(),
-                    credentialAsset.getLogin(),
-                    credentialAsset.getPassword(),
-                    credentialAsset.getCredentialOwnerId(),
-                    heirsIds,
-                    credentialAsset.getIsActive(),
-                    credentialAsset.getCreatedAt()
-            );
-
-            if(credentialsList.size() == 0) {
-                credentialsList.add(responseCredential);
-            }
-
-            List<CredentialResponse> assetsInList = credentialsList.stream()
-                    .filter(
-                            credential -> credential.getCredentialId().equals(responseCredential.getCredentialId())
+            List<CredentialAsset> inactiveCredentials = allCredentials.stream()
+                    .filter(credential ->
+                                credential.getCredentialId() == credentialAsset.getCredentialId() &&
+                                        !credential.getIsActive()
                     ).collect(Collectors.toList());
 
+            CredentialAsset inactiveCredential = inactiveCredentials.size() > 0 ? inactiveCredentials.get(0) : null;
 
-            CredentialResponse assetInList = assetsInList.size() > 0 ? assetsInList.get(0) : null;
+            if(inactiveCredential == null) {
+                String heirsIdsString = credentialAsset.getHeirsIds()
+                        .replace("[", "").replace("]", "");
 
-            if(assetInList == null) {
-                credentialsList.add(responseCredential);
+                List<Long> heirsIds = heirsIdsString.length() > 0 ?
+                        Arrays.stream(heirsIdsString.split(","))
+                        .map(Long::parseLong).collect(Collectors.toList())
+                        : new ArrayList<>();
+
+                CredentialResponse responseCredential = new CredentialResponse(
+                        credentialAsset.getCredentialId(),
+                        credentialAsset.getName(),
+                        credentialAsset.getDescription(),
+                        credentialAsset.getLink(),
+                        credentialAsset.getLogin(),
+                        credentialAsset.getPassword(),
+                        credentialAsset.getCredentialOwnerId(),
+                        heirsIds,
+                        credentialAsset.getIsActive(),
+                        credentialAsset.getCreatedAt()
+                );
+
+                if(credentialsList.size() == 0) {
+                    credentialsList.add(responseCredential);
+                }
+
+                List<CredentialResponse> assetsInList = credentialsList.stream()
+                        .filter(
+                                credential -> credential.getCredentialId().equals(responseCredential.getCredentialId())
+                        ).collect(Collectors.toList());
+
+
+                CredentialResponse assetInList = assetsInList.size() > 0 ? assetsInList.get(0) : null;
+
+                if(assetInList == null) {
+                    credentialsList.add(responseCredential);
+                }
             }
         });
 
