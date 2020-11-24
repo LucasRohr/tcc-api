@@ -3,7 +3,6 @@ spring:
     allow-bean-definition-overriding: true
   application:
     name: common-service
-
   jpa:
     database: POSTGRESQL
     show-sql: true

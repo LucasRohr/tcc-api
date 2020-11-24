@@ -4,7 +4,6 @@ import com.service.invite.controller.request.InviteCodeUpdateRequest;
 import com.service.invite.controller.request.InviteHeirRequest;
 import com.service.invite.controller.request.InviteUpdateRequest;
 import com.service.invite.controller.response.UserInviteResponse;
-import com.service.invite.domain.Invite;
 import com.service.invite.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -23,11 +23,13 @@ public class CredentialRecordModel {
 
     private String password;
 
-    private Long ownerId;
+    private Long credentialOwnerId;
 
-    private List<Long> heirsIds;
+    private String heirsIds;
 
     private Boolean isActive;
+
+    private Long createdAt;
 
     public String[] toArguments() {
         return Stream.of(
@@ -37,9 +39,10 @@ public class CredentialRecordModel {
                 this.link,
                 this.login,
                 this.password,
-                this.ownerId.toString(),
-                this.heirsIds.toString(),
-                this.isActive.toString()
+                this.credentialOwnerId.toString(),
+                this.heirsIds,
+                this.isActive.toString(),
+                this.createdAt.toString()
         ).toArray(String[]::new);
     }
 }
