@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source scripts/peer-util.sh
+. peer-util.sh
 
 CHANNEL_NAME="mychannel"
 CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/credential-chaincode/java/"

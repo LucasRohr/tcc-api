@@ -55,7 +55,7 @@ public class CredentialChaincode extends ChaincodeBase {
 
 	private Response queryByCredentialsOwnerId(final ChaincodeStub stub, final List<String> params) {
 		final long ownerId = Long.parseLong(params.get(0));
-		final String query = "{ \"selector\": { \"ownerId\": " + ownerId + " } }";
+		final String query = "{ \"selector\": { \"credentialOwnerId\": " + ownerId + " } }";
 
 		return ResponseUtils.newSuccessResponse(getQueryResult(stub, query));
 	}
@@ -67,13 +67,10 @@ public class CredentialChaincode extends ChaincodeBase {
 		final String link = params.get(3);
 		final String login = params.get(4);
 		final String password = params.get(5);
-		final Long ownerId = Long.parseLong(params.get(6));
-
-		final List<Long> heirsIds = Arrays.stream(
-				params.get(7).split(",")).map(Long::valueOf
-		).collect(Collectors.toList());
-
+		final Long credentialOwnerId = Long.parseLong(params.get(6));
+		final String heirsIds =	params.get(7);
 		final Boolean isActive = Boolean.parseBoolean(params.get(8));
+		final Long createdAt = Long.parseLong(params.get(9));
 
 		return Credential
 				.builder()
@@ -83,9 +80,10 @@ public class CredentialChaincode extends ChaincodeBase {
 				.link(link)
 				.login(login)
 				.password(password)
-				.ownerId(ownerId)
+				.credentialOwnerId(credentialOwnerId)
 				.heirsIds(heirsIds)
 				.isActive(isActive)
+				.createdAt(createdAt)
 				.build();
 	}
 

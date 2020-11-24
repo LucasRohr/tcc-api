@@ -3,8 +3,6 @@ package com.service.common.domain.fabric.credential;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Getter
 @NoArgsConstructor
 public class CredentialAsset {
@@ -20,9 +18,11 @@ public class CredentialAsset {
 
     private String password;
 
-    private Long ownerId;
+    private Long credentialOwnerId;
 
-    private List<Long> heirsIds;
+    private String heirsIds;
 
     private Boolean isActive;
+
+    private Long createdAt;
 }
