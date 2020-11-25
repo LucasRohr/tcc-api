@@ -36,11 +36,21 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                    HttpMethod.POST,
                    "/user-service/users/bootstrap"
                 ).permitAll()
+                    ).permitAll()
+            .antMatchers(
+                    HttpMethod.PUT,
+                    "/invite-service/invites/*"
+            ).permitAll()
+            .antMatchers(
+                    HttpMethod.GET,
+                    "/invite-service/invites/*"
+            ).permitAll()
             .anyRequest().authenticated();
     }
 
     @Bean
-    public JwtConfig jwtConfig() {
+    public JwtConfig jwtConfig()
+    {
         return new JwtConfig();
     }
 }

@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/applications/logs-service/logs.iml" filepath="$PROJECT_DIR$/applications/logs-service/logs.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/message-service/message.iml" filepath="$PROJECT_DIR$/applications/message-service/message.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/notification-service/notification.iml" filepath="$PROJECT_DIR$/applications/notification-service/notification.iml" />
+      <module fileurl="file://$PROJECT_DIR$/applications/notification-service/notification-service.iml" filepath="$PROJECT_DIR$/applications/notification-service/notification-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/tcc-api.iml" filepath="$PROJECT_DIR$/.idea/tcc-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/tccserver/tccserver.iml" filepath="$PROJECT_DIR$/applications/tccserver/tccserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/applications/user-service/user.iml" filepath="$PROJECT_DIR$/applications/user-service/user.iml" />
