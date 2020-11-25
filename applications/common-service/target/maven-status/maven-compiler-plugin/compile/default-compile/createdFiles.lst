@@ -45,6 +45,7 @@ com/service/common/repository/HeirRepository.class
 com/service/common/domain/fabric/user/UserRecordModel.class
 com/service/common/helpers/CryptoUtils.class
 com/service/common/component/chaincode/account/functions/GetAccountAssetByIdFunction.class
+com/service/common/repository/FileHeirRepository.class
 com/service/common/domain/fabric/credential/CredentialAsset.class
 com/service/common/service/fabric/user/GetUserAssetByIdService.class
 com/service/common/helpers/DirectoryCleaner.class

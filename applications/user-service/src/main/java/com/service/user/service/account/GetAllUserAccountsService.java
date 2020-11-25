@@ -15,25 +15,7 @@ public class GetAllUserAccountsService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public List<AccountResponse> getAccounts(Long userId) {
-        List<Account> accounts = accountRepository.getAllUserAccounts(userId);
-
-        List<AccountResponse> accountsList = accounts.stream().map(
-                (account) -> {
-                    final AccountResponse accountResponse = new AccountResponse(
-                            account.getId(),
-                            account.getName(),
-                            account.getUpdatedAt(),
-                            account.getUser().getId(),
-                            account.getUser().getName(),
-                            account.getType()
-                    );
-
-                    return accountResponse;
-                }
-        ).collect(Collectors.toList());
-
-        return accountsList;
+    public List<Account> getAllUserAccounts(Long id) {
+        return accountRepository.getAllUserAccounts(id);
     }
-
 }

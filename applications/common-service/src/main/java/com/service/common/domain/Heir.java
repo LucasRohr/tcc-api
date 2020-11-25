@@ -31,9 +31,10 @@ public class Heir {
     @OneToMany(mappedBy = "heir")
     private List<FileHeir> fileHeirs;
 
-    public Heir(HeirStatusEnum status, Owner owner, Account account, List<File> files) {
+    public Heir(HeirStatusEnum status, Owner owner, Account account, List<FileHeir> files) {
         this.status = status;
         this.owner = owner;
         this.account = account;
+        this.fileHeirs = fileHeirs;
     }
 }
