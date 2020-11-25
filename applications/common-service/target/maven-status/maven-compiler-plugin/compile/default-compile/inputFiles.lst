@@ -44,6 +44,7 @@
 /home/meta/Projetos/tcc-api/applications/common-service/src/main/java/com/service/common/helpers/CryptoUtils.java
 /home/meta/Projetos/tcc-api/applications/common-service/src/main/java/com/service/common/service/fabric/credential/GetCredentialAssetsByOwnerIdService.java
 /home/meta/Projetos/tcc-api/applications/common-service/src/main/java/com/service/common/service/fabric/account/GetAccountAssetByIdService.java
+/home/meta/Projetos/tcc-api/applications/common-service/src/main/java/com/service/common/repository/FileHeirRepository.java
 /home/meta/Projetos/tcc-api/applications/common-service/src/main/java/com/service/common/repository/AccountRepository.java
 /home/meta/Projetos/tcc-api/applications/common-service/src/main/java/com/service/common/dto/HeirAccountResponseDto.java
 /home/meta/Projetos/tcc-api/applications/common-service/src/main/java/com/service/common/component/chaincode/credential/functions/GetCredentialAssetsByOwnerIdFunction.java
