@@ -129,7 +129,7 @@ installAccountChaincode() {
   setGlobals $PEER
 
   set -x
-  peer chaincode install -n ACCOUNT_CHAINCODE_NAME -v 1.0 -l $CHAINCODE_LANGUAGE -p ${ACCOUNT_CC_SRC_PATH} >&log.txt
+  peer chaincode install -n $ACCOUNT_CHAINCODE_NAME -v 1.0 -l $CHAINCODE_LANGUAGE -p ${ACCOUNT_CC_SRC_PATH} >&log.txt
   res=$?
   set +x
   cat log.txt
@@ -144,7 +144,7 @@ instantiateAccountChaincode() {
   setGlobals $PEER
 
   set -x
-  peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n ACCOUNT_CHAINCODE_NAME -l $CHAINCODE_LANGUAGE -v 1.0 -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer')" >&log.txt
+  peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n $ACCOUNT_CHAINCODE_NAME -l $CHAINCODE_LANGUAGE -v 1.0 -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer')" >&log.txt
   res=$?
   set +x
   cat log.txt
@@ -160,7 +160,7 @@ installCredentialChaincode() {
   setGlobals $PEER
 
   set -x
-  peer chaincode install -n CREDENTIAL_CHAINCODE_NAME -v 1.0 -l $CHAINCODE_LANGUAGE -p ${CREDENTIAL_CC_SRC_PATH} >&log.txt
+  peer chaincode install -n $CREDENTIAL_CHAINCODE_NAME -v 1.0 -l $CHAINCODE_LANGUAGE -p ${CREDENTIAL_CC_SRC_PATH} >&log.txt
   res=$?
   set +x
   cat log.txt
@@ -175,7 +175,7 @@ instantiateCredentialChaincode() {
   setGlobals $PEER
 
   set -x
-  peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n CREDENTIAL_CHAINCODE_NAME -l $CHAINCODE_LANGUAGE -v 1.0 -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer')" >&log.txt
+  peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n $CREDENTIAL_CHAINCODE_NAME -l $CHAINCODE_LANGUAGE -v 1.0 -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer')" >&log.txt
   res=$?
   set +x
   cat log.txt

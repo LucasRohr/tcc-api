@@ -1,27 +1,90 @@
 package com.service.credential.controllers;
 
-import com.service.common.service.DeleteBucketFile;
-import com.service.common.service.UploadBucketFile;
+import com.service.credential.controllers.request.CredentialCreationRequest;
+import com.service.credential.controllers.request.CredentialRemoveRequest;
+import com.service.credential.controllers.request.HeirsUpdateRequest;
+import com.service.credential.controllers.response.CredentialHeirResponse;
+import com.service.credential.controllers.response.CredentialResponse;
+import com.service.credential.controllers.response.CredentialResponseWithouPassword;
+import com.service.credential.services.*;
+import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
+import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/credentials")
 public class CredentialController {
-    @Autowired
-    private UploadBucketFile uploadBucketFile;
 
     @Autowired
-    private DeleteBucketFile deleteBucketFile;
+    private CreateCredentialService createCredentialService;
 
-    @PostMapping("upload")
-    public String uploadFile(@RequestPart(value = "file") MultipartFile file) {
-        return this.uploadBucketFile.uploadFile(file, "credentials");
+    @Autowired
+    private GetCredentialsWithoutPasswordService getCredentialsWithoutPasswordService;
+
+    @Autowired
+    private GetCredentialPasswordService getCredentialPasswordService;
+
+    @Autowired
+    private RemoveCredentialService removeCredentialService;
+
+    @Autowired
+    private GetHeirsForCredentialService getHeirsForCredentialService;
+
+    @Autowired
+    private UpdateCredentialHeirsService updateCredentialHeirsService;
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("creation")
+    public void createCredential(@RequestBody @Validated CredentialCreationRequest credentialCreationRequest)
+            throws ProposalException, IOException, InvalidArgumentException {
+        createCredentialService.createCredential(credentialCreationRequest, true);
     }
 
-    @DeleteMapping("delete")
-    public String deleteFile(@RequestPart(value = "url") String fileUrl) {
-        return this.deleteBucketFile.deleteFileFromS3Bucket(fileUrl, "credentials");
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("owner-credentials")
+    public List<CredentialResponseWithouPassword> getOwnerCredential(@RequestParam("owner_id") Long ownerId)
+            throws ProposalException, IOException, InvalidArgumentException {
+        return getCredentialsWithoutPasswordService.getCredentials(ownerId);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("credential-auth")
+    public String getCredentialPassword(
+            @RequestParam("owner_id") Long ownerId,
+            @RequestParam("credential_id") Long credentialId
+    )
+            throws ProposalException, IOException, InvalidArgumentException {
+        return getCredentialPasswordService.getPassword(ownerId, credentialId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("credential-remove")
+    public void removeCredential(@RequestBody CredentialRemoveRequest credentialRemoveRequest)
+            throws ProposalException, IOException, InvalidArgumentException {
+         removeCredentialService.removeCredential(credentialRemoveRequest);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("owner/available-heirs")
+    public List<CredentialHeirResponse> getHeirs(
+            @RequestParam("owner_id") Long ownerId,
+            @RequestParam("credential_id") Long credentialId
+    ) throws ProposalException, IOException, InvalidArgumentException {
+        return getHeirsForCredentialService.getHeirs(ownerId, credentialId);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping("heirs-update")
+    public void updateHeirs(@RequestBody @Validated HeirsUpdateRequest heirsUpdateRequest)
+            throws ProposalException, IOException, InvalidArgumentException {
+        updateCredentialHeirsService.updateHeirs(heirsUpdateRequest);
+    }
+
 }

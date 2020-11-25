@@ -30,7 +30,8 @@ public class GetCredentialAssetsByOwnerIdService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public List<CredentialAsset> getCredentialsByOwnerId(Long ownerId) throws ProposalException, InvalidArgumentException, IOException {
+    public List<CredentialAsset> getCredentialsByOwnerId(Long ownerId)
+            throws ProposalException, InvalidArgumentException, IOException {
         final String[] arguments = mapArguments(ownerId);
         final BaseChaincodeFunction baseChaincodeFunction = new GetCredentialAssetsByOwnerIdFunction(arguments);
         final BaseChaincode baseChaincode = new CredentialAssetChaincode(baseChaincodeFunction);

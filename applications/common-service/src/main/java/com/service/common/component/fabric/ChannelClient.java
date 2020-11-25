@@ -42,6 +42,7 @@ public class ChannelClient {
 
 	public Collection<ProposalResponse> queryByChaincode(BaseChaincode baseChaincode) throws InvalidArgumentException, ProposalException {
 		final QueryByChaincodeRequest request = fabricClient.getInstance().newQueryProposalRequest();
+
 		request.setChaincodeID(ChaincodeID
 				.newBuilder()
 				.setName(baseChaincode.getName())

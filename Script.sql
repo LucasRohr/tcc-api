@@ -55,7 +55,7 @@ create table if not exists invites (
 	invite_code varchar(6),
 	owner_id bigint not null,
 	receiver_id bigint,
-	foreign key (owner_id) references owners(id)
+	foreign key (owner_id) references owners(account_id)
 );
 
 create table if not exists files (
@@ -68,7 +68,7 @@ create table if not exists files (
 	owner_id bigint not null,
 	created_at timestamp not null,
 	updated_at timestamp not null,
-	foreign key (owner_id) references owners(id)
+	foreign key (owner_id) references owners(account_id)
 );
 
 create table if not exists files_heirs (
@@ -76,7 +76,7 @@ create table if not exists files_heirs (
 	file_id bigint not null,
 	heir_id bigint not null,
 	foreign key (file_id) references files(id),
-	foreign key (heir_id) references heirs(id)
+	foreign key (heir_id) references heirs(account_id)
 );
 
 create table if not exists logs (
@@ -84,3 +84,5 @@ create table if not exists logs (
 	content text,
 	created_at timestamp not null
 );
+
+
