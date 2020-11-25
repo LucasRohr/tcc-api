@@ -1,9 +1,12 @@
 package com.service.user.service;
 
 import com.service.common.domain.Account;
+import com.service.common.domain.Heir;
 import com.service.common.domain.User;
 import com.service.common.domain.fabric.user.UserAsset;
+import com.service.common.enums.AccountTypes;
 import com.service.common.helpers.CryptoUtils;
+import com.service.common.repository.HeirRepository;
 import com.service.common.service.fabric.user.GetUserAssetByIdService;
 import com.service.user.controller.response.AccountResponse;
 import com.service.user.dto.UserInformation;
@@ -32,6 +35,9 @@ public class GetUserInformation {
     private AccountRepository accountRepository;
 
     @Autowired
+    private HeirRepository heirRepository;
+
+    @Autowired
     private GetUserAssetByIdService getUserAssetByIdService;
 
     public UserInformation getUserInformation(Long id) throws ProposalException, IOException, InvalidArgumentException {
@@ -50,8 +56,14 @@ public class GetUserInformation {
                             account.getName(),
                             account.getUpdatedAt(),
                             account.getUser().getId(),
+                            account.getUser().getName(),
                             account.getType()
                     );
+
+                    if(account.getType() == AccountTypes.HEIR) {
+                        Heir heir = heirRepository.getHeirByAccountId(account.getId());
+                        accountResponse.setStatus(heir.getStatus());
+                    }
 
                     return accountResponse;
                 }
