@@ -10,6 +10,7 @@
 /home/meta/Projetos/tcc-api/applications/user-service/src/main/java/com/service/user/service/SendLoginTokenService.java
 /home/meta/Projetos/tcc-api/applications/user-service/src/main/java/com/service/user/controller/request/SendLoginTokenRequest.java
 /home/meta/Projetos/tcc-api/applications/user-service/src/main/java/com/service/user/config/PasswordEncoder.java
+/home/meta/Projetos/tcc-api/applications/user-service/src/main/java/com/service/user/service/account/GetAllUserAccounts.java
 /home/meta/Projetos/tcc-api/applications/user-service/src/main/java/com/service/user/controller/response/LoginTokenValidationResponse.java
 /home/meta/Projetos/tcc-api/applications/user-service/src/main/java/com/service/user/exceptions/UserAlreadyExistsException.java
 /home/meta/Projetos/tcc-api/applications/user-service/src/main/java/com/service/user/dto/HeirDeactivationRequest.java
