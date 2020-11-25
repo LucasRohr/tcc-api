@@ -3,29 +3,22 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/fabric/chaincode/java/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/gateway/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/tccserver/pom.xml" />
         <option value="$PROJECT_DIR$/applications/auth-service/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/image-service/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/video-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/common-service/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/document-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/credential-service/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/message-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/document-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/file-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/image-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/invite-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/logs-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/message-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/notification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/tccserver/pom.xml" />
         <option value="$PROJECT_DIR$/applications/user-service/pom.xml" />
-        <option value="$PROJECT_DIR$/fabric/user-chaincode/pom.xml" />
-        <option value="$PROJECT_DIR$/fabric/chaincode/account-chaincode/pom.xml" />
-        <option value="$PROJECT_DIR$/fabric/chaincode/credential-chaincode/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/video-service/pom.xml" />
       </list>
     </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/fabric/chaincode/account-chaincode/java/pom.xml" />
-        <option value="$PROJECT_DIR$/fabric/chaincode/credential-chaincode/java/pom.xml" />
-      </set>
-    </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_14" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>
