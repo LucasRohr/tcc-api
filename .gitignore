@@ -1,2 +1,4 @@
 .idea
 applications/common-service/.env
+*.class
+fabric/bin/*
