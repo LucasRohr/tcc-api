@@ -29,6 +29,9 @@ public class Account {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(nullable = false)
+    private Boolean isActive = true;
+
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;

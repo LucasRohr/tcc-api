@@ -64,7 +64,8 @@ public class SaveUserService {
         UserRecordModel userRecordModel = new UserRecordModel(
                 savedUser.getId(),
                 CryptoUtils.encryptSimpleString(registerUserRequest.getCpf()),
-                registerUserRequest.getBirthday()
+                registerUserRequest.getBirthday(),
+                LocalDateTime.now()
         );
 
         saveUserAssetService.createTransaction(userRecordModel);

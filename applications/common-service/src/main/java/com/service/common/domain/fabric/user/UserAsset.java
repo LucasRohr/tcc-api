@@ -11,4 +11,6 @@ public class UserAsset {
     private String cpf;
 
     private Long birthday;
+
+    private Long createdAt;
 }
