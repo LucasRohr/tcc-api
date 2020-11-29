@@ -2,9 +2,7 @@ package com.service.user.controller;
 
 import com.service.common.domain.User;
 import com.service.common.enums.AccountTypes;
-import com.service.user.controller.request.RegisterUserRequest;
-import com.service.user.controller.request.SendLoginTokenRequest;
-import com.service.user.controller.request.ValidateLoginTokenRequest;
+import com.service.user.controller.request.*;
 import com.service.user.dto.UserInformation;
 import com.service.user.controller.response.LoginTokenValidationResponse;
 import com.service.user.exceptions.UserAlreadyExistsException;
@@ -43,6 +41,15 @@ public class UserController {
     @Autowired
     private GetAllUserAccountsService getAllUserAccountsService;
 
+    @Autowired
+    private UpdateProfileService updateProfileService;
+
+    @Autowired
+    private UpdatePasswordService updateProfileRequest;
+
+    @Autowired
+    private InactivateUserService inactivateUserService;
+
     @ResponseStatus(HttpStatus.CREATED)
     @ExceptionHandler({ UserAlreadyExistsException.class })
     @PostMapping("register")
@@ -71,8 +78,28 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("user-info")
-    public UserInformation getUserInfo(@RequestParam("user_id") Long id) throws ProposalException, IOException, InvalidArgumentException {
+    public UserInformation getUserInfo(@RequestParam("user_id") Long id)
+            throws ProposalException, IOException, InvalidArgumentException {
         return getUserInformation.getUserInformation(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("profile-update")
+    public void updateUser(@RequestBody @Validated UpdateProfileRequest updateProfileRequest)
+            throws ProposalException, InvalidArgumentException {
+        updateProfileService.updateProfile(updateProfileRequest);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("password-update")
+    public void updatePassword(@RequestBody @Validated UpdatePasswordRequest updatePasswordRequest) {
+        updateProfileRequest.updatePassword(updatePasswordRequest);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("user-inactivation")
+    public void inactivateUser(@RequestBody @Validated InactivateUserRequest inactivateUserRequest) {
+        inactivateUserService.inactivateUser(inactivateUserRequest);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -90,8 +117,7 @@ public class UserController {
         ));
         List<User> users = allUsersService.getAllUsers();
         Long carlosId = users.get(users.size() - 1).getId();
-        Long ownerId = getAllUserAccountsService.getAllUserAccounts(carlosId).get(0).getId();
-        // Long oooo = getUserInformation.getUserInformation(carlosId).getAccounts().get(0).getId();
+        Long ownerId = getAllUserAccountsService.getAccounts(carlosId).get(0).getId();
         saveUserService.saveUser(new RegisterUserRequest(
                 "Ronaldo Marques",
                 "heeynityxdx235@gmail.com",

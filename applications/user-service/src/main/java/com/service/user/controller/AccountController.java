@@ -1,8 +1,7 @@
 package com.service.user.controller;
 
 import com.service.common.dto.HeirAccountResponseDto;
-import com.service.user.controller.request.CreateHeirRequest;
-import com.service.user.controller.request.CreateOwnerRequest;
+import com.service.user.controller.request.*;
 import com.service.user.controller.response.AccountResponse;
 import com.service.user.dto.HeirDeactivationRequest;
 import com.service.user.service.account.*;
@@ -10,6 +9,7 @@ import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
@@ -36,6 +36,12 @@ public class AccountController {
 
     @Autowired
     private GetAllUserAccountsService getAllUserAccountsService;
+
+    @Autowired
+    private UpdateAccountService updateAccountService;
+
+    @Autowired
+    private InactivateAccountService inactivateAccountService;
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("last-update")
@@ -79,6 +85,18 @@ public class AccountController {
     @GetMapping("owner/credential-heirs")
     public List<HeirAccountResponseDto> getHeirsForCredentialCreation(@RequestParam("owner_id") Long ownerId) {
         return getAllOwnerHeirsService.getHeirs(ownerId);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping("account-update")
+    public void updateAccount(@RequestBody @Validated AccountUpdateRequest accountUpdateRequest) {
+        updateAccountService.update(accountUpdateRequest);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("account-inactivation")
+    public void inactivateUser(@RequestBody @Validated InactivateAccountRequest inactivateAccountRequest) {
+        inactivateAccountService.inactivate(inactivateAccountRequest);
     }
 
 }

@@ -6,6 +6,7 @@ import com.service.common.component.chaincode.BaseChaincodeFunction;
 import com.service.common.component.chaincode.user.UserAssetChaincode;
 import com.service.common.component.chaincode.user.functions.GetUserAssetByIdFunction;
 import com.service.common.component.fabric.ChannelClient;
+import com.service.common.domain.fabric.credential.CredentialAsset;
 import com.service.common.domain.fabric.user.UserAsset;
 import com.service.common.exceptions.InvalidProposalResponseException;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -42,6 +44,15 @@ public class GetUserAssetByIdService {
                 .getMessage());
 
         final List<UserAsset> userAssets = Arrays.asList(objectMapper.readValue(response, UserAsset[].class));
+
+        userAssets.sort(
+                new Comparator<UserAsset>() {
+                    @Override
+                    public int compare(UserAsset userA, UserAsset userB) {
+                        return userA.getCreatedAt() > userB.getCreatedAt() ? -1 : 1;
+                    }
+                }
+        );
 
         return userAssets.get(0);
     }

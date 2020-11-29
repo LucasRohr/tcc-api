@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    @Query("SELECT ac FROM Account ac WHERE ac.user.id = ?1 ORDER BY ac.updatedAt DESC")
+    @Query("SELECT ac FROM Account ac WHERE ac.user.id = ?1 AND ac.isActive = true ORDER BY ac.updatedAt DESC")
     List<Account> getAllUserAccounts(Long id);
 
 }

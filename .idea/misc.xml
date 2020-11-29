@@ -5,18 +5,18 @@
       <list>
         <option value="$PROJECT_DIR$/applications/auth-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/common-service/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/credential-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/document-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/file-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/gateway/pom.xml" />
         <option value="$PROJECT_DIR$/applications/image-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/invite-service/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/logs-service/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/message-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/notification-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/tccserver/pom.xml" />
-        <option value="$PROJECT_DIR$/applications/user-service/pom.xml" />
         <option value="$PROJECT_DIR$/applications/video-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/credential-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/logs-service/pom.xml" />
+        <option value="$PROJECT_DIR$/applications/message-service/pom.xml" />
       </list>
     </option>
   </component>
