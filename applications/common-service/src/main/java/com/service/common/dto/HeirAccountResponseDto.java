@@ -11,9 +11,9 @@ public class HeirAccountResponseDto {
 
     private Long id;
 
-    private String name;
+    private String userName;
 
-    private String accountName;
+    private String name;
 
     private String email;
 

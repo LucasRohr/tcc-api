@@ -64,12 +64,14 @@ public class UserChaincode extends ChaincodeBase {
 		final Long userId = Long.parseLong(params.get(0));
 		final String cpf = params.get(1);
 		final Long birthday = Long.parseLong(params.get(2));
+		final Long createdAt = Long.parseLong(params.get(3));
 
 		return User
 				.builder()
 				.userId(userId)
 				.cpf(cpf)
 				.birthday(birthday)
+				.createdAt(createdAt)
 				.build();
 	}
 

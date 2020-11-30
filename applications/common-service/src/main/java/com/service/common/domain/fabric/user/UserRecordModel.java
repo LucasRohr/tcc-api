@@ -19,14 +19,20 @@ public class UserRecordModel {
 
     private LocalDateTime birthday;
 
+    private LocalDateTime createdAt;
+
     public String[] toArguments() {
-        ZonedDateTime zonedDateTime = ZonedDateTime.of(this.birthday, ZoneId.systemDefault());
-        Long birthday = zonedDateTime.toInstant().toEpochMilli();
+        ZonedDateTime zonedDateTimeBirthday = ZonedDateTime.of(this.birthday, ZoneId.systemDefault());
+        Long birthday = zonedDateTimeBirthday.toInstant().toEpochMilli();
+
+        ZonedDateTime zonedDateTimeCreatedAt = ZonedDateTime.of(this.birthday, ZoneId.systemDefault());
+        Long createdAt = zonedDateTimeCreatedAt.toInstant().toEpochMilli();
 
         return Stream.of(
                 this.userId.toString(),
                 this.cpf,
-                birthday.toString()
+                birthday.toString(),
+                createdAt.toString()
         ).toArray(String[]::new);
     }
 }

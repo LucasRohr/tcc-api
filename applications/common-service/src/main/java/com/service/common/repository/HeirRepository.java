@@ -18,6 +18,9 @@ public interface HeirRepository extends JpaRepository<Heir, Long> {
     @Query("SELECT h FROM Heir h WHERE h.owner.id = ?1")
     List<Heir> getAllOwnerHeirs(Long ownerId);
 
+    @Query("SELECT h FROM Heir h WHERE h.account.id = ?1")
+    Heir getHeirByAccountId(Long account);
+
     @Query("SELECT h FROM Heir h WHERE h.owner.id = ?1 AND h.id = ?2")
     Heir getHeirByIdAndOwner(Long ownerId, Long heirId);
 }

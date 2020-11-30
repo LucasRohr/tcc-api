@@ -31,7 +31,11 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                     HttpMethod.POST,
                     jwtConfig.getUri(),
                     "/user-service/users/register"
-                    ).permitAll()
+                ).permitAll()
+            .antMatchers(
+                   HttpMethod.POST,
+                   "/user-service/users/bootstrap"
+                ).permitAll()
             .antMatchers(
                     HttpMethod.PUT,
                     "/invite-service/invites/*"
