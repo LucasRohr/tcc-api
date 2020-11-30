@@ -17,4 +17,6 @@ class User implements Serializable {
 	private String cpf;
 
 	private Long birthday;
+
+	private Long createdAt;
 }
