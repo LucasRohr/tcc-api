@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum HeirStatusEnum {
-    ACTIVE("active"),
-    ACCEPTED("accepted"),
-    DISINHERITED("disinherited");
+    ACTIVE("ACTIVE"),
+    ACCEPTED("ACCEPTED"),
+    DISINHERITED("DISINHERITED");
 
     @Getter
     private String value;

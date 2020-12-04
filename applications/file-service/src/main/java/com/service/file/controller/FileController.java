@@ -1,0 +1,106 @@
+package com.service.file.controller;
+
+import com.service.common.enums.FileTypeEnum;
+import com.service.file.controller.request.CreateFileRequest;
+import com.service.file.controller.request.CreateMultipleFilesRequest;
+import com.service.file.controller.request.UpdateFileHeirsRequest;
+import com.service.file.controller.request.UpdateFileRequest;
+import com.service.file.controller.response.FileHeirResponse;
+import com.service.file.controller.response.FileResponse;
+import com.service.file.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/files")
+public class FileController {
+
+    @Autowired
+    private SaveSingleFileService saveSingleFileService;
+
+    @Autowired
+    private SaveMultipleFilesService saveMultipleFilesService;
+
+    @Autowired
+    private InactivateFileService inactivateFileService;
+
+    @Autowired
+    private GetOwnerFilesService getOwnerFilesService;
+
+    @Autowired
+    private UpdateFileInfoService updateFileInfoService;
+
+    @Autowired
+    private GetOwnerHeirsForFileService getOwnerHeirsForFileService;
+
+    @Autowired
+    private UpdateFileHeirsService updateFileRequest;
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("single-media-upload")
+    public void uploadSingleFile(
+            @RequestPart(value = "file-content") MultipartFile file,
+            @RequestPart(value = "file-info") @Validated CreateFileRequest createFileRequest
+    ) {
+        saveSingleFileService.saveFile(file, createFileRequest);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("multiple-media-upload")
+    public void uploadSingleFile(
+            @RequestPart(value = "file-content") List<MultipartFile> files,
+            @RequestPart(value = "file-info") CreateMultipleFilesRequest createMultipleFilesRequest
+    ) {
+        saveMultipleFilesService.saveFiles(files, createMultipleFilesRequest);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("file-removal")
+    public void deleteFile(@RequestParam("media_id") Long mediaId) {
+        inactivateFileService.inactivate(mediaId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("file-info-update")
+    public void updateFileInfo(
+            @RequestPart("file-content") MultipartFile file,
+            @RequestPart(value = "file-info") UpdateFileRequest updateFileRequest
+    ) {
+        updateFileInfoService.updateFile(file, updateFileRequest);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("file-owner-heirs")
+    public List<FileHeirResponse> getOwnerHeirsForFile(
+            @RequestParam("owner_id") Long ownerId,
+            @RequestParam("file_id") Long fileId
+    ) {
+        return getOwnerHeirsForFileService.getHeirs(ownerId, fileId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("file-heirs-update")
+    public void updateFileHeirs(
+            @RequestBody UpdateFileHeirsRequest updateFileHeirsRequest
+    ) {
+        updateFileRequest.updateHeirs(updateFileHeirsRequest);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("owner-files")
+    public Page<FileResponse> getFiles(
+            Pageable pageable,
+            @RequestParam("owner_id") Long ownerId,
+            @RequestParam("file_type") FileTypeEnum type
+    ) {
+       return getOwnerFilesService.getFiles(pageable, ownerId, type);
+    }
+
+}

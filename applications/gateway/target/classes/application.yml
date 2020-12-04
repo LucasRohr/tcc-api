@@ -83,6 +83,9 @@ zuul:
     userService:
       path: /user-service/**
       serviceId: user-service
+    fileService:
+      path: /file-service/**
+      serviceId: file-service
     authService:
       path: /auth/**
       serviceId: auth-service

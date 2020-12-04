@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum FileTypeEnum {
-    DOCUMENT("document"),
-    IMAGE("image"),
-    VIDEO("video");
+    DOCUMENT("DOCUMENT"),
+    IMAGE("IMAGE"),
+    VIDEO("VIDEO");
 
     @Getter
     private String value;

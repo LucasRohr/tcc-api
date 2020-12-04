@@ -10,4 +10,11 @@ public interface FileHeirRepository extends JpaRepository<FileHeir, Long> {
 
     @Query("SELECT fh FROM FileHeir fh WHERE fh.heir.id = ?1")
     List<FileHeir> getFilesHeirsByHeir(Long heirId);
+
+    @Query("SELECT fh FROM FileHeir fh WHERE fh.file.owner.id = ?1")
+    List<FileHeir> getFilesHeirsByOwner(Long ownerId);
+
+    @Query("SELECT fh FROM FileHeir fh WHERE fh.file.id = ?1")
+    List<FileHeir> getFilesHeirsByFile(Long fileId);
+
 }

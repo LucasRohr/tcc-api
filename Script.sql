@@ -85,4 +85,3 @@ create table if not exists logs (
 	created_at timestamp not null
 );
 
-
