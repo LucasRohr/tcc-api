@@ -18,6 +18,6 @@ public class FileResponse {
 
     private FileTypeEnum type;
 
-    private String fileString;
+    private String file;
 
 }

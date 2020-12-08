@@ -21,7 +21,7 @@ public class UpdateFileInfoService {
 
     public void updateFile(MultipartFile editFile, UpdateFileRequest updateFileRequest) {
         File file = fileRepository.findById(updateFileRequest.getId()).get();
-        String fileFolder =  file.getType().getValue().toLowerCase();
+        String fileFolder =  file.getType().toString().toLowerCase();
 
         deleteBucketFileService.deleteFileFromS3Bucket(
                 file.getBucketUrl(),

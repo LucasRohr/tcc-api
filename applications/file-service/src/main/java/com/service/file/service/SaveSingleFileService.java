@@ -36,8 +36,9 @@ public class SaveSingleFileService {
 
     public void saveFile(MultipartFile file, CreateFileRequest createFileRequest) {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+
         String bucketUrl = uploadBucketFileService.uploadFile(
-                file, createFileRequest.getType().getValue().toLowerCase()
+                file, createFileRequest.getType().toString().toLowerCase()
         );
 
         Owner owner = ownerRepository.findById(createFileRequest.getOwnerId()).get();
