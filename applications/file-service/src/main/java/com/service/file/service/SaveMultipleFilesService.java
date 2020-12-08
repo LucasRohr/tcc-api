@@ -14,18 +14,19 @@ public class SaveMultipleFilesService {
     @Autowired
     private SaveSingleFileService saveSingleFileService;
 
-    public void saveFiles(List<MultipartFile> files, CreateMultipleFilesRequest createMultipleFilesRequest) {
-        files.forEach(multipartFile -> {
+    public void saveFiles(MultipartFile[] files, CreateMultipleFilesRequest createMultipleFilesRequest) {
+
+        for(MultipartFile multipartFile : files) {
             CreateFileRequest createFileRequest = new CreateFileRequest(
                     createMultipleFilesRequest.getOwnerId(),
-                    multipartFile.getName(),
+                    "Minha mídia",
                     "",
                     createMultipleFilesRequest.getHeirsIds(),
                     createMultipleFilesRequest.getType()
             );
 
             saveSingleFileService.saveFile(multipartFile, createFileRequest);
-        });
+        }
     }
 
 }

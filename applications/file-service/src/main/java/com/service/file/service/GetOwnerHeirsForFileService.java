@@ -22,7 +22,7 @@ public class GetOwnerHeirsForFileService {
     @Autowired
     private HeirRepository heirRepository;
 
-    public List<FileHeirResponse> getHeirs(Long ownerId, Long fileId) {
+    public List<FileHeirResponse> getHeirs(Long ownerId) {
         List<Heir> allOwnerHeirs = heirRepository.getAllOwnerHeirs(ownerId);
         List<FileHeir> fileHeirs = fileHeirRepository.getFilesHeirsByOwner(ownerId);
 

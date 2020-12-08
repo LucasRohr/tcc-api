@@ -29,12 +29,12 @@ public class GetOwnerFilesService {
                 pageable.getPageNumber(), 10,
                 Sort.by(Sort.Direction.DESC, "updatedAt"));
 
-        Page<File> files = fileRepository.getOwnerFilesByType(pageRequest, ownerId, type.getValue());
+        Page<File> files = fileRepository.getOwnerFilesByType(pageRequest, ownerId, type);
 
         files.forEach(file -> {
             try {
                 String fileBase = getBucketFileService.getFileFromBucket(
-                        file.getBucketUrl(), file.getType().getValue().toLowerCase(), file.getMimeType()
+                        file.getBucketUrl(), file.getType().toString().toLowerCase(), file.getMimeType()
                 );
 
                 String base64String = "data:application/" + file.getMimeType() + ";base64," + fileBase;

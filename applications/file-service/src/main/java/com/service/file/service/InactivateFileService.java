@@ -17,7 +17,7 @@ public class InactivateFileService {
     public void inactivate(Long id) {
         File file = fileRepository.findById(id).get();
 
-        deleteBucketFileService.deleteFileFromS3Bucket(file.getBucketUrl(), file.getType().getValue().toLowerCase());
+        deleteBucketFileService.deleteFileFromS3Bucket(file.getBucketUrl(), file.getType().toString().toLowerCase());
 
         file.setActive(false);
         fileRepository.save(file);

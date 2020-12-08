@@ -2,6 +2,7 @@ package com.service.common.repository;
 
 
 import com.service.common.domain.File;
+import com.service.common.enums.FileTypeEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,7 +15,7 @@ public interface FileRepository extends JpaRepository<File, Long> {
     Page<File> getOwnerFilesByType(
             Pageable pageable,
             @Param("ownerId") Long ownerId,
-            @Param("type") String type
+            @Param("type") FileTypeEnum type
     );
 
 }
