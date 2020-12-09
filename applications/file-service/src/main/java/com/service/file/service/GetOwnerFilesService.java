@@ -44,7 +44,8 @@ public class GetOwnerFilesService {
                         file.getName(),
                         file.getDescription(),
                         file.getType(),
-                        base64String
+                        base64String,
+                        file.getMimeType()
                 );
 
                 fileResponses.add(fileResponse);

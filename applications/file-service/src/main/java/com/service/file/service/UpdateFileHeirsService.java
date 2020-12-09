@@ -5,7 +5,6 @@ import com.service.common.domain.FileHeir;
 import com.service.common.domain.Heir;
 import com.service.common.repository.FileHeirRepository;
 import com.service.common.repository.HeirRepository;
-import com.service.file.controller.request.UpdateFileHeirsRequest;
 import com.service.common.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +24,8 @@ public class UpdateFileHeirsService {
     @Autowired
     private FileRepository fileRepository;
 
-    public void updateHeirs(UpdateFileHeirsRequest updateFileHeirsRequest) {
-        List<FileHeir> fileHeirs = fileHeirRepository.getFilesHeirsByFile(updateFileHeirsRequest.getId());
+    public void updateHeirs(Long fileId, List<Long> selectedHeirsIds) {
+        List<FileHeir> fileHeirs = fileHeirRepository.getFilesHeirsByFile(fileId);
 
         List<Long> heirsWithFileIds =
                 fileHeirs.stream().map(fileHeir -> fileHeir.getHeir().getId()).collect(Collectors.toList());
@@ -34,18 +33,18 @@ public class UpdateFileHeirsService {
         if(fileHeirs.size() > 0) {
             fileHeirs.forEach(fileHeir -> {
                 boolean isHeirToRemove =
-                        !updateFileHeirsRequest.getSelectedHeirsIds().contains(fileHeir.getHeir().getId());
+                        !selectedHeirsIds.contains(fileHeir.getHeir().getId());
 
                 if(isHeirToRemove) {
-                    heirRepository.delete(fileHeir.getHeir());
+                    fileHeirRepository.delete(fileHeir);
                 }
             });
 
-            updateFileHeirsRequest.getSelectedHeirsIds().forEach(heirId -> {
+            selectedHeirsIds.forEach(heirId -> {
                 boolean isNewHeir = !heirsWithFileIds.contains(heirId);
 
                 if(isNewHeir) {
-                    saveNewFileHeir(updateFileHeirsRequest.getId(), heirId);
+                    saveNewFileHeir(fileId, heirId);
                 }
             });
         }

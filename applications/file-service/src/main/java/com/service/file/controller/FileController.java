@@ -3,7 +3,6 @@ package com.service.file.controller;
 import com.service.common.enums.FileTypeEnum;
 import com.service.file.controller.request.CreateFileRequest;
 import com.service.file.controller.request.CreateMultipleFilesRequest;
-import com.service.file.controller.request.UpdateFileHeirsRequest;
 import com.service.file.controller.request.UpdateFileRequest;
 import com.service.file.controller.response.FileHeirResponse;
 import com.service.file.controller.response.FileResponse;
@@ -12,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,13 +34,10 @@ public class FileController {
     private GetOwnerFilesService getOwnerFilesService;
 
     @Autowired
-    private UpdateFileInfoService updateFileInfoService;
+    private UpdateFileService updateFileService;
 
     @Autowired
     private GetOwnerHeirsForFileService getOwnerHeirsForFileService;
-
-    @Autowired
-    private UpdateFileHeirsService updateFileRequest;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "single-media-upload", consumes = {"multipart/form-data"})
@@ -71,12 +64,12 @@ public class FileController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("file-info-update")
-    public void updateFileInfo(
+    @PutMapping("file-update")
+    public void updateFile(
             @RequestPart("file-content") MultipartFile file,
-            @RequestPart(value = "file-info") UpdateFileRequest updateFileRequest
+            @RequestPart("file-info") UpdateFileRequest updateFileRequest
     ) {
-        updateFileInfoService.updateFile(file, updateFileRequest);
+        updateFileService.updateFile(file, updateFileRequest);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -85,14 +78,6 @@ public class FileController {
             @RequestParam("owner_id") Long ownerId
     ) {
         return getOwnerHeirsForFileService.getHeirs(ownerId);
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @PutMapping("file-heirs-update")
-    public void updateFileHeirs(
-            @RequestBody UpdateFileHeirsRequest updateFileHeirsRequest
-    ) {
-        updateFileRequest.updateHeirs(updateFileHeirsRequest);
     }
 
     @ResponseStatus(HttpStatus.OK)

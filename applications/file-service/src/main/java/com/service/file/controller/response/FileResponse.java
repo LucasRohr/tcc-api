@@ -20,4 +20,6 @@ public class FileResponse {
 
     private String file;
 
+    private String mimeType;
+
 }

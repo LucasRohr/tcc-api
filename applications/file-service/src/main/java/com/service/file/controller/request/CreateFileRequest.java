@@ -26,6 +26,7 @@ public class CreateFileRequest {
     @NotNull
     private List<Long> heirsIds;
 
+    @NotNull
     private FileTypeEnum type;
 
 }

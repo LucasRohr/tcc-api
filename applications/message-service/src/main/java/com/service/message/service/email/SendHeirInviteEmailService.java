@@ -1,6 +1,6 @@
 package com.service.message.service.email;
 
-import com.service.message.component.link_code.RandomCode;
+import com.service.common.helpers.RandomCode;
 import com.service.message.controller.requests.HeirInviteEmailRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
