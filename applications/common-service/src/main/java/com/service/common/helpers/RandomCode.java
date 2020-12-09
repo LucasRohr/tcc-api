@@ -1,4 +1,4 @@
-package com.service.message.component.link_code;
+package com.service.common.helpers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

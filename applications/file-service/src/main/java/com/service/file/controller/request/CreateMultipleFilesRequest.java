@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -12,10 +13,13 @@ import java.util.List;
 @NoArgsConstructor
 public class CreateMultipleFilesRequest {
 
+    @NotNull
     private Long ownerId;
 
+    @NotNull
     private List<Long> heirsIds;
 
+    @NotNull
     private FileTypeEnum type;
 
 }

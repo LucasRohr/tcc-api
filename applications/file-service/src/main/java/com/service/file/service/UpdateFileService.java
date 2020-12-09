@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class UpdateFileInfoService {
+public class UpdateFileService {
 
     @Autowired
     private FileRepository fileRepository;
@@ -19,9 +19,12 @@ public class UpdateFileInfoService {
     @Autowired
     private UploadBucketFileService uploadBucketFileService;
 
+    @Autowired
+    private UpdateFileHeirsService updateFileHeirsService;
+
     public void updateFile(MultipartFile editFile, UpdateFileRequest updateFileRequest) {
         File file = fileRepository.findById(updateFileRequest.getId()).get();
-        String fileFolder =  file.getType().toString().toLowerCase();
+        String fileFolder = file.getType().toString().toLowerCase();
 
         deleteBucketFileService.deleteFileFromS3Bucket(
                 file.getBucketUrl(),
@@ -35,6 +38,8 @@ public class UpdateFileInfoService {
         file.setBucketUrl(bucketUrl);
 
         fileRepository.save(file);
+
+        updateFileHeirsService.updateHeirs(file.getId(), updateFileRequest.getHeirsIds());
     }
 
 }

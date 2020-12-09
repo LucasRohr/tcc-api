@@ -8,6 +8,9 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.service.common.exceptions.CryptoException;
 import com.service.common.helpers.CryptoUtils;
+import com.service.common.helpers.HashGenerator;
+import com.service.common.helpers.RandomCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +36,8 @@ public class UploadBucketFileService {
 
     @Value("${amazonProperties.secretKey}")
     private String secretKey;
+
+    private static final int FILE_NAME_LENGTH = 20;
 
     @PostConstruct
     private void initializeAmazon() {
@@ -60,8 +65,9 @@ public class UploadBucketFileService {
     private File encryptFile(File file) throws CryptoException {
         //TO DO: use blockchain user private key
         String privateKey = "some private key";
-        String pureFileName = file.getName().substring(0, file.getName().lastIndexOf(".") );
-        String filePath = "/home/lucas/" + pureFileName + ".enc";
+        String randomFileName = new RandomCode(FILE_NAME_LENGTH).nextString();
+
+        String filePath = "/home/lucas/" + randomFileName + ".enc";
 
         File outputFile = new File(filePath);
         CryptoUtils.encrypt(privateKey, file, outputFile);
@@ -78,6 +84,7 @@ public class UploadBucketFileService {
             String fileName = fileFolder + "/" + generateFileName(encryptFile);
             fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
             uploadFileTos3bucket(fileName, encryptFile);
+
             file.delete();
         } catch (Exception e) {
             e.printStackTrace();
