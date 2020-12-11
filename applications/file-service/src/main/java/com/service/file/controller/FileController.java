@@ -1,6 +1,7 @@
 package com.service.file.controller;
 
 import com.service.common.enums.FileTypeEnum;
+import com.service.common.exceptions.CryptoException;
 import com.service.file.controller.request.CreateFileRequest;
 import com.service.file.controller.request.CreateMultipleFilesRequest;
 import com.service.file.controller.request.UpdateFileRequest;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -38,6 +40,12 @@ public class FileController {
 
     @Autowired
     private GetOwnerHeirsForFileService getOwnerHeirsForFileService;
+
+    @Autowired
+    private GetFileByIdService getFileByIdService;
+
+    @Autowired
+    private GetHeirFilesService getHeirFilesService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "single-media-upload", consumes = {"multipart/form-data"})
@@ -78,6 +86,25 @@ public class FileController {
             @RequestParam("owner_id") Long ownerId
     ) {
         return getOwnerHeirsForFileService.getHeirs(ownerId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("file-to-download")
+    public String getFileToDownload(
+            @RequestParam("file_id") Long fileId
+    ) throws IOException, CryptoException {
+        return getFileByIdService.getfile(fileId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("heir-file")
+    public Page<FileResponse> getHeirFiles(
+            @RequestParam("page") int page,
+            @RequestParam("heir_id") Long heirId,
+            @RequestParam("file_type") String type
+    )  {
+        Pageable pageable = PageRequest.of(page, 10);
+        return getHeirFilesService.getFiles(pageable, heirId, FileTypeEnum.valueOf(type.toUpperCase()));
     }
 
     @ResponseStatus(HttpStatus.OK)
