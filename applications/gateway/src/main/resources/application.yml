@@ -25,8 +25,8 @@ spring:
 
   servlet:
     multipart:
-      maxFileSize: 20MB
-      maxRequestSize: 20MB
+      maxFileSize: 200MB
+      maxRequestSize: 200MB
 
 security:
   requireSsl: true
@@ -83,6 +83,9 @@ zuul:
     userService:
       path: /user-service/**
       serviceId: user-service
+    fileService:
+      path: /file-service/**
+      serviceId: file-service
     authService:
       path: /auth/**
       serviceId: auth-service

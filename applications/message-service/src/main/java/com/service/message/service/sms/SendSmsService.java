@@ -1,6 +1,6 @@
 package com.service.message.service.sms;
 
-import com.service.message.component.link_code.RandomCode;
+import com.service.common.helpers.RandomCode;
 import com.service.message.controller.requests.SmsRequest;
 import com.service.message.exceptions.SmsException;
 import org.springframework.http.HttpHeaders;
