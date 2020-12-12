@@ -22,4 +22,9 @@ public class FileHeir {
     @ManyToOne
     @JoinColumn(name = "file_id", nullable = false)
     private File file;
+
+    public FileHeir(Heir heir, File file) {
+        this.heir = heir;
+        this.file = file;
+    }
 }

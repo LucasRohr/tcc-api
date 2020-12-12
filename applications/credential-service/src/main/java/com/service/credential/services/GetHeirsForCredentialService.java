@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +49,15 @@ public class GetHeirsForCredentialService {
 
             credentialHeirResponses.add(credentialHeirResponse);
         });
+
+        credentialHeirResponses.sort(
+                new Comparator<CredentialHeirResponse>() {
+                    @Override
+                    public int compare(CredentialHeirResponse heirA, CredentialHeirResponse heirB) {
+                        return heirA.isHasItem() ? -1 : 1;
+                    }
+                }
+        );
 
         return credentialHeirResponses;
     }

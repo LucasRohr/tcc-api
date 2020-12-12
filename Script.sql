@@ -62,7 +62,7 @@ create table if not exists files (
 	id bigserial not null unique primary key,
 	"name" varchar(60) not null,
 	description varchar(200),
-	bucket_url varchar(100) not null,
+	bucket_url varchar(255) not null,
 	"type" varchar(15) not null,
 	mime_type varchar(6) not null,
 	owner_id bigint not null,
@@ -84,5 +84,4 @@ create table if not exists logs (
 	content text,
 	created_at timestamp not null
 );
-
 

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -35,12 +36,35 @@ public class File {
     private String mimeType;
 
     @Column(nullable = false, name = "created_at")
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false, name = "updated_at")
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "owner_id")
     private Owner owner;
+
+    @Column(nullable = false)
+    private boolean isActive = true;
+
+    public File(
+        String name,
+        String description,
+        String bucketUrl,
+        FileTypeEnum type,
+        String mimeType,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
+        Owner owner
+    ) {
+        this.name = name;
+        this.description = description;
+        this.bucketUrl = bucketUrl;
+        this.type = type;
+        this.mimeType = mimeType;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.owner = owner;
+    }
 }
