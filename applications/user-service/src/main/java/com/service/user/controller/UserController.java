@@ -120,10 +120,10 @@ public class UserController {
         Long ownerId = getAllUserAccountsService.getAccounts(carlosId).get(0).getId();
         saveUserService.saveUser(new RegisterUserRequest(
                 "Ronaldo Marques",
-                "heeynityxdx235@gmail.com",
+                "lucasrc17@live.com",
                 "882.338.300-54",
                 LocalDateTime.now().minusYears(34),
-                "Literatura2012",
+                "Senha123",
                 "Maridão Show De Horror",
                 AccountTypes.HEIR,
                 ownerId

@@ -45,8 +45,8 @@ public class AccountController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("last-update")
-    public void sendLoginToken(@RequestParam("account_id") Long accountId) {
-        updateAccountLastUpdatedAtService.uodateUpdatedAt(accountId);
+    public void updateLastAccess(@RequestParam("account_id") Long accountId) {
+        updateAccountLastUpdatedAtService.updateUpdatedAt(accountId);
     }
 
     @ResponseStatus(HttpStatus.OK)
