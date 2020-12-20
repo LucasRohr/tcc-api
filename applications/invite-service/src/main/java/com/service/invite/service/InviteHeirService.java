@@ -1,7 +1,11 @@
 package com.service.invite.service;
 
+import com.service.common.domain.Account;
 import com.service.common.domain.Owner;
 import com.service.common.domain.User;
+import com.service.common.dto.NotificationCreationRequestDto;
+import com.service.common.enums.NotificationTypesEnum;
+import com.service.common.repository.AccountRepository;
 import com.service.common.repository.OwnerRepository;
 import com.service.invite.controller.request.InviteHeirRequest;
 import com.service.invite.domain.Invite;
@@ -14,12 +18,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Service
 public class InviteHeirService {
 
     private static final String INVITE_MESSAGE_KEY = "HEIR_INVITE";
     private static final String INVITE_EMAIL_MESSAGE_URL = "http://message-service/messages/email/heir-invite";
     private static final String INVITE_SMS_MESSAGE_URL = "http://message-service/messages/sms";
+    private static final String NOTIFICATION_URL =
+            "http://notification-service/notification-creation";
 
     @Autowired
     private GetUserByEmailService getUserByEmailService;
@@ -32,6 +40,9 @@ public class InviteHeirService {
 
     @Autowired
     private OwnerRepository ownerRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     public void inviteByEmail(InviteHeirRequest inviteHeirRequest) {
         User invitedUser = getUserByEmailService.getUserByEmail(inviteHeirRequest.getEmail());
@@ -50,7 +61,7 @@ public class InviteHeirService {
 
             createdInviteId = createdInvite.getId();
 
-            // TODO: send notification for all invited user accounts
+            sendInviteToHeirAccounts(invitedUser.getId(), inviteOwner.getId());
         }
 
         if(!inviteHeirRequest.getEmail().isEmpty()) {
@@ -75,6 +86,24 @@ public class InviteHeirService {
 
             restTemplate.postForObject(INVITE_SMS_MESSAGE_URL, smsInviteDto, SmsInviteDto.class);
         }
+    }
+
+    private void sendInviteToHeirAccounts(Long userId, Long ownerId) {
+        List<Account> heirsAccounts = accountRepository.getAllUserAccounts(userId);
+
+        heirsAccounts.forEach(account -> {
+            NotificationCreationRequestDto notificationCreationRequestDto = new NotificationCreationRequestDto(
+                    ownerId,
+                    account.getId(),
+                    NotificationTypesEnum.HEIR_INVITE.toString()
+            );
+
+            restTemplate.postForObject(
+                    NOTIFICATION_URL,
+                    notificationCreationRequestDto,
+                    NotificationCreationRequestDto.class
+            );
+        });
     }
 
 }

@@ -27,8 +27,15 @@ public class AccountResponse {
 
     private HeirStatusEnum status;
 
+    private String ownerName;
+
     public AccountResponse(
-            Long id, String name, LocalDateTime updatedAt, Long userId, String userName, AccountTypes type
+            Long id,
+            String name,
+            LocalDateTime updatedAt,
+            Long userId,
+            String userName,
+            AccountTypes type
     ) {
         this.id = id;
         this.name = name;
