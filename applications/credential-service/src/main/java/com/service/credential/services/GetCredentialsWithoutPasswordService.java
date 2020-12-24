@@ -1,7 +1,7 @@
 package com.service.credential.services;
 
 import com.service.credential.controllers.response.CredentialResponse;
-import com.service.credential.controllers.response.CredentialResponseWithouPassword;
+import com.service.common.dto.CredentialResponseWithouPassword;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
