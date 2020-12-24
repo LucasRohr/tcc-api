@@ -99,4 +99,7 @@ public class AccountController {
         inactivateAccountService.inactivate(inactivateAccountRequest);
     }
 
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping("heir/heir-heritages")
+//    public void getHeir
 }
