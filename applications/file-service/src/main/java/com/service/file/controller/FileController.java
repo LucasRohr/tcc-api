@@ -1,5 +1,6 @@
 package com.service.file.controller;
 
+import com.service.common.dto.FileHeirDto;
 import com.service.common.enums.FileTypeEnum;
 import com.service.common.exceptions.CryptoException;
 import com.service.file.controller.request.CreateFileRequest;
@@ -105,6 +106,12 @@ public class FileController {
     )  {
         Pageable pageable = PageRequest.of(page, 10);
         return getHeirFilesService.getFiles(pageable, heirId, FileTypeEnum.valueOf(type.toUpperCase()));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("heir-file/all")
+    public List<FileHeirDto> getAllHeirFiles(@RequestParam("heir_id") Long heirId) {
+        return getHeirFilesService.getFiles(heirId);
     }
 
     @ResponseStatus(HttpStatus.OK)
