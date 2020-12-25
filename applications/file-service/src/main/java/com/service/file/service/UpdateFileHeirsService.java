@@ -9,6 +9,8 @@ import com.service.common.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,6 +59,14 @@ public class UpdateFileHeirsService {
         FileHeir fileHeir = new FileHeir(heir, file);
 
         fileHeirRepository.save(fileHeir);
+    }
+
+    public void unlinkFileHeirs(Long heirId, Long[] fileHeirIds) {
+        List<Long> ids = Arrays.asList(fileHeirIds);
+        ids.forEach(id -> {
+            FileHeir fh = fileHeirRepository.getFileHeirByFileAndHeir(heirId, id);
+            fileHeirRepository.delete(fh);
+        });
     }
 
 }

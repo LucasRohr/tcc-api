@@ -6,6 +6,7 @@ import com.service.user.controller.request.*;
 import com.service.user.controller.response.AccountResponse;
 import com.service.user.dto.HeirDeactivationRequest;
 import com.service.user.service.GetCheckAssetsByHeirService;
+import com.service.user.service.UpdateHeirHeritagesService;
 import com.service.user.service.account.*;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
@@ -47,6 +48,9 @@ public class AccountController {
 
     @Autowired
     private GetCheckAssetsByHeirService getCheckAssetsByHeirService;
+
+    @Autowired
+    private UpdateHeirHeritagesService updateHeirHeritagesService;
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("last-update")
@@ -108,6 +112,13 @@ public class AccountController {
     @GetMapping("heir/heir-heritages")
     public List<HeirAssetCheckDto> getHeirCheckAssets(@RequestParam("heir_id") Long heirId) {
         return getCheckAssetsByHeirService.getCheckAssetsByHeir(heirId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("heir/items-update")
+    public void updateHeirItems(@RequestParam("heir_id") Long heirId, @RequestBody Long[] fileHeirIds) {
+        // TODO add credentials to method
+        updateHeirHeritagesService.updateHeirHeritages(heirId, fileHeirIds);
     }
 
 }

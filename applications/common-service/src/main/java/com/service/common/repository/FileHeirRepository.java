@@ -31,4 +31,9 @@ public interface FileHeirRepository extends JpaRepository<FileHeir, Long> {
             "WHERE fh.heir.id = :heirId AND fh.file.isActive = true")
     List<FileHeir> getHeirsFilesByHeir(@Param("heirId") Long heirId);
 
+    @Query("SELECT fh FROM FileHeir fh " +
+            "WHERE fh.heir.id = :heirId AND fh.id = :id")
+    FileHeir getFileHeirByFileAndHeir(@Param("heirId") Long heirId, @Param("id") Long id);
+
+
 }
