@@ -10,6 +10,6 @@ import java.util.List;
 
 @FeignClient(value = "file", url = "http://localhost:8200")
 public interface FileClient {
-    @RequestMapping(method = RequestMethod.GET, value = "/files/heir-file/all/{heirId}")
-    public List<FileHeirDto> getAllFilesByHeir(@PathVariable("heirId") Long heirId);
+    @RequestMapping(method = RequestMethod.GET, value = "/files/heir-file/all?heir_id={heirId}")
+    List<FileHeirDto> getAllFilesByHeir(@PathVariable("heirId") Long heirId);
 }

@@ -27,7 +27,7 @@ public interface FileHeirRepository extends JpaRepository<FileHeir, Long> {
             @Param("type") FileTypeEnum type
     );
 
-    @Query("SELECT fh from FileHeir fh" +
+    @Query("SELECT fh FROM FileHeir fh " +
             "WHERE fh.heir.id = :heirId AND fh.file.isActive = true")
     List<FileHeir> getHeirsFilesByHeir(@Param("heirId") Long heirId);
 

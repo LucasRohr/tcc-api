@@ -1,6 +1,7 @@
 package com.service.user.controller;
 
 import com.service.common.dto.HeirAccountResponseDto;
+import com.service.common.dto.HeirAssetCheckDto;
 import com.service.user.controller.request.*;
 import com.service.user.controller.response.AccountResponse;
 import com.service.user.dto.HeirDeactivationRequest;
@@ -105,7 +106,8 @@ public class AccountController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("heir/heir-heritages")
-    public void getHeirCheckAssets(@RequestParam("heir_id") Long heirId) {
-        getCheckAssetsByHeirService.getCheckAssetsByHeir(heirId);
+    public List<HeirAssetCheckDto> getHeirCheckAssets(@RequestParam("heir_id") Long heirId) {
+        return getCheckAssetsByHeirService.getCheckAssetsByHeir(heirId);
     }
+
 }

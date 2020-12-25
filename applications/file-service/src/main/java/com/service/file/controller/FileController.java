@@ -1,6 +1,7 @@
 package com.service.file.controller;
 
 import com.service.common.dto.FileHeirDto;
+import com.service.common.dto.HeirAssetCheckDto;
 import com.service.common.enums.FileTypeEnum;
 import com.service.common.exceptions.CryptoException;
 import com.service.file.controller.request.CreateFileRequest;
@@ -79,6 +80,15 @@ public class FileController {
             @RequestPart("file-info") UpdateFileRequest updateFileRequest
     ) {
         updateFileService.updateFile(file, updateFileRequest);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("file-heir-heritage-remove")
+    public void removeHeritageFromHeir(
+            @RequestParam("heir_id") Long heirId,
+            @RequestPart("files-heirs") HeirAssetCheckDto heirAssetCheckDto
+    ) {
+
     }
 
     @ResponseStatus(HttpStatus.OK)
