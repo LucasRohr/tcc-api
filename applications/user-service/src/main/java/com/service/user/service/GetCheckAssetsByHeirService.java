@@ -42,11 +42,11 @@ public class GetCheckAssetsByHeirService {
             }
         });
 
-        fileHeirs.forEach(file -> {
+        fileHeirs.forEach(fileHeir -> {
             heirAssetChecks.add(new HeirAssetCheckDto(
-                    file.getFileId(),
-                    file.getType().name(),
-                    file.getFileName()
+                    fileHeir.getId(),
+                    fileHeir.getType().name(),
+                    fileHeir.getFileName()
             ));
         });
 

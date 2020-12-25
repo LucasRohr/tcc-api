@@ -11,6 +11,6 @@ import java.util.List;
 @FeignClient(value = "credential", url = "http://localhost:8500")
 public interface CredentialClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/credentials/owner-credentials/{ownerId}")
-    public List<CredentialResponseWithouPassword> getCredentialsByHeirsOwner(@PathVariable("ownerId") Long ownerId);
+    @RequestMapping(method = RequestMethod.GET, value = "/credentials/owner-credentials?owner_id={ownerId}")
+    List<CredentialResponseWithouPassword> getCredentialsByHeirsOwner(@PathVariable("ownerId") Long ownerId);
 }
