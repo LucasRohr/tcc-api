@@ -5,6 +5,7 @@ import com.service.common.dto.HeirAssetCheckDto;
 import com.service.user.controller.request.*;
 import com.service.user.controller.response.AccountResponse;
 import com.service.user.dto.HeirDeactivationRequest;
+import com.service.user.dto.UpdateHeirHeritageRequest;
 import com.service.user.service.GetCheckAssetsByHeirService;
 import com.service.user.service.UpdateHeirHeritagesService;
 import com.service.user.service.account.*;
@@ -116,9 +117,11 @@ public class AccountController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("heir/items-update")
-    public void updateHeirItems(@RequestParam("heir_id") Long heirId, @RequestBody Long[] fileHeirIds) {
-        // TODO add credentials to method
-        updateHeirHeritagesService.updateHeirHeritages(heirId, fileHeirIds);
+    public void updateHeirItems(
+            @RequestParam("heir_id") Long heirId,
+            @RequestBody UpdateHeirHeritageRequest request
+    ) {
+        updateHeirHeritagesService.updateHeirHeritages(heirId, request);
     }
 
 }

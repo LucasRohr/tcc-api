@@ -89,7 +89,7 @@ public class FileController {
     @PutMapping("file-heir-unlink")
     public void unlinkHeritageFromHeir(
             @RequestParam("heir_id") Long heirId,
-            @RequestBody Long[] fileHeirIds
+            @RequestBody List<Long> fileHeirIds
     ) {
         updateFileHeirsService.unlinkFileHeirs(heirId, fileHeirIds);
     }

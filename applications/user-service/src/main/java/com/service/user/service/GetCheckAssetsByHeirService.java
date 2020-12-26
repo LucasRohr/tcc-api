@@ -4,6 +4,7 @@ import com.service.common.domain.Heir;
 import com.service.common.dto.CredentialResponseWithouPassword;
 import com.service.common.dto.FileHeirDto;
 import com.service.common.dto.HeirAssetCheckDto;
+import com.service.common.dto.HeirCredentialAssetCheckDto;
 import com.service.common.repository.HeirRepository;
 import com.service.user.clients.CredentialClient;
 import com.service.user.clients.FileClient;
@@ -34,10 +35,10 @@ public class GetCheckAssetsByHeirService {
 
         creds.forEach(cred -> {
             if (cred.getHeirsIds().contains(heirId) && cred.getIsActive()) {
-                heirAssetChecks.add(new HeirAssetCheckDto(
+                heirAssetChecks.add(new HeirCredentialAssetCheckDto(
                         cred.getCredentialId(),
-                        "CREDENTIAL",
-                        cred.getName()
+                        cred.getName(),
+                        cred.getHeirsIds()
                 ));
             }
         });

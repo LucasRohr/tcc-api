@@ -15,5 +15,5 @@ public interface FileClient {
     List<FileHeirDto> getAllFilesByHeir(@PathVariable("heirId") Long heirId);
 
     @RequestMapping(method = RequestMethod.PUT, value = "/files/file-heir-unlink?heir_id={heirId}")
-    void unlinkFileHeirs(@PathVariable("heirId") Long heirId, @RequestBody Long[] fileHeirIds);
+    void unlinkFileHeirs(@PathVariable("heirId") Long heirId, @RequestBody List<Long> fileHeirIds);
 }

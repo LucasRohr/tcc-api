@@ -2,7 +2,7 @@ package com.service.credential.controllers;
 
 import com.service.credential.controllers.request.CredentialCreationRequest;
 import com.service.credential.controllers.request.CredentialRemoveRequest;
-import com.service.credential.controllers.request.HeirsUpdateRequest;
+import com.service.common.dto.HeirsUpdateRequest;
 import com.service.credential.controllers.response.CredentialHeirResponse;
 import com.service.common.dto.CredentialResponseWithouPassword;
 import com.service.credential.services.*;
