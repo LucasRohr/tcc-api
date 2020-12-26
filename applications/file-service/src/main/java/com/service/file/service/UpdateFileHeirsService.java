@@ -59,4 +59,11 @@ public class UpdateFileHeirsService {
         fileHeirRepository.save(fileHeir);
     }
 
+    public void unlinkFileHeirs(Long heirId, List<Long> fileHeirIds) {
+        fileHeirIds.forEach(id -> {
+            FileHeir fh = fileHeirRepository.getFileHeirByFileAndHeir(heirId, id);
+            fileHeirRepository.delete(fh);
+        });
+    }
+
 }

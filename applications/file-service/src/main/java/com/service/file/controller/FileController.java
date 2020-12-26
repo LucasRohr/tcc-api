@@ -86,7 +86,7 @@ public class FileController {
     @PutMapping("file-heir-heritage-remove")
     public void removeHeritageFromHeir(
             @RequestParam("heir_id") Long heirId,
-            @RequestPart("files-heirs") HeirAssetCheckDto heirAssetCheckDto
+            @RequestBody List<Long> fileHeirIds
     ) {
 
     }

@@ -12,4 +12,7 @@ import java.util.List;
 public interface FileClient {
     @RequestMapping(method = RequestMethod.GET, value = "/files/heir-file/all?heir_id={heirId}")
     List<FileHeirDto> getAllFilesByHeir(@PathVariable("heirId") Long heirId);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/files/file-heir-unlink?heir_id={heirId}")
+    void unlinkFileHeirs(@PathVariable("heirId") Long heirId, @RequestBody List<Long> fileHeirIds);
 }
