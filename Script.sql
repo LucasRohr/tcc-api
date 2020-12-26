@@ -23,18 +23,12 @@ create table if not exists accounts (
 create table if not exists notifications (
 	id bigserial not null unique primary key,
 	"type" varchar(25) not null,
+	is_read boolean not null default false,
 	created_at timestamp not null,
 	account_id bigint not null,
-	foreign key (account_id) references accounts(id)
-);
-
-create table if not exists accounts_notification (
-	id bigserial not null unique primary key,
-	is_read boolean not null default false,
 	receiver_id bigint not null,
-	notification_id bigint not null,
+	foreign key (account_id) references accounts(id)
 	foreign key (receiver_id) references accounts(id),
-	foreign key (notification_id) references notifications(id)
 );
 
 create table if not exists owners (
@@ -84,4 +78,3 @@ create table if not exists logs (
 	content text,
 	created_at timestamp not null
 );
-

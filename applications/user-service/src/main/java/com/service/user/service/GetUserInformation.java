@@ -60,9 +60,10 @@ public class GetUserInformation {
                             account.getType()
                     );
 
-                    if(account.getType() == AccountTypes.HEIR) {
+                    if(account.getType().equals(AccountTypes.HEIR)) {
                         Heir heir = heirRepository.getHeirByAccountId(account.getId());
                         accountResponse.setStatus(heir.getStatus());
+                        accountResponse.setOwnerName(heir.getOwner().getAccount().getName());
                     }
 
                     return accountResponse;
