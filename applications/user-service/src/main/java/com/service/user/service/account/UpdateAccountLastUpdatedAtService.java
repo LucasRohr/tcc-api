@@ -13,7 +13,7 @@ public class UpdateAccountLastUpdatedAtService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public void uodateUpdatedAt(Long accountId) {
+    public void updateUpdatedAt(Long accountId) {
         Account account = accountRepository.findById(accountId).get();
 
         account.setUpdatedAt(LocalDateTime.now());
