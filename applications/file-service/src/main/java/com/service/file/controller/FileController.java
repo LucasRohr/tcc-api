@@ -49,6 +49,12 @@ public class FileController {
     @Autowired
     private GetHeirFilesService getHeirFilesService;
 
+    @Autowired
+    private UpdateFileHeirsService updateFileHeirsService;
+
+    @Autowired
+    private UnlinkFileHeirsService unlinkFileHeirsService;
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "single-media-upload", consumes = {"multipart/form-data"})
     public void uploadSingleFile(
@@ -88,7 +94,7 @@ public class FileController {
             @RequestParam("heir_id") Long heirId,
             @RequestBody List<Long> fileHeirIds
     ) {
-
+        unlinkFileHeirsService.unlinkFileHeirs(heirId, fileHeirIds);
     }
 
     @ResponseStatus(HttpStatus.OK)
