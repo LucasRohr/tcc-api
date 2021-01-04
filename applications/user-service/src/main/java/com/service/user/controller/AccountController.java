@@ -1,9 +1,13 @@
 package com.service.user.controller;
 
 import com.service.common.dto.HeirAccountResponseDto;
+import com.service.common.dto.HeirAssetCheckDto;
 import com.service.user.controller.request.*;
 import com.service.user.controller.response.AccountResponse;
 import com.service.user.dto.HeirDeactivationRequest;
+import com.service.user.dto.UpdateHeirHeritageRequest;
+import com.service.user.service.GetCheckAssetsByHeirService;
+import com.service.user.service.UpdateHeirHeritagesService;
 import com.service.user.service.account.*;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
@@ -42,6 +46,12 @@ public class AccountController {
 
     @Autowired
     private InactivateAccountService inactivateAccountService;
+
+    @Autowired
+    private GetCheckAssetsByHeirService getCheckAssetsByHeirService;
+
+    @Autowired
+    private UpdateHeirHeritagesService updateHeirHeritagesService;
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("last-update")
@@ -97,6 +107,21 @@ public class AccountController {
     @PutMapping("account-inactivation")
     public void inactivateUser(@RequestBody @Validated InactivateAccountRequest inactivateAccountRequest) {
         inactivateAccountService.inactivate(inactivateAccountRequest);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("heir/heir-heritages")
+    public List<HeirAssetCheckDto> getHeirCheckAssets(@RequestParam("heir_id") Long heirId) {
+        return getCheckAssetsByHeirService.getCheckAssetsByHeir(heirId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("heir/items-update")
+    public void updateHeirItems(
+            @RequestParam("heir_id") Long heirId,
+            @RequestBody UpdateHeirHeritageRequest request
+    ) {
+        updateHeirHeritagesService.updateHeirHeritages(heirId, request);
     }
 
 }

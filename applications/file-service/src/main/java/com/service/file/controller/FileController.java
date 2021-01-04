@@ -1,5 +1,7 @@
 package com.service.file.controller;
 
+import com.service.common.dto.FileHeirDto;
+import com.service.common.dto.HeirAssetCheckDto;
 import com.service.common.enums.FileTypeEnum;
 import com.service.common.exceptions.CryptoException;
 import com.service.file.controller.request.CreateFileRequest;
@@ -47,6 +49,12 @@ public class FileController {
     @Autowired
     private GetHeirFilesService getHeirFilesService;
 
+    @Autowired
+    private UpdateFileHeirsService updateFileHeirsService;
+
+    @Autowired
+    private UnlinkFileHeirsService unlinkFileHeirsService;
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "single-media-upload", consumes = {"multipart/form-data"})
     public void uploadSingleFile(
@@ -81,6 +89,15 @@ public class FileController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @PutMapping("file-heir-unlink")
+    public void unlinkHeritageFromHeir(
+            @RequestParam("heir_id") Long heirId,
+            @RequestBody List<Long> fileHeirIds
+    ) {
+        unlinkFileHeirsService.unlinkFileHeirs(heirId, fileHeirIds);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("file-owner-heirs")
     public List<FileHeirResponse> getOwnerHeirsForFile(
             @RequestParam("owner_id") Long ownerId
@@ -105,6 +122,12 @@ public class FileController {
     )  {
         Pageable pageable = PageRequest.of(page, 10);
         return getHeirFilesService.getFiles(pageable, heirId, FileTypeEnum.valueOf(type.toUpperCase()));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("heir-file/all")
+    public List<FileHeirDto> getAllHeirFiles(@RequestParam("heir_id") Long heirId) {
+        return getHeirFilesService.getFiles(heirId);
     }
 
     @ResponseStatus(HttpStatus.OK)
