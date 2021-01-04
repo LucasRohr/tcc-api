@@ -1,6 +1,5 @@
 package com.service.credential.services;
 
-import com.service.credential.controllers.request.HeirsUpdateRequest;
 import com.service.credential.controllers.response.CredentialResponse;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;

@@ -1,4 +1,4 @@
-package com.service.credential.controllers.request;
+package com.service.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
