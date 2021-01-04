@@ -67,7 +67,7 @@ public class UploadBucketFileService {
         String privateKey = "some private key";
         String randomFileName = new RandomCode(FILE_NAME_LENGTH).nextString();
 
-        String filePath = "/home/meta/" + randomFileName + ".enc";
+        String filePath = System.getenv("FILE_PATH") + randomFileName + ".enc";
 
         File outputFile = new File(filePath);
         CryptoUtils.encrypt(privateKey, file, outputFile);
