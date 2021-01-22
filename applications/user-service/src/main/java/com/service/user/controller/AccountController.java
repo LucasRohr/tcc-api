@@ -53,6 +53,9 @@ public class AccountController {
     @Autowired
     private UpdateHeirHeritagesService updateHeirHeritagesService;
 
+    @Autowired
+    private ValidateDeathCertificateService validateDeathCertificateService;
+
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("last-update")
     public void updateLastAccess(@RequestParam("account_id") Long accountId) {
@@ -122,6 +125,14 @@ public class AccountController {
             @RequestBody UpdateHeirHeritageRequest request
     ) {
         updateHeirHeritagesService.updateHeirHeritages(heirId, request);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("owner/validate_certificate")
+    public void validateDeathCertificate(
+            @RequestParam("certificate_hash_code") String certificateHashCode
+    ) {
+        validateDeathCertificateService.validateDeathCertificate(certificateHashCode);
     }
 
 }
