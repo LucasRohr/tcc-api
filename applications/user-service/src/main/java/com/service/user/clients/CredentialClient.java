@@ -16,9 +16,6 @@ public interface CredentialClient {
     @RequestMapping(method = RequestMethod.GET, value = "/owner-credentials?owner_id={ownerId}")
     List<CredentialResponseWithouPassword> getCredentialsByHeirsOwner(@PathVariable("ownerId") Long ownerId);
 
-    @RequestMapping(
-            method = RequestMethod.PUT,
-            value = "/heirs-update"
-    )
+    @RequestMapping(method = RequestMethod.PUT, value = "/heirs-update")
     void editCredentialHeirs(@RequestBody HeirsUpdateRequest request);
 }
