@@ -131,7 +131,7 @@ public class AccountController {
     @PutMapping("owner/validate_certificate")
     public void validateDeathCertificate(
             @RequestParam("certificate_hash_code") String certificateHashCode
-    ) {
+    ) throws InvalidArgumentException, ProposalException {
         validateDeathCertificateService.validateDeathCertificate(certificateHashCode);
     }
 
