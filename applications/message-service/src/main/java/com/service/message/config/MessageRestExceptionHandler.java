@@ -1,4 +1,4 @@
-package com.service.file.config;
+package com.service.message.config;
 
 import com.service.common.domain.CustomErrorRepresentation;
 import com.service.common.exceptions.BadRequestException;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+public class MessageRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({NotFoundException.class})
     public ResponseEntity<CustomErrorRepresentation> handleNotFoundException(
