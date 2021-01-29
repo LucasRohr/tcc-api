@@ -19,7 +19,6 @@ public class ValidateLoginTokenService {
             throw new ValidateLoginException();
         }
 
-        LoginTokenValidationResponse loinTokenValidationResponse = new LoginTokenValidationResponse(user.getId());
-        return loinTokenValidationResponse;
+        return new LoginTokenValidationResponse(user.getId());
     }
 }
