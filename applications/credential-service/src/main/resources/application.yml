@@ -24,10 +24,16 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
 
+amazonProperties:
+  endpointUrl: https://s3.sa-east-1.amazonaws.com
+  accessKey: ${AWS_ACCESS_KEY}
+  secretKey: ${AWS_SECRET_KEY}
+  bucketName: ${AWS_BUCKET_NAME}
+
 fabric:
   admin:
-    username: admin
-    password: adminpw
+    username: ${FABRIC_USERNAME}
+    password: ${FABRIC_PASSWORD}
   ca:
     org1:
       url: http://localhost:7054
@@ -52,9 +58,3 @@ fabric:
       name: peer3.org1.example.com
       url: grpc://localhost:10051
   userDirectoryPath: src/main/resources/user
-
-amazonProperties:
-  endpointUrl: https://s3.sa-east-1.amazonaws.com
-  accessKey: AKIAZV6ZBNTXQXPTJWIE
-  secretKey: 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
-  bucketName: tcc-douglas-lucas
