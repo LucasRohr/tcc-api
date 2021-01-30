@@ -19,8 +19,7 @@ public class SendSmsService {
 
     private static final int smsType = 9;
 
-    private static final String apiKey =
-            "FCSETRIF7T8XUWVGDH9QWQDH82P8OSFP3GDH3N9GQW6Y4WL94LDO5TWNFIMHKY5A9LEYJ5X4EGP1MYQCO3WTLCDIY0ZNLER0ILXO1IEI22PRRN03LJB5AIT8LEM5KO5W";
+    private static final String apiKey = System.getenv("SMS_KEY");
 
     private HttpHeaders httpHeaders = new HttpHeaders();
 

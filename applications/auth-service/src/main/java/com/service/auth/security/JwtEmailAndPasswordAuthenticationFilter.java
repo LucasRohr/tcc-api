@@ -45,8 +45,6 @@ public class JwtEmailAndPasswordAuthenticationFilter extends UsernamePasswordAut
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                     userCredentials.getEmail(), userCredentials.getPassword(), Collections.emptyList());
 
-
-
             return authManager.authenticate(authToken);
         } catch (IOException e) {
             throw new RuntimeException(e);
