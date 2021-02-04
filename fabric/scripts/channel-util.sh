@@ -2,17 +2,17 @@
 
 CHANNEL_NAME="$1"
 
+CERTIFICATE_CHAINCODE_NAME="certificatevalidationcc"
+USER_CHAINCODE_NAME="usercc"
+ACCOUNT_CHAINCODE_NAME="accountcc"
+CREDENTIAL_CHAINCODE_NAME="credentialcc"
+
 CERTIFICATE_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/certificate-chaincode/java"
 USER_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/user-chaincode/java"
 ACCOUNT_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/account-chaincode/java"
 CREDENTIAL_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/credential-chaincode/java"
 
 CHAINCODE_LANGUAGE="java"
-
-CERTIFICATE_CHAINCODE_NAME="certificatevalidationcc"
-USER_CHAINCODE_NAME="usercc"
-ACCOUNT_CHAINCODE_NAME="accountcc"
-CREDENTIAL_CHAINCODE_NAME="credentialcc"
 
 COUNTER=1
 MAX_RETRY=10
@@ -41,63 +41,26 @@ joinChannel () {
 	done
 }
 
-# === CERTIFICATE ===
+installChaincodeOnAllPeers () {
+    CHAINCODE_NAME=$1
+    CHAINCODE_PATH=$2
 
-installCertificateChaincodeOnAllPeers () {
-	for peer in 0 1 2 3; do
-	installCertificateChaincode $peer
-	done
+  	for peer in 0 1 2 3; do
+    installChaincode $peer $CHAINCODE_NAME $CHAINCODE_PATH
+    done
 }
 
-instantiateCertificateChaincodeOnAllPeers(){
-	for peer in 0 1; do
-	instantiateCertificateChaincode $peer
-	done
+instantiateChaincodeOnAllPeers () {
+  CHAINCODE_NAME=$1
+
+  for peer in 0 1; do
+  instantiateChaincode $peer $CHAINCODE_NAME
+  done
 }
 
-# === USER ===
-
-installUserChaincodeOnAllPeers () {
-	for peer in 0 1 2 3; do
-	installUserChaincode $peer
-	done
-}
-
-instantiateUserChaincodeOnAllPeers(){
-	for peer in 0 1; do
-	instantiateUserChaincode $peer
-	done
-}
-
-# === ACCOUNT ===
-
-installAccountChaincodeOnAllPeers () {
-	for peer in 0 1 2 3; do
-	installAccountChaincode $peer
-	done
-}
-
-instantiateAccountChaincodeOnAllPeers(){
-	for peer in 0 1; do
-	instantiateAccountChaincode $peer
-	done
-}
-
-# === CREDENTIAL ===
-
-installCredentialChaincodeOnAllPeers () {
-	for peer in 0 1 2 3; do
-	installCredentialChaincode $peer
-	done
-}
-
-instantiateCredentialChaincodeOnAllPeers(){
-	for peer in 0 1; do
-	instantiateCredentialChaincode $peer
-	done
-}
 
 # =========================================
+
 
 echo "Creating channel..."
 createChannel
@@ -108,42 +71,54 @@ joinChannel
 echo "Updating anchor peers for org1..."
 updateAnchorPeers 0
 
+
 # === CERTIFICATE ===
 
-echo "\n ===== CERTIFICATE ===== \n"
+echo ""
+echo "===== CERTIFICATE ====="
+echo ""
 
 echo "Installing certificate chaincode on all peers..."
-installCertificateChaincodeOnAllPeers
+installChaincodeOnAllPeers $CERTIFICATE_CHAINCODE_NAME $CERTIFICATE_CC_SRC_PATH
 
 echo "Instantiating certificate chaincode on all peers..."
-instantiateCertificateChaincodeOnAllPeers
+instantiateChaincodeOnAllPeers $CERTIFICATE_CHAINCODE_NAME
+
 
 # === USER ===
 
-echo "\n ===== USER ===== \n"
+echo ""
+echo "===== USER ====="
+echo ""
 
 echo "Installing user chaincode on all peers..."
-installUserChaincodeOnAllPeers
+installChaincodeOnAllPeers $USER_CHAINCODE_NAME $USER_CC_SRC_PATH
 
 echo "Instantiating user chaincode on all peers..."
-instantiateUserChaincodeOnAllPeers
+instantiateChaincodeOnAllPeers $USER_CHAINCODE_NAME
+
 
 # === ACCOUNT ===
 
-echo "\n ===== ACCOUNT ===== \n"
+echo ""
+echo "===== ACCOUNT ====="
+echo ""
 
 echo "Installing account chaincode on all peers..."
-installAccountChaincodeOnAllPeers
+installChaincodeOnAllPeers $ACCOUNT_CHAINCODE_NAME $ACCOUNT_CC_SRC_PATH
 
 echo "Instantiating account chaincode on all peers..."
-instantiateAccountChaincodeOnAllPeers
+instantiateChaincodeOnAllPeers $ACCOUNT_CHAINCODE_NAME
+
 
 # === CREDENTIAL ===
 
-echo "\n ===== CREDENTIAL ===== \n"
+echo ""
+echo "===== CREDENTIAL ====="
+echo ""
 
 echo "Installing credential chaincode on all peers..."
-installCredentialChaincodeOnAllPeers
+installChaincodeOnAllPeers $CREDENTIAL_CHAINCODE_NAME $CREDENTIAL_CC_SRC_PATH
 
 echo "Instantiating credential chaincode on all peers..."
-instantiateCredentialChaincodeOnAllPeers
+instantiateChaincodeOnAllPeers $CREDENTIAL_CHAINCODE_NAME
