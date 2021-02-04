@@ -1,6 +1,7 @@
 package com.service.user.service;
 
 import com.service.common.domain.User;
+import com.service.common.repository.UserRepository;
 import com.service.user.dto.LoginAuthRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 public class SendLoginTokenService {
 
     @Autowired
-    private UpdateUserService updateUserService;
+    private UserRepository userRepository;
 
     @Autowired
     private GetUserByEmailService getUserByEmailService;
@@ -24,7 +25,7 @@ public class SendLoginTokenService {
     public void sendToken(String email, String token) {
         User user = getUserByEmailService.getUserByEmail(email);
         user.setToken(token);
-        updateUserService.updateUser(user);
+        userRepository.save(user);
 
         LoginAuthRequest loginAuthRequest = new LoginAuthRequest(email, LOGIN_MESSAGE_KEY);
         restTemplate.postForObject(LOGIN_MESSAGE_URL, loginAuthRequest, LoginAuthRequest.class);

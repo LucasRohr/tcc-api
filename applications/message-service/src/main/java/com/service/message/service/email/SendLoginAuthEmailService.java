@@ -1,16 +1,15 @@
 package com.service.message.service.email;
 
-import com.service.common.domain.User;
+import com.service.common.dto.UpdateUserLoginTokenRequestDto;
 import com.service.common.helpers.RandomCode;
 import com.service.message.controller.requests.EmailRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import com.service.user.service.GetUserByEmailService;
-import com.service.user.service.UpdateUserService;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -19,6 +18,7 @@ import java.io.IOException;
 @Service
 public class SendLoginAuthEmailService {
     private static final int codeLength = 6;
+    private static final String UPDATE_TOKEN_URL = "http://user-service/users/login-token-update";
 
     @Autowired
     JavaMailSender mailSender;
@@ -27,10 +27,7 @@ public class SendLoginAuthEmailService {
     TemplateEngine htmlTemplateEngine;
 
     @Autowired
-    private GetUserByEmailService getUserByEmailService;
-
-    @Autowired
-    private UpdateUserService updateUserService;
+    private RestTemplate restTemplate;
 
     public void sendEmail(EmailRequest emailRequest) throws MessagingException, IOException {
         Context ctx = prepareContext(emailRequest);
@@ -45,10 +42,16 @@ public class SendLoginAuthEmailService {
         this.mailSender.send(mimeMessage);
         this.htmlTemplateEngine.clearTemplateCache();
 
-        User user = getUserByEmailService.getUserByEmail(emailRequest.getEmail());
-        user.setLoginToken(ctx.getVariable("authToken").toString());
+        UpdateUserLoginTokenRequestDto updateUserLoginTokenRequestDto = new UpdateUserLoginTokenRequestDto(
+                        emailRequest.getEmail(),
+                        ctx.getVariable("authToken").toString()
+                );
 
-        updateUserService.updateUser(user);
+        restTemplate.postForObject(
+                UPDATE_TOKEN_URL,
+                updateUserLoginTokenRequestDto,
+                UpdateUserLoginTokenRequestDto.class
+        );
     }
 
     private Context prepareContext(EmailRequest emailRequest) {
