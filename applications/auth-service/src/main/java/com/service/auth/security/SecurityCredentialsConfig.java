@@ -1,6 +1,6 @@
 package com.service.auth.security;
 
-import com.service.user.config.PasswordEncoder;
+import com.service.auth.config.AuthPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.service.common.domain.JwtConfig;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +24,7 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
     private JwtConfig jwtConfig;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private AuthPasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

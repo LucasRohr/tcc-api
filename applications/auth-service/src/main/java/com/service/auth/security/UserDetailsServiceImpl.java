@@ -6,25 +6,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.service.user.service.AllUsersService;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+    private static final String GET_USER_URL = "http://user-service/users/user-by-email?email=%s";
+
     @Autowired
-    private AllUsersService allUsersService;
+    private RestTemplate restTemplate;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        String fullUrl = String.format(GET_USER_URL, email);
 
-        final List<com.service.common.domain.User> users = allUsersService.getAllUsers();
+        com.service.common.domain.User user =
+                restTemplate.getForObject(fullUrl, com.service.common.domain.User.class);
 
-        for(com.service.common.domain.User appUser: users) {
-            if(appUser.getEmail().equals(email)) {
-                return new User(appUser.getEmail(), appUser.getPassword(), new ArrayList<>());
-            }
+        if(user != null) {
+            return new User(user.getEmail(), user.getPassword(), new ArrayList<>());
         }
 
         throw new UsernameNotFoundException("Email: " + email + " not found");

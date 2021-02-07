@@ -1,6 +1,7 @@
 package com.service.user.controller;
 
 import com.service.common.domain.User;
+import com.service.common.dto.UpdateUserLoginTokenRequestDto;
 import com.service.common.enums.AccountTypes;
 import com.service.user.controller.request.*;
 import com.service.user.dto.UserInformation;
@@ -50,6 +51,12 @@ public class UserController {
     @Autowired
     private InactivateUserService inactivateUserService;
 
+    @Autowired
+    private GetUserByEmailService getUserByEmailService;
+
+    @Autowired
+    private UpdateUserLoginTokenService updateUserLoginTokenService;
+
     @ResponseStatus(HttpStatus.CREATED)
     @ExceptionHandler({ UserAlreadyExistsException.class })
     @PostMapping("register")
@@ -84,6 +91,12 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping("user-by-email")
+    public User getUserByEmail(@RequestParam("email") String email) {
+        return getUserByEmailService.getUserByEmail(email);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping("profile-update")
     public void updateUser(@RequestBody @Validated UpdateProfileRequest updateProfileRequest)
             throws ProposalException, InvalidArgumentException {
@@ -100,6 +113,12 @@ public class UserController {
     @PutMapping("user-inactivation")
     public void inactivateUser(@RequestBody @Validated InactivateUserRequest inactivateUserRequest) {
         inactivateUserService.inactivateUser(inactivateUserRequest);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("login-token-update")
+    public void updateUserLoginToken(@RequestBody UpdateUserLoginTokenRequestDto updateUserLoginTokenRequestDto) {
+        updateUserLoginTokenService.updateUser(updateUserLoginTokenRequestDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
