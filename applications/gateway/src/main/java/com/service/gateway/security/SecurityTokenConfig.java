@@ -38,11 +38,19 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                 ).permitAll()
             .antMatchers(
                     HttpMethod.PUT,
-                    "/invite-service/invites/*"
+                    "/invite-service/invites/invite-response"
+            ).permitAll()
+            .antMatchers(
+                    HttpMethod.PUT,
+                    "/invite-service/invites/invite-code-update"
             ).permitAll()
             .antMatchers(
                     HttpMethod.GET,
-                    "/invite-service/invites/*"
+                    "/invite-service/invites/invite-check"
+            ).permitAll()
+            .antMatchers(
+                    HttpMethod.GET,
+                    "/invite-service/invites/invite-by-id"
             ).permitAll()
             .anyRequest().authenticated();
     }

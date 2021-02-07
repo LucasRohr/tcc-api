@@ -60,126 +60,35 @@ updateAnchorPeers() {
   sleep $DELAY
 }
 
-# === CERTIFICATE ===
-
-installCertificateChaincode() {
+installChaincode() {
   PEER=$1
+  CHAINCODE_NAME=$2
+  CHAINCODE_PATH=$3
+
   setGlobals $PEER
   
   set -x
-  peer chaincode install -n $CERTIFICATE_CHAINCODE_NAME -v 1.0 -l $CHAINCODE_LANGUAGE -p ${CERTIFICATE_CC_SRC_PATH} >&log.txt
+  peer chaincode install -n $CHAINCODE_NAME -v 1.0 -l $CHAINCODE_LANGUAGE -p ${CHAINCODE_PATH} >&log.txt
   res=$?
   set +x
   cat log.txt
   
   verifyResult $res "Chaincode installation on peer${PEER}.org1 has failed"
-  echo "===================== Chaincode is installed on peer${PEER}.org1 ===================== "
+  echo "===================== Chaincode ${CHAINCODE_NAME} is installed on peer${PEER}.org1 ===================== "
 }
 
-
-instantiateCertificateChaincode() {
+instantiateChaincode() {
   PEER=$1
+  CHAINCODE_NAME=$2
+
   setGlobals $PEER
 
   set -x
-  peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n $CERTIFICATE_CHAINCODE_NAME -l $CHAINCODE_LANGUAGE -v 1.0 -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer')" >&log.txt
+  peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n $CHAINCODE_NAME -l $CHAINCODE_LANGUAGE -v 1.0 -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer')" >&log.txt
   res=$?
   set +x
   cat log.txt
 
   verifyResult $res "Chaincode instantiation on peer${PEER}.org1 on channel '$CHANNEL_NAME' failed"
-  echo "===================== Chaincode is instantiated on peer${PEER}.org1 on channel '$CHANNEL_NAME' ===================== "
-}
-
-# === USER ===
-
-installUserChaincode() {
-  PEER=$1
-  setGlobals $PEER
-
-  set -x
-  peer chaincode install -n $USER_CHAINCODE_NAME -v 1.0 -l $CHAINCODE_LANGUAGE -p ${USER_CC_SRC_PATH} >&log.txt
-  res=$?
-  set +x
-  cat log.txt
-
-  verifyResult $res "Chaincode installation on peer${PEER}.org1 has failed"
-  echo "===================== Chaincode is installed on peer${PEER}.org1 ===================== "
-}
-
-
-instantiateUserChaincode() {
-  PEER=$1
-  setGlobals $PEER
-
-  set -x
-  peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n $USER_CHAINCODE_NAME -l $CHAINCODE_LANGUAGE -v 1.0 -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer')" >&log.txt
-  res=$?
-  set +x
-  cat log.txt
-
-  verifyResult $res "Chaincode instantiation on peer${PEER}.org1 on channel '$CHANNEL_NAME' failed"
-  echo "===================== Chaincode is instantiated on peer${PEER}.org1 on channel '$CHANNEL_NAME' ===================== "
-}
-
-# === ACCOUNT ===
-
-installAccountChaincode() {
-  PEER=$1
-  setGlobals $PEER
-
-  set -x
-  peer chaincode install -n $ACCOUNT_CHAINCODE_NAME -v 1.0 -l $CHAINCODE_LANGUAGE -p ${ACCOUNT_CC_SRC_PATH} >&log.txt
-  res=$?
-  set +x
-  cat log.txt
-
-  verifyResult $res "Chaincode installation on peer${PEER}.org1 has failed"
-  echo "===================== Chaincode is installed on peer${PEER}.org1 ===================== "
-}
-
-
-instantiateAccountChaincode() {
-  PEER=$1
-  setGlobals $PEER
-
-  set -x
-  peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n $ACCOUNT_CHAINCODE_NAME -l $CHAINCODE_LANGUAGE -v 1.0 -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer')" >&log.txt
-  res=$?
-  set +x
-  cat log.txt
-
-  verifyResult $res "Chaincode instantiation on peer${PEER}.org1 on channel '$CHANNEL_NAME' failed"
-  echo "===================== Chaincode is instantiated on peer${PEER}.org1 on channel '$CHANNEL_NAME' ===================== "
-}
-
-# === CREDENTIAL ===
-
-installCredentialChaincode() {
-  PEER=$1
-  setGlobals $PEER
-
-  set -x
-  peer chaincode install -n $CREDENTIAL_CHAINCODE_NAME -v 1.0 -l $CHAINCODE_LANGUAGE -p ${CREDENTIAL_CC_SRC_PATH} >&log.txt
-  res=$?
-  set +x
-  cat log.txt
-
-  verifyResult $res "Chaincode installation on peer${PEER}.org1 has failed"
-  echo "===================== Chaincode is installed on peer${PEER}.org1 ===================== "
-}
-
-
-instantiateCredentialChaincode() {
-  PEER=$1
-  setGlobals $PEER
-
-  set -x
-  peer chaincode instantiate -o orderer.example.com:7050 -C $CHANNEL_NAME -n $CREDENTIAL_CHAINCODE_NAME -l $CHAINCODE_LANGUAGE -v 1.0 -c '{"Args":["init"]}' -P "AND ('Org1MSP.peer')" >&log.txt
-  res=$?
-  set +x
-  cat log.txt
-
-  verifyResult $res "Chaincode instantiation on peer${PEER}.org1 on channel '$CHANNEL_NAME' failed"
-  echo "===================== Chaincode is instantiated on peer${PEER}.org1 on channel '$CHANNEL_NAME' ===================== "
+  echo "===================== Chaincode ${CHAINCODE_NAME} is instantiated on peer${PEER}.org1 on channel '$CHANNEL_NAME' ===================== "
 }

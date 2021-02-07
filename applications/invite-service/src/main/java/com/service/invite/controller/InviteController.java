@@ -57,8 +57,8 @@ public class InviteController {
         return checkInviteByCodeService.checkInvite(code);
     }
 
-    @GetMapping("invite-owner")
-    public Long getInviteBy(@RequestParam("invite_id") Long inviteId) {
+    @GetMapping("invite-by-id")
+    public Long getInviteById(@RequestParam("invite_id") Long inviteId) {
         return getInviteOwnerByIdService.getInviteOwner(inviteId);
     }
 }
