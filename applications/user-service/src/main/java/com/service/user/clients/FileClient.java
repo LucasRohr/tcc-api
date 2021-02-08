@@ -16,4 +16,7 @@ public interface FileClient {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/files/file-heir-unlink?heir_id={heirId}")
     void unlinkFileHeirs(@PathVariable("heirId") Long heirId, @RequestBody List<Long> fileHeirIds);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/files/release?owner_id={ownerId}")
+    void releaseFilesHeritage(@PathVariable("ownerId") Long ownerId);
 }

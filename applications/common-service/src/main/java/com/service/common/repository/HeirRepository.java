@@ -1,7 +1,6 @@
 package com.service.common.repository;
 
 import com.service.common.domain.Heir;
-import com.service.common.domain.Owner;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -23,4 +22,7 @@ public interface HeirRepository extends JpaRepository<Heir, Long> {
 
     @Query("SELECT h FROM Heir h WHERE h.owner.id = ?1 AND h.id = ?2")
     Heir getHeirByIdAndOwner(Long ownerId, Long heirId);
+
+//    @Query("SELECT ac FROM Account ac WHERE ac.id = ?1 AND ac.isActive = true AND ac.type = \"heir\"")
+//    Account getHeirById(Long Id);
 }
