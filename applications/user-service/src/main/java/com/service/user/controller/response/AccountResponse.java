@@ -29,6 +29,8 @@ public class AccountResponse {
 
     private String ownerName;
 
+    private Boolean isOwnerAlive;
+
     public AccountResponse(
             Long id,
             String name,

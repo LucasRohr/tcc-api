@@ -55,9 +55,6 @@ public class FileController {
     @Autowired
     private UnlinkFileHeirsService unlinkFileHeirsService;
 
-    @Autowired
-    private ReleaseFilesService releaseFilesService;
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "single-media-upload", consumes = {"multipart/form-data"})
     public void uploadSingleFile(
@@ -144,9 +141,4 @@ public class FileController {
         return getOwnerFilesService.getFiles(pageable, ownerId, FileTypeEnum.valueOf(type.toUpperCase()));
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @PutMapping("release")
-    public void releaseFilesHeritage(@RequestParam("ownerId") Long ownerId) {
-        return releaseFilesService.releaseFiles(ownerId);
-    }
 }

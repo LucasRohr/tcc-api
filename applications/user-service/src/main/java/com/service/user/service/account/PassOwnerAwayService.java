@@ -28,10 +28,6 @@ public class PassOwnerAwayService {
         if (!owner.getIsAlive()) return;
         owner.setIsAlive(false);
         ownerRepository.save(owner);
-
-        Long ownerId = owner.getId();
-
-        fileClient.releaseFilesHeritage(ownerId);
-        credentialClient.releaseCredentialsHeritage(ownerId);
+        credentialClient.releaseCredentialsHeritage(owner.getId());
     }
 }
