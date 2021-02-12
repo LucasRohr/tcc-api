@@ -64,6 +64,7 @@ public class GetUserInformation {
                         Heir heir = heirRepository.getHeirByAccountId(account.getId());
                         accountResponse.setStatus(heir.getStatus());
                         accountResponse.setOwnerName(heir.getOwner().getAccount().getName());
+                        accountResponse.setIsOwnerAlive(heir.getOwner().getIsAlive());
                     }
 
                     return accountResponse;
