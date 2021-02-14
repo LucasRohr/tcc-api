@@ -3,11 +3,9 @@ package com.service.common.service.fabric.account;
 import com.service.common.component.chaincode.BaseChaincode;
 import com.service.common.component.chaincode.BaseChaincodeFunction;
 import com.service.common.component.chaincode.account.AccountAssetChaincode;
-import com.service.common.component.chaincode.user.UserAssetChaincode;
-import com.service.common.component.chaincode.user.functions.SaveUserAssetFunction;
+import com.service.common.component.chaincode.account.functions.SaveAccountAssetFunction;
 import com.service.common.component.fabric.ChannelClient;
 import com.service.common.domain.fabric.account.AccountRecordModel;
-import com.service.common.domain.fabric.user.UserRecordModel;
 import lombok.extern.slf4j.Slf4j;
 import org.hyperledger.fabric.sdk.ChaincodeResponse;
 import org.hyperledger.fabric.sdk.ProposalResponse;
@@ -29,9 +27,10 @@ public class SaveAccountAssetService {
         this.channelClient = channelClient;
     }
 
-    public List<String> createTransaction(AccountRecordModel recordModel) throws ProposalException, InvalidArgumentException {
+    public List<String> createTransaction(AccountRecordModel recordModel)
+            throws ProposalException, InvalidArgumentException {
         final String[] arguments = recordModel.toArguments();
-        final BaseChaincodeFunction baseChaincodeFunction = new SaveUserAssetFunction(arguments);
+        final BaseChaincodeFunction baseChaincodeFunction = new SaveAccountAssetFunction(arguments);
         final BaseChaincode baseChaincode = new AccountAssetChaincode(baseChaincodeFunction);
 
         final Collection<ProposalResponse> proposalResponses = channelClient.sendTransactionProposal(baseChaincode);

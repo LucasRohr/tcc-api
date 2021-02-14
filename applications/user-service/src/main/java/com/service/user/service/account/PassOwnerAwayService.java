@@ -19,15 +19,10 @@ public class PassOwnerAwayService {
     @Autowired
     private CredentialClient credentialClient;
 
-    public void passAway(Long ownerId) {
-        Owner owner = ownerRepository.findByAccountId(ownerId);
-        passAway(owner);
-    }
-
     public void passAway(Owner owner) {
-        if (!owner.getIsAlive()) return;
-        owner.setIsAlive(false);
-        ownerRepository.save(owner);
-        credentialClient.releaseCredentialsHeritage(owner.getId());
+        if (owner.getIsAlive()) {
+            owner.setIsAlive(false);
+            ownerRepository.save(owner);
+        }
     }
 }

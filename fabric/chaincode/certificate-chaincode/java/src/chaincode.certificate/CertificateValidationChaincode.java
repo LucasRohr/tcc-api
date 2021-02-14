@@ -47,37 +47,36 @@ public class CertificateValidationChaincode extends ChaincodeBase {
 	@Transaction
 	private Response validateDeathCertificate(final ChaincodeStub stub, final List<String> params) {
 		String apiResponse = "";
+
 		try {
 			final String hash = params.get(0);
-			// final String hash = "BVCBVCBCVBCVBVBVBVBVBVBVBVBVBVBv";
 			final String url = "https://registrocivil.org.br:8443/api/carrinho/pedidos/validarCodigoHash/" + hash;
-
 
 			HttpURLConnection httpClient =
 					(HttpURLConnection) new URL(url).openConnection();
 
-			// optional default is GET
 			httpClient.setRequestMethod("GET");
-			httpClient.setRequestProperty("User-Agent", "Mozilla/5.0");
+			httpClient.setRequestProperty("user-agent", "Chrome/81.0.4044.129");
 			httpClient.setRequestProperty(
-					"Authorization",
-					"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI2b2oxTDB2Ynl0bjMzMzRTWWJaNVFJdlpuVGhhZGVYeCIsImhhc2hfY29kZSI6IkhZVFlUWVlUVFJZVFlUWVRSWVRZVFlUUllSVFlSVFlyIn0.TnxxVmcKI2_Xbp8tL6fIpGCWrmTX67vLlQdXRm_Hs4I"
+					"authorization",
+					"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI2b2oxTDB2Ynl0bjMzMzRTWWJaNVF" +
+							"JdlpuVGhhZGVYeCIsImhhc2hfY29kZSI6ImZzZGYxczFkZjFkZjY1ZjZzZGY2c2ZkZjZkczZmMX" +
+							"NkIn0.WCUgzSlTFbeWodyP8z6oLYeGZD8o-jBqDRjxIALgguA"
 			);
+
 			httpClient.setRequestProperty(
 					"apikey",
 					"7CojClx9l62Mz6SJcEHFWZfK2NtSHXgI"
 			);
 
 			int responseCode = httpClient.getResponseCode();
+
 			System.out.print(responseCode);
 			if (responseCode != 200) {
-				throw new ChaincodeException("Pokemon not found :/");
+				throw new ChaincodeException("Código de certificado inválido.");
 			}
 
-			// Sending 'GET' request to URL
-			try (BufferedReader in = new BufferedReader(
-					new InputStreamReader(httpClient.getInputStream()))) {
-
+			try (BufferedReader in = new BufferedReader(new InputStreamReader(httpClient.getInputStream()))) {
 				StringBuilder response = new StringBuilder();
 				String line;
 
@@ -85,15 +84,13 @@ public class CertificateValidationChaincode extends ChaincodeBase {
 					response.append(line);
 				}
 
-				//print result
 				apiResponse = response.toString();
-
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return ResponseUtils.newSuccessResponse("okk");
+
+		return ResponseUtils.newSuccessResponse(apiResponse);
 	}
 
 	public static void main(String[] args) {

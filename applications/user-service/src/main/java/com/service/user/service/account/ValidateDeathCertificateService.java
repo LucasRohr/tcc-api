@@ -10,9 +10,6 @@ import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class ValidateDeathCertificateService {
 
@@ -20,23 +17,33 @@ public class ValidateDeathCertificateService {
     private InitiateDeathCertificateValidationService initiateDeathCertificateValidationService;
 
     @Autowired
-    private UpdateAccountService updateAccountService;
-
-    @Autowired
     private HeirRepository heirRepository;
 
     @Autowired
     private PassOwnerAwayService passOwnerAwayService;
 
-    public void validateDeathCertificate(ValidateDeathCertificateRequest request) throws ProposalException, InvalidArgumentException {
-        // logic
-        DeathCertificateRecordModel deathCertificateRecordModel = new DeathCertificateRecordModel(request.getCertificateHashCode());
+    @Autowired
+    private ActivateHeirsHeritagesServices activateHeirsHeritagesServices;
 
-        // return initiateDeathCertificateValidationService.createTransaction(deathCertificateRecordModel);
+    public void validateDeathCertificate(ValidateDeathCertificateRequest request)
+            throws ProposalException, InvalidArgumentException {
 
-        if (true) {
+        DeathCertificateRecordModel deathCertificateRecordModel =
+                new DeathCertificateRecordModel(request.getCertificateHashCode());
+
+        String validationResponse =
+                initiateDeathCertificateValidationService.createTransaction(deathCertificateRecordModel).get(0);
+
+        if(validationResponse != null) {
+            System.out.println("\n====== RESPONSE CC ========\n");
+            System.out.println(validationResponse);
+            System.out.println("\n======================\n");
+
             Owner owner = heirRepository.getHeirByAccountId(request.getHeirId()).getOwner();
+
             passOwnerAwayService.passAway(owner);
+            activateHeirsHeritagesServices.activateHeirs(owner.getId());
         }
+
     }
 }

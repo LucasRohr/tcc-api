@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ValidateDeathCertificateRequest {
+
     private Long heirId;
+
     private String certificateHashCode;
+
 }
