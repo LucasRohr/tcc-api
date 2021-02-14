@@ -13,9 +13,34 @@ public class ValidateDeathCertificateService {
     @Autowired
     private InitiateDeathCertificateValidationService initiateDeathCertificateValidationService;
 
-    public void validateDeathCertificate(String hash) throws ProposalException, InvalidArgumentException {
-        // logic
-        DeathCertificateRecordModel deathCertificateRecordModel = new DeathCertificateRecordModel(hash);
-        initiateDeathCertificateValidationService.createTransaction(deathCertificateRecordModel);
+    @Autowired
+    private HeirRepository heirRepository;
+
+    @Autowired
+    private PassOwnerAwayService passOwnerAwayService;
+
+    @Autowired
+    private ActivateHeirsHeritagesServices activateHeirsHeritagesServices;
+
+    public void validateDeathCertificate(ValidateDeathCertificateRequest request)
+            throws ProposalException, InvalidArgumentException {
+
+        DeathCertificateRecordModel deathCertificateRecordModel =
+                new DeathCertificateRecordModel(request.getCertificateHashCode());
+
+        String validationResponse =
+                initiateDeathCertificateValidationService.createTransaction(deathCertificateRecordModel).get(0);
+
+        if(validationResponse != null) {
+            System.out.println("\n====== RESPONSE CC ========\n");
+            System.out.println(validationResponse);
+            System.out.println("\n======================\n");
+
+            Owner owner = heirRepository.getHeirByAccountId(request.getHeirId()).getOwner();
+
+            passOwnerAwayService.passAway(owner);
+            activateHeirsHeritagesServices.activateHeirs(owner.getId());
+        }
+
     }
 }

@@ -49,48 +49,51 @@ public class CertificateValidationChaincode extends ChaincodeBase {
 	}
 
 	@Transaction
-	private Response validateDeathCertificate(final ChaincodeStub stub, final List<String> params) throws IOException {
+	private Response validateDeathCertificate(final ChaincodeStub stub, final List<String> params) {
+		String apiResponse = "";
 
-		final String hash = params.get(0);
-		// final String hash = "BVCBVCBCVBCVBVBVBVBVBVBVBVBVBVBv";
-		final String url = "https://registrocivil.org.br:8443/api/carrinho/pedidos/validarCodigoHash/" + hash;
-		String apiResponse;
+		try {
+			final String hash = params.get(0);
+			final String url = "https://registrocivil.org.br:8443/api/carrinho/pedidos/validarCodigoHash/" + hash;
 
-		HttpURLConnection httpClient =
-				(HttpURLConnection) new URL(url).openConnection();
+			HttpURLConnection httpClient =
+					(HttpURLConnection) new URL(url).openConnection();
 
-		// optional default is GET
-		httpClient.setRequestMethod("GET");
-		httpClient.setRequestProperty("User-Agent", "Mozilla/5.0");
-		httpClient.setRequestProperty(
-				"Authorization",
-				"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI2b2oxTDB2Ynl0bjMzMzRTWWJaNVFJdlpuVGhhZGVYeCIsImhhc2hfY29kZSI6IkhZVFlUWVlUVFJZVFlUWVRSWVRZVFlUUllSVFlSVFlyIn0.TnxxVmcKI2_Xbp8tL6fIpGCWrmTX67vLlQdXRm_Hs4I"
-		);
-		httpClient.setRequestProperty(
-				"apikey",
-				"7CojClx9l62Mz6SJcEHFWZfK2NtSHXgI"
-		);
+			httpClient.setRequestMethod("GET");
+			httpClient.setRequestProperty("user-agent", "Chrome/81.0.4044.129");
+			httpClient.setRequestProperty(
+					"authorization",
+					"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI2b2oxTDB2Ynl0bjMzMzRTWWJaNVF" +
+							"JdlpuVGhhZGVYeCIsImhhc2hfY29kZSI6ImZzZGYxczFkZjFkZjY1ZjZzZGY2c2ZkZjZkczZmMX" +
+							"NkIn0.WCUgzSlTFbeWodyP8z6oLYeGZD8o-jBqDRjxIALgguA"
+			);
 
-		int responseCode = httpClient.getResponseCode();
-		if (responseCode != 200) {
-			throw new ChaincodeException("Pokemon not found :/");
-		}
+			httpClient.setRequestProperty(
+					"apikey",
+					"7CojClx9l62Mz6SJcEHFWZfK2NtSHXgI"
+			);
 
-		// Sending 'GET' request to URL
-		try (BufferedReader in = new BufferedReader(
-				new InputStreamReader(httpClient.getInputStream()))) {
+			int responseCode = httpClient.getResponseCode();
 
-			StringBuilder response = new StringBuilder();
-			String line;
-
-			while ((line = in.readLine()) != null) {
-				response.append(line);
+			System.out.print(responseCode);
+			if (responseCode != 200) {
+				throw new ChaincodeException("Código de certificado inválido.");
 			}
 
-			//print result
-			apiResponse = response.toString();
+			try (BufferedReader in = new BufferedReader(new InputStreamReader(httpClient.getInputStream()))) {
+				StringBuilder response = new StringBuilder();
+				String line;
 
+				while ((line = in.readLine()) != null) {
+					response.append(line);
+				}
+
+				apiResponse = response.toString();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+
 		return ResponseUtils.newSuccessResponse(apiResponse);
 	}
 

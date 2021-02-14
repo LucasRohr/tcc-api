@@ -39,6 +39,9 @@ public class CredentialController {
     @Autowired
     private UpdateCredentialHeirsService updateCredentialHeirsService;
 
+    @Autowired
+    private GetHeirCredentialsService getHeirCredentialsService;
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("creation")
     public void createCredential(@RequestBody @Validated CredentialCreationRequest credentialCreationRequest)
@@ -48,19 +51,27 @@ public class CredentialController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("owner-credentials")
-    public List<CredentialResponseWithouPassword> getOwnerCredential(@RequestParam("owner_id") Long ownerId)
+    public List<CredentialResponseWithouPassword> getOwnerCredentials(@RequestParam("owner_id") Long ownerId)
             throws ProposalException, IOException, InvalidArgumentException {
         return getCredentialsWithoutPasswordService.getCredentials(ownerId);
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping("heir-credentials")
+    public List<CredentialResponseWithouPassword> getHeirCredentials(@RequestParam("heir_id") Long heirId)
+            throws ProposalException, IOException, InvalidArgumentException {
+        return getHeirCredentialsService.getHeirCredentials(heirId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("credential-auth")
     public String getCredentialPassword(
-            @RequestParam("owner_id") Long ownerId,
-            @RequestParam("credential_id") Long credentialId
+            @RequestParam("account_id") Long accountId,
+            @RequestParam("credential_id") Long credentialId,
+            @RequestParam("is_owner") boolean isOwner
     )
             throws ProposalException, IOException, InvalidArgumentException {
-        return getCredentialPasswordService.getPassword(ownerId, credentialId);
+        return getCredentialPasswordService.getPassword(accountId, credentialId, isOwner);
     }
 
     @ResponseStatus(HttpStatus.OK)
