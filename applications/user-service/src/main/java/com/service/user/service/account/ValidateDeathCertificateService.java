@@ -8,6 +8,7 @@ import com.service.common.repository.HeirRepository;
 import com.service.common.service.fabric.certificate.InitiateDeathCertificateValidationService;
 import com.service.user.dto.CertificateValidationResponseDto;
 import com.service.user.dto.ValidateDeathCertificateRequest;
+import com.service.user.exceptions.InvalidDeathCertificateException;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,14 +47,14 @@ public class ValidateDeathCertificateService {
                 CertificateValidationResponseDto.class
         );
 
+        boolean isHashCodeValid =
+                validationResponse.getHashCodeValidation() != null && validationResponse.getHashCodeValidation() != 0;
 
-        if(validationResponse != null) {
-            System.out.println("\n====== RESPONSE CC ========\n");
-            System.out.println(validationResponse.toString());
-            System.out.println("\n======================\n");
-//
-//            passOwnerAwayService.passAway(owner);
-//            activateHeirsHeritagesServices.activateHeirs(owner.getId());
+        if(isHashCodeValid) {
+            passOwnerAwayService.passAway(owner);
+            activateHeirsHeritagesServices.activateHeirs(owner.getId());
+        } else {
+            throw new InvalidDeathCertificateException();
         }
 
     }
