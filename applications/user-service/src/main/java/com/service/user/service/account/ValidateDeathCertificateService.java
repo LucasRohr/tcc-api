@@ -1,11 +1,19 @@
 package com.service.user.service.account;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.service.common.domain.Owner;
 import com.service.common.domain.fabric.certificate.DeathCertificateRecordModel;
-import com.service.common.service.fabric.account.InitiateDeathCertificateValidationService;
+import com.service.common.repository.HeirRepository;
+import com.service.common.service.fabric.certificate.InitiateDeathCertificateValidationService;
+import com.service.user.dto.CertificateValidationResponseDto;
+import com.service.user.dto.ValidateDeathCertificateRequest;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ValidateDeathCertificateService {
@@ -22,22 +30,27 @@ public class ValidateDeathCertificateService {
     @Autowired
     private ActivateHeirsHeritagesServices activateHeirsHeritagesServices;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     public void validateDeathCertificate(ValidateDeathCertificateRequest request)
-            throws ProposalException, InvalidArgumentException {
+            throws ProposalException, InvalidArgumentException, JsonProcessingException {
 
         Owner owner = heirRepository.getHeirByAccountId(request.getHeirId()).getOwner();
 
         DeathCertificateRecordModel deathCertificateRecordModel =
-                new DeathCertificateRecordModel(request.getCertificateHashCode(), owner.getId());
+                new DeathCertificateRecordModel(owner.getId(), !owner.getIsAlive(), request.getCertificateHashCode());
 
-        String validationResponse =
-                initiateDeathCertificateValidationService.createTransaction(deathCertificateRecordModel).get(0);
+        CertificateValidationResponseDto validationResponse = objectMapper.readValue(
+                initiateDeathCertificateValidationService.createTransaction(deathCertificateRecordModel),
+                CertificateValidationResponseDto.class
+        );
+
 
         if(validationResponse != null) {
             System.out.println("\n====== RESPONSE CC ========\n");
-            System.out.println(validationResponse);
+            System.out.println(validationResponse.toString());
             System.out.println("\n======================\n");
-
 //
 //            passOwnerAwayService.passAway(owner);
 //            activateHeirsHeritagesServices.activateHeirs(owner.getId());
