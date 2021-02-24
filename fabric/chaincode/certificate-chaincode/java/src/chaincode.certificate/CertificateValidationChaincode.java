@@ -34,11 +34,6 @@ public class CertificateValidationChaincode extends ChaincodeBase {
 	@Override
 	public Response init(ChaincodeStub stub) {
 		AcceptAllCertificates.acceptAllCertificates();
-//		try {
-//			InstallCert.main(new String[]{"https://registrocivil.org.br:8443", "changeit"});
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
 		return ResponseUtils.newSuccessResponse();
 	}
 
@@ -56,12 +51,14 @@ public class CertificateValidationChaincode extends ChaincodeBase {
 
 	@Transaction
 	private Response validateDeathCertificate(final ChaincodeStub stub, final List<String> params) {
+		final String key = params.get(0);
+		final String certificateState = gson.toJson(mapParamsToCertificate(params));
+
+		stub.putStringState(key, certificateState);
+
 		String apiResponse = "";
-		CertificateResponse certificateResponse;
 
-		System.out.println(params.get(1));
-
-		final String hash = params.get(0);
+		final String hash = params.get(2);
 
 		final String url = "https://registrocivil.org.br:8443/api/carrinho/pedidos/validarCodigoHash/" + hash;
 		try {
@@ -82,20 +79,21 @@ public class CertificateValidationChaincode extends ChaincodeBase {
 					"7CojClx9l62Mz6SJcEHFWZfK2NtSHXgI"
 			);
 
-			try (BufferedReader in = new BufferedReader(new InputStreamReader(httpClient.getInputStream()))) {
-				StringBuilder response = new StringBuilder();
-				String line;
+			BufferedReader in = new BufferedReader(new InputStreamReader(httpClient.getInputStream()));
 
-				while ((line = in.readLine()) != null) {
-					response.append(line);
-				}
+			StringBuilder response = new StringBuilder();
+			String line;
 
-				apiResponse = response.toString();
+			while ((line = in.readLine()) != null) {
+				response.append(line);
 			}
+
+			in.close();
+
+			apiResponse = response.toString();
 
 			int responseCode = httpClient.getResponseCode();
 
-			System.out.print(responseCode);
 			if (responseCode != 200) {
 				throw new ChaincodeException("Houve um problema com a requisição. Tente novamente mais tarde.");
 			}
@@ -104,14 +102,20 @@ public class CertificateValidationChaincode extends ChaincodeBase {
 			e.printStackTrace();
 		}
 
-//		certificateResponse = gson.fromJson(apiResponse, CertificateResponse.class);
-//
-//		if (certificateResponse.getCodigoHashOk() == 1) {
-//			final String ownerId = params.get(1);
-//			stub.putStringState(ownerId, apiResponse);
-//		}
-
 		return ResponseUtils.newSuccessResponse(apiResponse);
+	}
+
+	private CertificateValidation mapParamsToCertificate(List<String> params) {
+		final Long ownerId = Long.parseLong(params.get(0));
+		final Boolean isHeritageActive =  Boolean.parseBoolean(params.get(1));
+		final String hashCode = params.get(2);
+
+		return CertificateValidation
+				.builder()
+				.ownerId(ownerId)
+				.isHeritageActive(isHeritageActive)
+				.hashCode(hashCode)
+				.build();
 	}
 
 	public static void main(String[] args) {

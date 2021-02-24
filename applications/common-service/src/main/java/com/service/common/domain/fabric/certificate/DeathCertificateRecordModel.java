@@ -11,14 +11,17 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public class DeathCertificateRecordModel {
 
-    private String hashCode;
-
     private Long ownerId;
+
+    private Boolean isHeritageActive;
+
+    private String hashCode;
 
     public String[] toArguments() {
         return Stream.of(
-                this.hashCode,
-                this.ownerId
+                this.ownerId.toString(),
+                this.isHeritageActive.toString(),
+                this.hashCode
         ).toArray(String[]::new);
     }
 }
