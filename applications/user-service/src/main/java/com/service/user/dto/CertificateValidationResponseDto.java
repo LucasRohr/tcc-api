@@ -1,6 +1,6 @@
 package com.service.user.dto;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,49 +10,49 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CertificateValidationResponseDto {
 
-    @SerializedName("codigo_hash_ok")
+    @JsonProperty("codigo_hash_ok")
     private Long hashCodeValidation;
 
-    @SerializedName("origem_certidao")
+    @JsonProperty("origem_certidao")
     private String certificateOrigin;
 
-    @SerializedName("data_emissao")
+    @JsonProperty("data_emissao")
     private String emissionDate;
 
-    @SerializedName("hora_emissao")
+    @JsonProperty("hora_emissao")
     private String emissionHour;
 
-    @SerializedName("data_assinatura")
+    @JsonProperty("data_assinatura")
     private String signatureDate;
 
-    @SerializedName("hora_assinatura")
+    @JsonProperty("hora_assinatura")
     private String signatureHour;
 
-    @SerializedName("tipo_registro")
+    @JsonProperty("tipo_registro")
     private String registerType;
 
-    @SerializedName("nome_cartorio")
+    @JsonProperty("nome_cartorio")
     private String registryName;
 
-    @SerializedName("endereco")
+    @JsonProperty("endereco")
     private String adress;
 
-    @SerializedName("estado")
+    @JsonProperty("estado")
     private String state;
 
-    @SerializedName("cidade")
+    @JsonProperty("cidade")
     private String city;
 
-    @SerializedName("cep")
+    @JsonProperty("cep")
     private String cep;
 
-    @SerializedName("usuario_assinante_certidao")
+    @JsonProperty("usuario_assinante_certidao")
     private String certificateSubscriber;
 
-    @SerializedName("cargo_usuario")
+    @JsonProperty("cargo_usuario")
     private String certificateSubscriberJob;
 
-    @SerializedName("num_dias_emissao")
+    @JsonProperty("num_dias_emissao")
     private String emissionElapsedDays;
 
 }
