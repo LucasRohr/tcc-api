@@ -37,10 +37,6 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                    "/user-service/users/bootstrap"
                 ).permitAll()
             .antMatchers(
-                   HttpMethod.PUT,
-                   "/user-service/accounts/owner/validate_certificate"
-            ).permitAll()
-            .antMatchers(
                     HttpMethod.PUT,
                     "/invite-service/invites/invite-response"
             ).permitAll()
