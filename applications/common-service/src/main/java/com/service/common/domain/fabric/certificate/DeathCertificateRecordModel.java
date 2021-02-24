@@ -10,11 +10,15 @@ import java.util.stream.Stream;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeathCertificateRecordModel {
+
     private String hashCode;
+
+    private Long ownerId;
 
     public String[] toArguments() {
         return Stream.of(
-                this.hashCode
+                this.hashCode,
+                this.ownerId
         ).toArray(String[]::new);
     }
 }

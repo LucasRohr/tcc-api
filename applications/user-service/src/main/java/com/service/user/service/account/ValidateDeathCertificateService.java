@@ -25,8 +25,10 @@ public class ValidateDeathCertificateService {
     public void validateDeathCertificate(ValidateDeathCertificateRequest request)
             throws ProposalException, InvalidArgumentException {
 
+        Owner owner = heirRepository.getHeirByAccountId(request.getHeirId()).getOwner();
+
         DeathCertificateRecordModel deathCertificateRecordModel =
-                new DeathCertificateRecordModel(request.getCertificateHashCode());
+                new DeathCertificateRecordModel(request.getCertificateHashCode(), owner.getId());
 
         String validationResponse =
                 initiateDeathCertificateValidationService.createTransaction(deathCertificateRecordModel).get(0);
@@ -36,10 +38,9 @@ public class ValidateDeathCertificateService {
             System.out.println(validationResponse);
             System.out.println("\n======================\n");
 
-            Owner owner = heirRepository.getHeirByAccountId(request.getHeirId()).getOwner();
-
-            passOwnerAwayService.passAway(owner);
-            activateHeirsHeritagesServices.activateHeirs(owner.getId());
+//
+//            passOwnerAwayService.passAway(owner);
+//            activateHeirsHeritagesServices.activateHeirs(owner.getId());
         }
 
     }

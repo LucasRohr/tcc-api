@@ -128,7 +128,9 @@ public class AccountController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("heir/certificate-validation")
-    public void validateDeathCertificate(@RequestBody ValidateDeathCertificateRequest request)
+    public void validateDeathCertificate(
+            @RequestBody ValidateDeathCertificateRequest request
+    )
             throws InvalidArgumentException, ProposalException, IOException {
         validateDeathCertificateService.validateDeathCertificate(request);
     }

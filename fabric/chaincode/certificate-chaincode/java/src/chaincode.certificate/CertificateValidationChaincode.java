@@ -8,6 +8,7 @@ import org.hyperledger.fabric.shim.ChaincodeStub;
 import org.hyperledger.fabric.shim.ResponseUtils;
 import org.hyperledger.fabric.contract.annotation.Transaction;
 
+import javax.net.ssl.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,6 +16,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.List;
 
 public class CertificateValidationChaincode extends ChaincodeBase {
@@ -29,6 +33,12 @@ public class CertificateValidationChaincode extends ChaincodeBase {
 
 	@Override
 	public Response init(ChaincodeStub stub) {
+		AcceptAllCertificates.acceptAllCertificates();
+//		try {
+//			InstallCert.main(new String[]{"https://registrocivil.org.br:8443", "changeit"});
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		return ResponseUtils.newSuccessResponse();
 	}
 
@@ -51,16 +61,19 @@ public class CertificateValidationChaincode extends ChaincodeBase {
 	@Transaction
 	private Response validateDeathCertificate(final ChaincodeStub stub, final List<String> params) {
 		String apiResponse = "";
+		CertificateResponse certificateResponse;
 
+		System.out.println(params.get(1));
+
+		final String hash = params.get(0);
+
+		final String url = "https://registrocivil.org.br:8443/api/carrinho/pedidos/validarCodigoHash/" + hash;
 		try {
-			final String hash = params.get(0);
-			final String url = "https://registrocivil.org.br:8443/api/carrinho/pedidos/validarCodigoHash/" + hash;
-
-			HttpURLConnection httpClient =
-					(HttpURLConnection) new URL(url).openConnection();
+			HttpsURLConnection httpClient =
+					(HttpsURLConnection) new URL(url).openConnection();
 
 			httpClient.setRequestMethod("GET");
-			httpClient.setRequestProperty("user-agent", "Chrome/81.0.4044.129");
+			httpClient.setRequestProperty("user-agent", "Mozilla/5.0");
 			httpClient.setRequestProperty(
 					"authorization",
 					"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI2b2oxTDB2Ynl0bjMzMzRTWWJaNVF" +
@@ -73,13 +86,6 @@ public class CertificateValidationChaincode extends ChaincodeBase {
 					"7CojClx9l62Mz6SJcEHFWZfK2NtSHXgI"
 			);
 
-			int responseCode = httpClient.getResponseCode();
-
-			System.out.print(responseCode);
-			if (responseCode != 200) {
-				throw new ChaincodeException("Código de certificado inválido.");
-			}
-
 			try (BufferedReader in = new BufferedReader(new InputStreamReader(httpClient.getInputStream()))) {
 				StringBuilder response = new StringBuilder();
 				String line;
@@ -90,9 +96,24 @@ public class CertificateValidationChaincode extends ChaincodeBase {
 
 				apiResponse = response.toString();
 			}
+
+			int responseCode = httpClient.getResponseCode();
+
+			System.out.print(responseCode);
+			if (responseCode != 200) {
+				throw new ChaincodeException("Houve um problema com a requisição. Tente novamente mais tarde.");
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+//		certificateResponse = gson.fromJson(apiResponse, CertificateResponse.class);
+//
+//		if (certificateResponse.getCodigoHashOk() == 1) {
+//			final String ownerId = params.get(1);
+//			stub.putStringState(ownerId, apiResponse);
+//		}
 
 		return ResponseUtils.newSuccessResponse(apiResponse);
 	}
