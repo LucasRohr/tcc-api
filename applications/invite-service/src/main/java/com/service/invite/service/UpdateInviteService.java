@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UpdateInviteService {
 
-
-
     @Autowired
     private InviteRepository inviteRepository;
 

@@ -2,7 +2,8 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: credential-service
+    name: auth-service
+
   jpa:
     database: POSTGRESQL
     show-sql: true
@@ -17,7 +18,7 @@ spring:
     password: ${DATABASE_PASSWORD}
 
 server:
-  port: 8500
+  port: 9100
 
 eureka:
   client:

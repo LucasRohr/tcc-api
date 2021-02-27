@@ -1,5 +1,7 @@
 package com.service.credential.services;
 
+import com.service.common.domain.Heir;
+import com.service.common.repository.HeirRepository;
 import com.service.credential.controllers.response.CredentialResponse;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
@@ -16,7 +18,20 @@ public class GetCredentialPasswordService {
     @Autowired
     private GetOwnerCredentialsService getOwnerCredentialsService;
 
-    public String getPassword(Long ownerId, Long credentialId) throws ProposalException, IOException, InvalidArgumentException {
+    @Autowired
+    private HeirRepository heirRepository;
+
+    public String getPassword(Long accountId, Long credentialId, boolean isOwner)
+            throws ProposalException, IOException, InvalidArgumentException {
+        Long ownerId;
+
+        if(isOwner) {
+            ownerId = accountId;
+        } else {
+            Heir heir = heirRepository.getHeirByAccountId(accountId);
+            ownerId = heir.getOwner().getId();
+        }
+
         List<CredentialResponse> credentialResponses = getOwnerCredentialsService.getOwnerCredentials(ownerId);
 
         CredentialResponse credentialResponse = credentialResponses.stream().filter(credential ->
