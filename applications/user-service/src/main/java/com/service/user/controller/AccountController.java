@@ -6,6 +6,7 @@ import com.service.user.controller.request.*;
 import com.service.user.controller.response.AccountResponse;
 import com.service.user.dto.HeirDeactivationRequest;
 import com.service.user.dto.UpdateHeirHeritageRequest;
+import com.service.user.dto.ValidateDeathCertificateRequest;
 import com.service.user.service.GetCheckAssetsByHeirService;
 import com.service.user.service.UpdateHeirHeritagesService;
 import com.service.user.service.account.*;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
@@ -52,6 +54,9 @@ public class AccountController {
 
     @Autowired
     private UpdateHeirHeritagesService updateHeirHeritagesService;
+
+    @Autowired
+    private ValidateDeathCertificateService validateDeathCertificateService;
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("last-update")
@@ -122,6 +127,15 @@ public class AccountController {
             @RequestBody UpdateHeirHeritageRequest request
     ) {
         updateHeirHeritagesService.updateHeirHeritages(heirId, request);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("heir/certificate-validation")
+    public void validateDeathCertificate(
+            @RequestBody ValidateDeathCertificateRequest request
+    )
+            throws InvalidArgumentException, ProposalException, IOException {
+        validateDeathCertificateService.validateDeathCertificate(request);
     }
 
 }

@@ -12,9 +12,7 @@ import java.util.List;
 class CertificateValidation implements Serializable {
 	private Long ownerId;
 
-	private List<Long> heirsIds;
+	private Boolean isHeritageActive;
 
-	private boolean isHeritageActive;
-
-	private List<String> keyRing;
+	private String hashCode;
 }

@@ -126,11 +126,11 @@ public class UserController {
     public void bootstrap() throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException, IOException {
         registerUser(new RegisterUserRequest(
                 "Carlos Vasconcellos",
-                "scorpionmk1302@gmail.com",
+                "muan@hotmail.com",
                 "354.336.510-02",
                 LocalDateTime.now().minusYears(29),
                 "Literatura2012",
-                "Papai Carlos",
+                "Carlos Vasconcellos",
                 AccountTypes.OWNER,
                 null
         ));
@@ -139,11 +139,11 @@ public class UserController {
         Long ownerId = getAllUserAccountsService.getAccounts(carlosId).get(0).getId();
         saveUserService.saveUser(new RegisterUserRequest(
                 "Ronaldo Marques",
-                "jooooooj@live.com",
+                "papaibesteira@click21.com",
                 "882.338.300-54",
                 LocalDateTime.now().minusYears(34),
                 "Senha123",
-                "Maridão Show De Horror",
+                "Ronaldo Marques",
                 AccountTypes.HEIR,
                 ownerId
         ));

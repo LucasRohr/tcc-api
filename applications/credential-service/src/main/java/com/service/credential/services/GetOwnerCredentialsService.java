@@ -53,7 +53,9 @@ public class GetOwnerCredentialsService {
 
             if(inactiveCredential == null) {
                 String heirsIdsString = credentialAsset.getHeirsIds()
-                        .replace("[", "").replace("]", "");
+                        .replace("[", "")
+                        .replace("]", "")
+                        .replace(" ", "");
 
                 List<Long> heirsIds = heirsIdsString.length() > 0 ?
                         Arrays.stream(heirsIdsString.split(","))

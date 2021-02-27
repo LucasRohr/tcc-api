@@ -54,7 +54,10 @@ public class GetUserAssetByIdService {
                 }
         );
 
-        return userAssets.get(0);
+        if (userAssets.size() > 0) {
+            return userAssets.get(0);
+        }
+        throw new Error("No userAsset found");
     }
 
     private String[] mapArguments(Long userId) {

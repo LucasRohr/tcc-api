@@ -55,6 +55,9 @@ public class FileController {
     @Autowired
     private UnlinkFileHeirsService unlinkFileHeirsService;
 
+    @Autowired
+    private GetAllHeirFilesService getAllHeirFilesService;
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "single-media-upload", consumes = {"multipart/form-data"})
     public void uploadSingleFile(
@@ -114,7 +117,7 @@ public class FileController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("heir-file")
+    @GetMapping("heir-files")
     public Page<FileResponse> getHeirFiles(
             @RequestParam("page") int page,
             @RequestParam("heir_id") Long heirId,
@@ -127,7 +130,7 @@ public class FileController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("heir-file/all")
     public List<FileHeirDto> getAllHeirFiles(@RequestParam("heir_id") Long heirId) {
-        return getHeirFilesService.getFiles(heirId);
+        return getAllHeirFilesService.getFiles(heirId);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -138,7 +141,7 @@ public class FileController {
             @RequestParam("file_type") String type
     ) {
         Pageable pageable = PageRequest.of(page, 10);
-       return getOwnerFilesService.getFiles(pageable, ownerId, FileTypeEnum.valueOf(type.toUpperCase()));
+        return getOwnerFilesService.getFiles(pageable, ownerId, FileTypeEnum.valueOf(type.toUpperCase()));
     }
 
 }

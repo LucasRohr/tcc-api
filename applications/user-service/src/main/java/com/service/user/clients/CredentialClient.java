@@ -18,4 +18,7 @@ public interface CredentialClient {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/heirs-update")
     void editCredentialHeirs(@RequestBody HeirsUpdateRequest request);
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/release?owner_id={ownerId}")
+    void releaseCredentialsHeritage(@PathVariable("ownerId") Long ownerId);
 }
