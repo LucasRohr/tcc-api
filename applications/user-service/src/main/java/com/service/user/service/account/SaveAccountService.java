@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Service
 public class SaveAccountService {
@@ -28,9 +31,11 @@ public class SaveAccountService {
     @Autowired
     private SaveAccountAssetService saveAccountAssetService;
 
-    public void saveAccount(Account account, AccountTypes accountType, Long ownerId)
+    public void saveAccount(Account account, AccountTypes accountType, Long ownerId, String cryptoPassword)
             throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException {
         Account savedAccount = accountRepository.save(account);
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
+        Long timestamp = zonedDateTime.toInstant().toEpochMilli();
 
         KeyPair accountKeys = CryptoUtils.generateKeyPair();
 
@@ -44,7 +49,9 @@ public class SaveAccountService {
                 savedAccount.getId(),
                 accountKeys.getPrivate().toString(),
                 accountKeys.getPublic().toString(),
-                accountType.toString()
+                accountType.toString(),
+                cryptoPassword,
+                timestamp
         );
 
         saveAccountAssetService.createTransaction(accountRecord);
