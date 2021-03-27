@@ -11,7 +11,7 @@ public class AsymmetricCrypto {
 
     private static final String KEY_GENERATION_ALGORITHM = "RSA";
 
-    static KeyPair generateKeyPair(String salt) {
+    public static KeyPair generateKeyPair(String salt) {
         SecureRandom random = new SecureRandom(salt.getBytes(StandardCharsets.UTF_8));
         KeyPairGenerator keyPairGenerator = null;
         try {
@@ -23,7 +23,7 @@ public class AsymmetricCrypto {
         return keyPairGenerator.generateKeyPair();
     }
 
-    static byte[] encrypt(String plainText, PublicKey publicKey) {
+    public static byte[] encrypt(String plainText, PublicKey publicKey) {
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance(KEY_GENERATION_ALGORITHM);
@@ -50,7 +50,7 @@ public class AsymmetricCrypto {
         return new byte[0];
     }
 
-    static String decrypt(byte[] cipherText, PrivateKey privateKey) {
+    public static String decrypt(byte[] cipherText, PrivateKey privateKey) {
 
         Cipher cipher  = null;
         try {
