@@ -33,7 +33,7 @@ public class SymmetricCrypto {
         return initializationVector;
     }
 
-    public byte[] encrypt(String plainText, SecretKey secretKey, byte[] initializationVector) {
+    public String encrypt(String plainText, SecretKey secretKey, byte[] initializationVector) {
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);
@@ -54,17 +54,17 @@ public class SymmetricCrypto {
         }
 
         try {
-            return cipher.doFinal(plainText.getBytes());
+            return new String(cipher.doFinal(plainText.getBytes()));
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
             e.printStackTrace();
         }
 
-        return new byte[0];
+        return "";
     }
 
-     static String decrypt(byte[] cipherText, SecretKey secretKey, byte[] initializationVector) {
+     static String decrypt(String cipherText, SecretKey secretKey, byte[] initializationVector) {
          Cipher cipher = null;
          try {
              cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);
@@ -86,7 +86,7 @@ public class SymmetricCrypto {
 
          byte[] result = new byte[0];
          try {
-             result = cipher.doFinal(cipherText);
+             result = cipher.doFinal(cipherText.getBytes());
          } catch (IllegalBlockSizeException e) {
              e.printStackTrace();
          } catch (BadPaddingException e) {
