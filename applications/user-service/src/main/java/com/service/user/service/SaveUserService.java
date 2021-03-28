@@ -59,7 +59,12 @@ public class SaveUserService {
                 registerUserRequest.getFirstAccountType()
         );
 
-        saveAccountService.saveAccount(newAccount, registerUserRequest.getFirstAccountType(), registerUserRequest.getOwnerId());
+        saveAccountService.saveAccount(
+                newAccount,
+                registerUserRequest.getFirstAccountType(),
+                registerUserRequest.getOwnerId(),
+                ""
+        );
 
         UserRecordModel userRecordModel = new UserRecordModel(
                 savedUser.getId(),

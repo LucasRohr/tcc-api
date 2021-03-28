@@ -19,12 +19,18 @@ public class AccountRecordModel {
 
     private String accountType;
 
+    private String cryptoPassword;
+
+    private Long timestamp;
+
     public String[] toArguments() {
         return Stream.of(
                 this.accountId.toString(),
                 this.privateKey,
                 this.publicKey,
-                this.accountType
+                this.accountType,
+                this.cryptoPassword,
+                this.timestamp.toString()
         ).toArray(String[]::new);
     }
 }

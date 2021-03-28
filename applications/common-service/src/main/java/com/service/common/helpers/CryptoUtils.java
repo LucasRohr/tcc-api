@@ -89,8 +89,8 @@ public class CryptoUtils {
             Cipher c = Cipher.getInstance(ALGORITHM);
             c.init(Cipher.DECRYPT_MODE, key);
 
-            byte[] decordedValue = Base64.getDecoder().decode(encryptedString);
-            byte[] decValue = c.doFinal(decordedValue);
+            byte[] decodedValue = Base64.getDecoder().decode(encryptedString);
+            byte[] decValue = c.doFinal(decodedValue);
 
             decodedText = new String(decValue);
         } catch (Exception e) {
