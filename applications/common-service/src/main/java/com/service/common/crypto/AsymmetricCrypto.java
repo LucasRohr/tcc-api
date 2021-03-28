@@ -19,11 +19,11 @@ public class AsymmetricCrypto {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        keyPairGenerator.initialize(2048, random);
+        keyPairGenerator.initialize(4096, random);
         return keyPairGenerator.generateKeyPair();
     }
 
-    public static byte[] encrypt(String plainText, PublicKey publicKey) {
+    public static String encrypt(String plainText, PublicKey publicKey) {
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance(KEY_GENERATION_ALGORITHM);
@@ -40,17 +40,17 @@ public class AsymmetricCrypto {
         }
 
         try {
-            return cipher.doFinal(plainText.getBytes());
+            return new String(cipher.doFinal(plainText.getBytes()));
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
             e.printStackTrace();
         }
 
-        return new byte[0];
+        return "";
     }
 
-    public static String decrypt(byte[] cipherText, PrivateKey privateKey) {
+    public static String decrypt(String cipherText, PrivateKey privateKey) {
 
         Cipher cipher  = null;
         try {
@@ -69,7 +69,7 @@ public class AsymmetricCrypto {
 
         byte[] result = new byte[0];
         try {
-            result = cipher.doFinal(cipherText);
+            result = cipher.doFinal(cipherText.getBytes());
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
