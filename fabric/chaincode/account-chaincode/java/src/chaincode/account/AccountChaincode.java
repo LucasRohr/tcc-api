@@ -64,6 +64,8 @@ public class AccountChaincode extends ChaincodeBase {
         final String privateKey = params.get(1);
         final String publicKey = params.get(2);
         final String accountType = params.get(3);
+        final String cryptoPassword = params.get(4);
+        final Long timestamp = Long.parseLong(params.get(5));
 
         return Account
                 .builder()
@@ -71,6 +73,8 @@ public class AccountChaincode extends ChaincodeBase {
                 .privateKey(privateKey)
                 .publicKey(publicKey)
                 .accountType(accountType)
+                .cryptoPassword(cryptoPassword)
+                .timestamp(timestamp)
                 .build();
     }
 
