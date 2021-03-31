@@ -1,5 +1,6 @@
 package com.service.user.service.account;
 
+import com.service.common.crypto.AsymmetricCrypto;
 import com.service.common.domain.Account;
 import com.service.common.domain.fabric.account.AccountRecordModel;
 import com.service.common.helpers.CryptoUtils;
@@ -37,7 +38,7 @@ public class SaveAccountService {
         ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
         Long timestamp = zonedDateTime.toInstant().toEpochMilli();
 
-        KeyPair accountKeys = CryptoUtils.generateKeyPair();
+        KeyPair accountKeys = AsymmetricCrypto.generateKeyPair(cryptoPassword);
 
         if(accountType == AccountTypes.OWNER) {
             saveOwnerService.saveOwner(savedAccount);

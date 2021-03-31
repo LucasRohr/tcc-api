@@ -13,4 +13,6 @@ public class CreateOwnerRequest {
 
     private String accountName;
 
+    private String cryptoPassword;
+
 }

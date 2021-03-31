@@ -35,7 +35,12 @@ public class CreateSingleOwnerAccountService {
                 AccountTypes.OWNER
         );
 
-        saveAccountService.saveAccount(ownerAccount, AccountTypes.OWNER, createOwnerRequest.getUserId(), "");
+        saveAccountService.saveAccount(
+                ownerAccount,
+                AccountTypes.OWNER,
+                createOwnerRequest.getUserId(),
+                createOwnerRequest.getCryptoPassword()
+        );
     }
 
 }
