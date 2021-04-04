@@ -17,10 +17,13 @@ public class FileRecordModel {
 
     private Long createdAt;
 
+    private Long fileOwnerId;
+
     public String[] toArguments() {
         return Stream.of(
             this.fileId.toString(),
             this.symmetricKey,
+            this.fileOwnerId.toString(),
             this.createdAt.toString()
         ).toArray(String[]::new);
     }
