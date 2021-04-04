@@ -6,11 +6,13 @@ CERTIFICATE_CHAINCODE_NAME="certificatevalidationcc"
 USER_CHAINCODE_NAME="usercc"
 ACCOUNT_CHAINCODE_NAME="accountcc"
 CREDENTIAL_CHAINCODE_NAME="credentialcc"
+FILE_CHAINCODE_NAME="filecc"
 
 CERTIFICATE_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/certificate-chaincode/java"
 USER_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/user-chaincode/java"
 ACCOUNT_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/account-chaincode/java"
 CREDENTIAL_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/credential-chaincode/java"
+FILE_CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/file-chaincode/java"
 
 CHAINCODE_LANGUAGE="java"
 
@@ -122,3 +124,16 @@ installChaincodeOnAllPeers $CREDENTIAL_CHAINCODE_NAME $CREDENTIAL_CC_SRC_PATH
 
 echo "Instantiating credential chaincode on all peers..."
 instantiateChaincodeOnAllPeers $CREDENTIAL_CHAINCODE_NAME
+
+
+# === FILE ===
+
+echo ""
+echo "===== FILE ====="
+echo ""
+
+echo "Installing file chaincode on all peers..."
+installChaincodeOnAllPeers $FILE_CHAINCODE_NAME $FILE_CC_SRC_PATH
+
+echo "Instantiating file chaincode on all peers..."
+instantiateChaincodeOnAllPeers $FILE_CHAINCODE_NAME
