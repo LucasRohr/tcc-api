@@ -13,4 +13,6 @@ public class FileAsset {
     private String symmetricKey;
 
     private Long createdAt;
+
+    private Long fileOwnerId;
 }

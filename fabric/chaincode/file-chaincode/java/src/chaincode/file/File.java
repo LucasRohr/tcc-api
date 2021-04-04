@@ -15,4 +15,6 @@ class File implements Serializable {
     private Long fileId;
 
     private String symmetricKey;
+
+    private Long fileOwnerId;
 }
