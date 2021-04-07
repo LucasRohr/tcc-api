@@ -74,6 +74,20 @@ echo "Updating anchor peers for org1..."
 updateAnchorPeers 0
 
 
+# === FILE ===
+
+echo ""
+echo "===== FILE ====="
+echo ""
+
+echo "Installing file chaincode on all peers..."
+installChaincodeOnAllPeers $FILE_CHAINCODE_NAME $FILE_CC_SRC_PATH
+
+echo "Instantiating file chaincode on all peers..."
+instantiateChaincodeOnAllPeers $FILE_CHAINCODE_NAME
+
+
+
 # === CERTIFICATE ===
 
 echo ""
@@ -124,16 +138,3 @@ installChaincodeOnAllPeers $CREDENTIAL_CHAINCODE_NAME $CREDENTIAL_CC_SRC_PATH
 
 echo "Instantiating credential chaincode on all peers..."
 instantiateChaincodeOnAllPeers $CREDENTIAL_CHAINCODE_NAME
-
-
-# === FILE ===
-
-echo ""
-echo "===== FILE ====="
-echo ""
-
-echo "Installing file chaincode on all peers..."
-installChaincodeOnAllPeers $FILE_CHAINCODE_NAME $FILE_CC_SRC_PATH
-
-echo "Instantiating file chaincode on all peers..."
-instantiateChaincodeOnAllPeers $FILE_CHAINCODE_NAME

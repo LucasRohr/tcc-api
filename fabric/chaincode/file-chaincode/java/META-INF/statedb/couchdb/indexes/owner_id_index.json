@@ -1,0 +1,11 @@
+{
+  "index": {
+    "fields": [
+      "fileOwnerId"
+    ]
+  },
+  "ddoc": "file_owner_id_doc",
+  "name": "file_owner_id_index",
+  "type": "json"
+}
+
