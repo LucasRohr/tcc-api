@@ -27,8 +27,8 @@ create table if not exists notifications (
 	created_at timestamp not null,
 	account_id bigint not null,
 	receiver_id bigint not null,
-	foreign key (account_id) references accounts(id)
-	foreign key (receiver_id) references accounts(id),
+	foreign key (account_id) references accounts(id),
+	foreign key (receiver_id) references accounts(id)
 );
 
 create table if not exists owners (
