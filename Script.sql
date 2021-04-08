@@ -15,6 +15,7 @@ create table if not exists accounts (
 	"name" varchar(60) not null,
 	created_at timestamp not null,
 	updated_at timestamp not null,
+	is_active boolean not null default true,
 	user_id bigint not null,
 	"type" varchar(15) not null,
 	foreign key (user_id) references users(id)
@@ -61,6 +62,7 @@ create table if not exists files (
 	mime_type varchar(6) not null,
 	owner_id bigint not null,
 	created_at timestamp not null,
+	is_active boolean not null default true,
 	updated_at timestamp not null,
 	foreign key (owner_id) references owners(account_id)
 );
