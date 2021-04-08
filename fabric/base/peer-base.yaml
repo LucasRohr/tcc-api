@@ -25,6 +25,7 @@ services:
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=couchdb_username
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=couchdb_password
+      - GODEBUG=netdns=go
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
 
@@ -52,6 +53,7 @@ services:
       - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/var/hyperledger/orderer/tls/server.crt
       - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/var/hyperledger/orderer/tls/server.key
       - ORDERER_GENERAL_CLUSTER_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+      - GODEBUG=netdns=go
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
 
