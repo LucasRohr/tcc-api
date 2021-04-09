@@ -6,10 +6,12 @@ import com.service.common.domain.FileHeir;
 import com.service.common.domain.Heir;
 import com.service.common.domain.Owner;
 import com.service.common.domain.fabric.account.AccountAsset;
+import com.service.common.domain.fabric.file.FileRecordModel;
 import com.service.common.repository.FileHeirRepository;
 import com.service.common.repository.HeirRepository;
 import com.service.common.repository.OwnerRepository;
 import com.service.common.service.fabric.account.GetAccountAssetByIdService;
+import com.service.common.service.fabric.file.SaveFileAssetService;
 import com.service.file.controller.request.CreateFileRequest;
 import com.service.common.repository.FileRepository;
 import org.apache.commons.io.FilenameUtils;
@@ -22,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Service
 public class SaveSingleFileService {
@@ -42,17 +46,18 @@ public class SaveSingleFileService {
     private HeirRepository heirRepository;
 
     @Autowired
-    private SymmetricCrypto symmetricCrypto;
-
-    @Autowired
     private GetAccountAssetByIdService getAccountAssetByIdService;
 
-    public void saveFile(MultipartFile file, CreateFileRequest createFileRequest) {
+    @Autowired
+    private SaveFileAssetService saveFileAssetService;
+
+    public void saveFile(MultipartFile file, CreateFileRequest createFileRequest)
+            throws InvalidArgumentException, ProposalException {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         Owner owner = ownerRepository.findById(createFileRequest.getOwnerId()).get();
         AccountAsset ownerAsset = getOwnerAssetById(owner.getId());
 
-        SecretKey fileKey = symmetricCrypto.generateKey(ownerAsset.getCryptoPassword());
+        SecretKey fileKey = SymmetricCrypto.generateKey(ownerAsset.getCryptoPassword());
 
         String bucketUrl = uploadBucketFileService.uploadFile(
                 file, createFileRequest.getType().toString().toLowerCase()
@@ -70,6 +75,22 @@ public class SaveSingleFileService {
         );
 
         File savedFile = fileRepository.save(fileToSave);
+
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
+        Long timestamp = zonedDateTime.toInstant().toEpochMilli();
+
+        FileRecordModel fileRecordModel = new FileRecordModel(
+                savedFile.getId(),
+                fileKey.toString(),
+                timestamp,
+                owner.getAccount().getId()
+        );
+
+        System.out.println("==============\n\n");
+        System.out.println(fileKey.toString());
+        System.out.println("\n\n==============");
+
+        saveFileAssetService.createTransaction(fileRecordModel);
 
         createFileRequest.getHeirsIds().forEach(heirId -> {
             Heir heir = heirRepository.findById(heirId).get();

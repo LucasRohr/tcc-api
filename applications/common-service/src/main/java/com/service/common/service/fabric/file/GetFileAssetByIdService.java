@@ -3,8 +3,8 @@ package com.service.common.service.fabric.file;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.service.common.component.chaincode.BaseChaincode;
 import com.service.common.component.chaincode.BaseChaincodeFunction;
-import com.service.common.component.chaincode.account.functions.GetAccountAssetByIdFunction;
 import com.service.common.component.chaincode.file.FileAssetChaincode;
+import com.service.common.component.chaincode.file.functions.GetFileAssetByIdFunction;
 import com.service.common.component.fabric.ChannelClient;
 import com.service.common.domain.fabric.file.FileAsset;
 import com.service.common.exceptions.InvalidProposalResponseException;
@@ -26,7 +26,7 @@ public class GetFileAssetByIdService {
 
     public FileAsset getFileAssetById(Long fileId) throws ProposalException, InvalidArgumentException, IOException {
         final String[] arguments = mapArguments(fileId);
-        final BaseChaincodeFunction baseChaincodeFunction = new GetAccountAssetByIdFunction(arguments);
+        final BaseChaincodeFunction baseChaincodeFunction = new GetFileAssetByIdFunction(arguments);
         final BaseChaincode baseChaincode = new FileAssetChaincode(baseChaincodeFunction);
 
         final String response = Objects.requireNonNull(channelClient.queryByChaincode(baseChaincode))

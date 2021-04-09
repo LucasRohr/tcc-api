@@ -3,10 +3,10 @@ package com.service.user.service.account;
 import com.service.common.crypto.AsymmetricCrypto;
 import com.service.common.domain.Account;
 import com.service.common.domain.fabric.account.AccountRecordModel;
-import com.service.common.helpers.CryptoUtils;
 import com.service.common.repository.AccountRepository;
 import com.service.common.service.fabric.account.SaveAccountAssetService;
 import com.service.common.enums.AccountTypes;
+import com.service.user.config.PasswordEncoder;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,9 @@ public class SaveAccountService {
     @Autowired
     private SaveAccountAssetService saveAccountAssetService;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     public void saveAccount(Account account, AccountTypes accountType, Long ownerId, String cryptoPassword)
             throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException {
         Account savedAccount = accountRepository.save(account);
@@ -51,7 +54,7 @@ public class SaveAccountService {
                 accountKeys.getPrivate().toString(),
                 accountKeys.getPublic().toString(),
                 accountType.toString(),
-                cryptoPassword,
+                encoder.bCryptPasswordEncoder().encode(cryptoPassword),
                 timestamp
         );
 

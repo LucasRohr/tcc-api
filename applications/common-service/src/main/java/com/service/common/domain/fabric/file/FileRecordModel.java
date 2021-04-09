@@ -12,12 +12,11 @@ import java.util.stream.Stream;
 public class FileRecordModel {
     private Long fileId;
 
-    // TODO change to SecretKey and call conversion SymmetricKey method
     private String symmetricKey;
 
-    private Long createdAt;
-
     private Long fileOwnerId;
+
+    private Long createdAt;
 
     public String[] toArguments() {
         return Stream.of(
