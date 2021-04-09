@@ -63,11 +63,15 @@ public class FileChaincode extends ChaincodeBase {
     private File mapParamsToFile(List<String> params) {
         final Long fileId = Long.parseLong(params.get(0));
         final String symmetricKey = params.get(1);
+        final Long fileOwnerId = Long.parseLong(params.get(2));
+        final Long createdAt = Long.parseLong(params.get(3));
 
         return File
                 .builder()
                 .fileId(fileId)
                 .symmetricKey(symmetricKey)
+                .fileOwnerId(fileOwnerId)
+                .createdAt(createdAt)
                 .build();
     }
 

@@ -24,7 +24,7 @@
         <jackson-datatype-jsr310.version>2.10.0.pr3</jackson-datatype-jsr310.version>
 
         <!-- Chaincode path location -->
-        <chaincode.path.location>chaincode.user.UserChaincode</chaincode.path.location>
+        <chaincode.path.location>chaincode.file.FileChaincode</chaincode.path.location>
     </properties>
 
     <repositories>
