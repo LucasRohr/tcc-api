@@ -24,7 +24,7 @@ public class FileChaincode extends ChaincodeBase {
     }
 
     @Override
-    public Response init(ChaincodeStub chaincodeStub) {
+    public Response init(ChaincodeStub stub) {
         return ResponseUtils.newSuccessResponse();
     }
 
@@ -34,7 +34,7 @@ public class FileChaincode extends ChaincodeBase {
 
         switch (chaincodeStub.getFunction()) {
             case "createFileAsset":
-                return createFile(chaincodeStub, params);
+                return createFileAsset(chaincodeStub, params);
             case "queryByFileAssetId":
                 return queryByFileId(chaincodeStub, params);
             default:
@@ -44,7 +44,7 @@ public class FileChaincode extends ChaincodeBase {
     }
 
     @Transaction
-    private Response createFile(final ChaincodeStub chaincodeStub, final List<String> params) {
+    private Response createFileAsset(final ChaincodeStub chaincodeStub, final List<String> params) {
         final String key = params.get(0);
         final String fileState = gson.toJson(mapParamsToFile(params));
 

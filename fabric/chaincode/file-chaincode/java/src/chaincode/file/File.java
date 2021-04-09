@@ -16,6 +16,8 @@ class File implements Serializable {
 
     private String symmetricKey;
 
+    private Long createdAt;
+
     private Long fileOwnerId;
 
     private Long createdAt;
