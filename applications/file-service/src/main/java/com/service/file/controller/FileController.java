@@ -10,6 +10,8 @@ import com.service.file.controller.request.UpdateFileRequest;
 import com.service.file.controller.response.FileHeirResponse;
 import com.service.file.controller.response.FileResponse;
 import com.service.file.service.*;
+import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
+import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -63,7 +65,7 @@ public class FileController {
     public void uploadSingleFile(
             @RequestPart(value = "file-content") MultipartFile file,
             @RequestPart(value = "file-info") CreateFileRequest createFileRequest
-    ) {
+    ) throws ProposalException, InvalidArgumentException {
         saveSingleFileService.saveFile(file, createFileRequest);
     }
 
@@ -72,7 +74,7 @@ public class FileController {
     public void uploadSingleFile(
             @RequestPart(value = "file-content") MultipartFile[] files,
             @RequestPart(value = "file-info") CreateMultipleFilesRequest createMultipleFilesRequest
-    ) {
+    ) throws InvalidArgumentException, ProposalException {
         saveMultipleFilesService.saveFiles(files, createMultipleFilesRequest);
     }
 
