@@ -34,7 +34,12 @@ public class BuildHeirAccountService {
                 AccountTypes.HEIR
         );
 
-        saveAccountService.saveAccount(newAccount, AccountTypes.HEIR, createHeirRequest.getOwnerId(), "");
+        saveAccountService.saveAccount(
+                newAccount,
+                AccountTypes.HEIR,
+                createHeirRequest.getOwnerId(),
+                createHeirRequest.getCryptoPassword()
+        );
     }
 
 }
