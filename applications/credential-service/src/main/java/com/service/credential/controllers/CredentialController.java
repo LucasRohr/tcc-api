@@ -46,7 +46,7 @@ public class CredentialController {
     @PostMapping("creation")
     public void createCredential(@RequestBody @Validated CredentialCreationRequest credentialCreationRequest)
             throws ProposalException, IOException, InvalidArgumentException {
-        createCredentialService.createCredential(credentialCreationRequest, true);
+        createCredentialService.createCredential(credentialCreationRequest, true, null);
     }
 
     @ResponseStatus(HttpStatus.OK)

@@ -1,6 +1,7 @@
 package com.service.file.service;
 
 import com.service.common.crypto.SymmetricCrypto;
+import com.service.common.crypto.SymmetricKeyCrypto;
 import com.service.common.domain.File;
 import com.service.common.domain.FileHeir;
 import com.service.common.domain.Heir;
@@ -26,6 +27,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 
 @Service
 public class SaveSingleFileService {
@@ -55,12 +59,20 @@ public class SaveSingleFileService {
             throws InvalidArgumentException, ProposalException {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         Owner owner = ownerRepository.findById(createFileRequest.getOwnerId()).get();
-        AccountAsset ownerAsset = getOwnerAssetById(owner.getId());
+        AccountAsset ownerAsset = getAccountAssetById(owner.getId());
+
+        List<AccountAsset> accountAssets = new ArrayList<>();
+        accountAssets.add(ownerAsset);
+
+        createFileRequest.getHeirsIds().forEach(heirId -> {
+             AccountAsset accountAsset = getAccountAssetById(heirId);
+            accountAssets.add(accountAsset);
+        });
 
         SecretKey fileKey = SymmetricCrypto.generateKey(ownerAsset.getCryptoPassword());
 
         String bucketUrl = uploadBucketFileService.uploadFile(
-                file, createFileRequest.getType().toString().toLowerCase()
+                file, createFileRequest.getType().toString().toLowerCase(), fileKey
         );
 
         File fileToSave = new File(
@@ -79,16 +91,15 @@ public class SaveSingleFileService {
         ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
         Long timestamp = zonedDateTime.toInstant().toEpochMilli();
 
+        String stringKey = Base64.getEncoder().encodeToString(fileKey.getEncoded());
+        String encryptedSymmetricKey = SymmetricKeyCrypto.encryptKey(stringKey, accountAssets);
+
         FileRecordModel fileRecordModel = new FileRecordModel(
                 savedFile.getId(),
-                fileKey.toString(),
+                encryptedSymmetricKey,
                 timestamp,
                 owner.getAccount().getId()
         );
-
-        System.out.println("==============\n\n");
-        System.out.println(fileKey.toString());
-        System.out.println("\n\n==============");
 
         saveFileAssetService.createTransaction(fileRecordModel);
 
@@ -104,7 +115,7 @@ public class SaveSingleFileService {
         });
     }
 
-    private AccountAsset getOwnerAssetById(Long id) {
+    private AccountAsset getAccountAssetById(Long id) {
         try {
             return getAccountAssetByIdService.getUserAssetById(id);
         } catch (ProposalException e) {

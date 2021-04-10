@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 public class FileAsset {
     private Long fileId;
 
-    // TODO change to SecretKey and call conversion SymmetricKey method
     private String symmetricKey;
 
     private Long createdAt;

@@ -31,6 +31,8 @@ public class CredentialRecordModel {
 
     private Long createdAt;
 
+    private String symmetricKey;
+
     public String[] toArguments() {
         return Stream.of(
                 this.credentialId.toString(),
@@ -42,7 +44,8 @@ public class CredentialRecordModel {
                 this.credentialOwnerId.toString(),
                 this.heirsIds,
                 this.isActive.toString(),
-                this.createdAt.toString()
+                this.createdAt.toString(),
+                symmetricKey
         ).toArray(String[]::new);
     }
 }

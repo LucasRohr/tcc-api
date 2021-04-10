@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.crypto.SecretKey;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -47,19 +48,18 @@ public class GetBucketFileService {
         return new String(encoded, StandardCharsets.US_ASCII);
     }
 
-    public String getFileFromBucket(String fileUrl, String folderName, String fileExtension)
+    public String getFileFromBucket(String fileUrl, String folderName, String fileExtension, SecretKey symmetricKey)
             throws IOException, CryptoException {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
         String pureFileName = fileName.substring(0, fileName.lastIndexOf("."));
         File outputFile = new File(System.getenv("FILE_PATH") + pureFileName + fileExtension);
 
-        String privateKey = "some private key";
-
         S3ObjectInputStream inputStream = getFileFromS3bucket(folderName + "/" + fileName).getObjectContent();
         FileUtils.copyInputStreamToFile(inputStream, outputFile);
         File inputFile = FileUtils.getFile(outputFile);
 
-        CryptoUtils.decrypt(privateKey, inputFile, outputFile);
+        String stringKey = java.util.Base64.getEncoder().encodeToString(symmetricKey.getEncoded());
+        CryptoUtils.decrypt(stringKey, inputFile, outputFile);
 
         return convertFileToBase64(outputFile);
     }

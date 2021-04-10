@@ -36,7 +36,7 @@ public class RemoveCredentialService {
                 selectedCredential.getCredentialOwnerId()
         );
 
-        createCredentialService.createCredential(credentialCreationRequest, false);
+        createCredentialService.createCredential(credentialCreationRequest, false, selectedCredential.getSymmetricKey());
     }
 
 }

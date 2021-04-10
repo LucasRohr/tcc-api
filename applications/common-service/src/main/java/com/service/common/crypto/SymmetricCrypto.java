@@ -26,14 +26,15 @@ public class SymmetricCrypto {
         return key;
     }
 
-    public static byte[] createInitializationVector() {
+    private static byte[] createInitializationVector() {
         byte[] initializationVector = new byte[16];
         SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(initializationVector);
         return initializationVector;
     }
 
-    public String encrypt(String plainText, SecretKey secretKey, byte[] initializationVector) {
+    public static String encrypt(String plainText, SecretKey secretKey) {
+        byte[] initializationVector = createInitializationVector();
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);
@@ -64,7 +65,8 @@ public class SymmetricCrypto {
         return "";
     }
 
-     static String decrypt(String cipherText, SecretKey secretKey, byte[] initializationVector) {
+    public static String decrypt(String cipherText, SecretKey secretKey) {
+        byte[] initializationVector = createInitializationVector();
          Cipher cipher = null;
          try {
              cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);

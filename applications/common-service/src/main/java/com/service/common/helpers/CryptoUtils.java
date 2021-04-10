@@ -56,13 +56,6 @@ public class CryptoUtils {
         }
     }
 
-    public static KeyPair generateKeyPair() throws NoSuchAlgorithmException {
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        keyGen.initialize(512);
-
-        return keyGen.genKeyPair();
-    }
-
     public static String encryptSimpleString(String text) {
         String encodedText = "";
 

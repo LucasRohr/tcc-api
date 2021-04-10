@@ -17,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Base64;
 
 @Service
 public class SaveAccountService {
@@ -49,10 +50,16 @@ public class SaveAccountService {
             saveHeirService.saveHeir(savedAccount, ownerId);
         }
 
+        byte[] bytePublicKey = accountKeys.getPublic().getEncoded();
+        String stringPublicKey = Base64.getEncoder().encodeToString(bytePublicKey);
+
+        byte[] bytePrivateKey = accountKeys.getPrivate().getEncoded();
+        String stringPrivateKey = Base64.getEncoder().encodeToString(bytePrivateKey);
+
         AccountRecordModel accountRecord = new AccountRecordModel(
                 savedAccount.getId(),
-                accountKeys.getPrivate().toString(),
-                accountKeys.getPublic().toString(),
+                stringPrivateKey,
+                stringPublicKey,
                 accountType.toString(),
                 encoder.bCryptPasswordEncoder().encode(cryptoPassword),
                 timestamp

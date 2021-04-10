@@ -89,7 +89,7 @@ public class FileController {
     public void updateFile(
             @RequestPart("file-content") MultipartFile file,
             @RequestPart("file-info") UpdateFileRequest updateFileRequest
-    ) {
+    ) throws ProposalException, IOException, InvalidArgumentException {
         updateFileService.updateFile(file, updateFileRequest);
     }
 
