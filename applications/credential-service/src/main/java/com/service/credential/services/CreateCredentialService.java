@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -41,7 +43,7 @@ public class CreateCredentialService {
     private GetAccountAssetByIdService getAccountAssetByIdService;
 
     public void createCredential(CredentialCreationRequest credentialCreationRequest, boolean isActive, String credentialKeyString)
-            throws ProposalException, IOException, InvalidArgumentException {
+            throws ProposalException, IOException, InvalidArgumentException, InvalidKeySpecException, NoSuchAlgorithmException {
         ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
         Long createdAt = zonedDateTime.toInstant().toEpochMilli();
 
@@ -62,7 +64,7 @@ public class CreateCredentialService {
         SecretKey updateSymmetricKey = credentialKeyString != null ? SymmetricKeyCrypto.decryptKey(credentialKeyString, ownerAsset) : null;
 
         SecretKey credentialKey =
-                updateSymmetricKey != null ? updateSymmetricKey : SymmetricCrypto.generateKey(ownerAsset.getCryptoPassword());
+                updateSymmetricKey != null ? updateSymmetricKey : SymmetricCrypto.generateKey("password");
 
         String stringKey = Base64.getEncoder().encodeToString(credentialKey.getEncoded());
         String encryptedSymmetricKey = SymmetricKeyCrypto.encryptKey(stringKey, accountAssets);

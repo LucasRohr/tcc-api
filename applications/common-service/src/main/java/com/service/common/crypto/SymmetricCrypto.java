@@ -2,28 +2,33 @@ package com.service.common.crypto;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 
 public class SymmetricCrypto {
 
     private static final String KEY_GENERATION_ALGORITHM = "AES";
     private static final String AES_CIPHER_ALGORITHM = "AES/CBC/PKCS5PADDING";
 
-    public static SecretKey generateKey(String password) {
-        SecureRandom secureRandom = new SecureRandom(password.getBytes(StandardCharsets.UTF_8));
-        KeyGenerator keygenerator = null;
-        try {
-            keygenerator = KeyGenerator.getInstance(KEY_GENERATION_ALGORITHM);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        keygenerator.init(256, secureRandom);
-        SecretKey key = keygenerator.generateKey();
-        return key;
+    public static SecretKey generateKey(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] key = factory.generateSecret(spec).getEncoded();
+
+        SecretKeySpec keySpec = new SecretKeySpec(key, KEY_GENERATION_ALGORITHM);
+
+        return keySpec;
     }
 
     private static byte[] createInitializationVector() {

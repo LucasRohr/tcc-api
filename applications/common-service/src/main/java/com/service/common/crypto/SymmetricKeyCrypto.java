@@ -1,7 +1,6 @@
 package com.service.common.crypto;
 
 import com.service.common.domain.fabric.account.AccountAsset;
-import com.service.common.domain.fabric.account.AccountRecordModel;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -14,17 +13,19 @@ import java.util.List;
 
 public class SymmetricKeyCrypto {
 
+    private static final String KEY_GENERATION_ALGORITHM = "RSA";
+
     public static String encryptKey(String key, List<AccountAsset> accounts) {
-        String encryptedKey = "";
+        final String[] encryptedKey = {""};
 
         accounts.forEach(account -> {
             PublicKey accountPublicKey = convertPublicKeyString(account.getPublicKey());
             String encryptedAccountKey = AsymmetricCrypto.encrypt(key, accountPublicKey);
 
-            encryptedKey.concat(account.getAccountId() + ":::" + encryptedAccountKey + "---");
+            encryptedKey[0] = encryptedKey[0].concat(account.getAccountId() + ":::" + encryptedAccountKey + "---");
         });
 
-        return encryptedKey;
+        return encryptedKey[0];
     }
 
     public static SecretKey decryptKey(String encryptedKeyString, AccountAsset account) {
@@ -52,10 +53,8 @@ public class SymmetricKeyCrypto {
         KeyFactory factory = null;
 
         try {
-            factory = KeyFactory.getInstance("ECDSA", "BC");
+            factory = KeyFactory.getInstance(KEY_GENERATION_ALGORITHM);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchProviderException e) {
             e.printStackTrace();
         }
 
@@ -75,10 +74,8 @@ public class SymmetricKeyCrypto {
         KeyFactory factory = null;
 
         try {
-            factory = KeyFactory.getInstance("ECDSA", "BC");
+            factory = KeyFactory.getInstance(KEY_GENERATION_ALGORITHM);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchProviderException e) {
             e.printStackTrace();
         }
 
