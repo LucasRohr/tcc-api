@@ -2,10 +2,7 @@ package com.service.file.service;
 
 import com.service.common.crypto.SymmetricCrypto;
 import com.service.common.crypto.SymmetricKeyCrypto;
-import com.service.common.domain.File;
-import com.service.common.domain.FileHeir;
-import com.service.common.domain.Heir;
-import com.service.common.domain.Owner;
+import com.service.common.domain.*;
 import com.service.common.domain.fabric.account.AccountAsset;
 import com.service.common.domain.fabric.file.FileRecordModel;
 import com.service.common.repository.FileHeirRepository;
@@ -24,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -56,7 +55,7 @@ public class SaveSingleFileService {
     private SaveFileAssetService saveFileAssetService;
 
     public void saveFile(MultipartFile file, CreateFileRequest createFileRequest)
-            throws InvalidArgumentException, ProposalException {
+            throws InvalidArgumentException, ProposalException, InvalidKeySpecException, NoSuchAlgorithmException {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         Owner owner = ownerRepository.findById(createFileRequest.getOwnerId()).get();
         AccountAsset ownerAsset = getAccountAssetById(owner.getId());
@@ -65,11 +64,11 @@ public class SaveSingleFileService {
         accountAssets.add(ownerAsset);
 
         createFileRequest.getHeirsIds().forEach(heirId -> {
-             AccountAsset accountAsset = getAccountAssetById(heirId);
+            AccountAsset accountAsset = getAccountAssetById(heirId);
             accountAssets.add(accountAsset);
         });
 
-        SecretKey fileKey = SymmetricCrypto.generateKey(ownerAsset.getCryptoPassword());
+        SecretKey fileKey = SymmetricCrypto.generateKey("password");
 
         String bucketUrl = uploadBucketFileService.uploadFile(
                 file, createFileRequest.getType().toString().toLowerCase(), fileKey
@@ -93,6 +92,9 @@ public class SaveSingleFileService {
 
         String stringKey = Base64.getEncoder().encodeToString(fileKey.getEncoded());
         String encryptedSymmetricKey = SymmetricKeyCrypto.encryptKey(stringKey, accountAssets);
+
+        System.out.println("decrypted stringKey = " + stringKey);
+        System.out.println("encryptedSymmetricKey = " + encryptedSymmetricKey);
 
         FileRecordModel fileRecordModel = new FileRecordModel(
                 savedFile.getId(),

@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 @Service
 public class SaveMultipleFilesService {
 
@@ -15,7 +18,7 @@ public class SaveMultipleFilesService {
     private SaveSingleFileService saveSingleFileService;
 
     public void saveFiles(MultipartFile[] files, CreateMultipleFilesRequest createMultipleFilesRequest)
-            throws ProposalException, InvalidArgumentException {
+            throws ProposalException, InvalidArgumentException, InvalidKeySpecException, NoSuchAlgorithmException {
 
         for(MultipartFile multipartFile : files) {
             CreateFileRequest createFileRequest = new CreateFileRequest(

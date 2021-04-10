@@ -12,6 +12,8 @@ public class AccountAsset {
 
     private String publicKey;
 
+    private String accountType;
+
     private String cryptoPassword;
 
     private Long timestamp;
