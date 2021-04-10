@@ -36,7 +36,11 @@ public class UpdateCredentialHeirsService {
                 heirsUpdateRequest.getOwnerId()
         );
 
-        createCredentialService.createCredential(credentialCreationRequest, true);
+        boolean hasChangedHeirs =
+                !selectedCredential.getHeirsIds().toString().equals(heirsUpdateRequest.getHeirsIds().toString());
+        String symmetricKey = hasChangedHeirs ? null : selectedCredential.getSymmetricKey();
+
+        createCredentialService.createCredential(credentialCreationRequest, true, symmetricKey);
     }
 
 }

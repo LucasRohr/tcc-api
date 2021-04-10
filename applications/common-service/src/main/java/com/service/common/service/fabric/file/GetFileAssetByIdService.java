@@ -13,6 +13,8 @@ import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -24,7 +26,7 @@ public class GetFileAssetByIdService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public FileAsset getFileAssetById(Long fileId) throws ProposalException, InvalidArgumentException, IOException {
+    public List<FileAsset> getFileAssetById(Long fileId) throws ProposalException, InvalidArgumentException, IOException {
         final String[] arguments = mapArguments(fileId);
         final BaseChaincodeFunction baseChaincodeFunction = new GetFileAssetByIdFunction(arguments);
         final BaseChaincode baseChaincode = new FileAssetChaincode(baseChaincodeFunction);
@@ -35,7 +37,7 @@ public class GetFileAssetByIdService {
                 .orElseThrow(InvalidProposalResponseException::new)
                 .getMessage();
 
-        return objectMapper.readValue(response, FileAsset.class);
+        return Arrays.asList(objectMapper.readValue(response, FileAsset[].class));
     }
 
     private String[] mapArguments(Long fileId) {

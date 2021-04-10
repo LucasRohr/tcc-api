@@ -17,6 +17,9 @@ public class UpdateFileRequest {
     @NotNull
     private Long id;
 
+    @NotNull
+    private Long ownerId;
+
     @NotEmpty
     private String name;
 
