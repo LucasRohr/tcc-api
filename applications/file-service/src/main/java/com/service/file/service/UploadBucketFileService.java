@@ -63,13 +63,12 @@ public class UploadBucketFileService {
     }
 
     private File encryptFile(File file, SecretKey symmetricKey) throws CryptoException {
-        String stringKey = Base64.getEncoder().encodeToString(symmetricKey.getEncoded());
         String randomFileName = new RandomCode(FILE_NAME_LENGTH).nextString();
 
         String filePath = System.getenv("FILE_PATH") + randomFileName + ".enc";
 
         File outputFile = new File(filePath);
-        CryptoUtils.encrypt(stringKey, file, outputFile);
+        CryptoUtils.encrypt(symmetricKey, file, outputFile);
 
         return outputFile;
     }

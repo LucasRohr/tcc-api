@@ -63,7 +63,7 @@ public class SaveUserService {
                 newAccount,
                 registerUserRequest.getFirstAccountType(),
                 registerUserRequest.getOwnerId(),
-                ""
+                "password"
         );
 
         UserRecordModel userRecordModel = new UserRecordModel(
