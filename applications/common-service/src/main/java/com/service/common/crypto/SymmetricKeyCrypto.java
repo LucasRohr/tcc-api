@@ -45,10 +45,6 @@ public class SymmetricKeyCrypto {
 
         byte[] decodedKey = AsymmetricCrypto.decrypt(encryptedKey, privateKey);
 
-        System.out.println("==== decodedKey ====\n\n");
-        System.out.println(decodedKey);
-        System.out.println("\n\n========");
-
         return new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
     }
 

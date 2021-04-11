@@ -14,6 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
 
@@ -45,7 +47,7 @@ public class CredentialController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("creation")
     public void createCredential(@RequestBody @Validated CredentialCreationRequest credentialCreationRequest)
-            throws ProposalException, IOException, InvalidArgumentException {
+            throws ProposalException, IOException, InvalidArgumentException, InvalidKeySpecException, NoSuchAlgorithmException {
         createCredentialService.createCredential(credentialCreationRequest, true, null);
     }
 
@@ -77,7 +79,7 @@ public class CredentialController {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("credential-remove")
     public void removeCredential(@RequestBody CredentialRemoveRequest credentialRemoveRequest)
-            throws ProposalException, IOException, InvalidArgumentException {
+            throws ProposalException, IOException, InvalidArgumentException, InvalidKeySpecException, NoSuchAlgorithmException {
          removeCredentialService.removeCredential(credentialRemoveRequest);
     }
 
@@ -93,7 +95,7 @@ public class CredentialController {
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("heirs-update")
     public void updateHeirs(@RequestBody @Validated HeirsUpdateRequest heirsUpdateRequest)
-            throws ProposalException, IOException, InvalidArgumentException {
+            throws ProposalException, IOException, InvalidArgumentException, InvalidKeySpecException, NoSuchAlgorithmException {
         updateCredentialHeirsService.updateHeirs(heirsUpdateRequest);
     }
 

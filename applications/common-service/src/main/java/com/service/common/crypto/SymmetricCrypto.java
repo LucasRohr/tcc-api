@@ -15,7 +15,7 @@ import java.security.spec.KeySpec;
 public class SymmetricCrypto {
 
     private static final String KEY_GENERATION_ALGORITHM = "AES";
-    private static final String AES_CIPHER_ALGORITHM = "AES/CBC/PKCS5PADDING";
+    private static final String AES_CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
 
     public static SecretKey generateKey(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecureRandom random = new SecureRandom();
@@ -59,7 +59,7 @@ public class SymmetricCrypto {
         }
 
         try {
-            return new String(cipher.doFinal(plainText.getBytes()));
+            return new String(cipher.doFinal(plainText.getBytes()), StandardCharsets.ISO_8859_1);
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
@@ -92,7 +92,7 @@ public class SymmetricCrypto {
 
          byte[] result = new byte[0];
          try {
-             result = cipher.doFinal(cipherText.getBytes());
+             result = cipher.doFinal(cipherText.getBytes(StandardCharsets.ISO_8859_1));
          } catch (IllegalBlockSizeException e) {
              e.printStackTrace();
          } catch (BadPaddingException e) {

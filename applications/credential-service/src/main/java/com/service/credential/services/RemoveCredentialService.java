@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 @Service
 public class RemoveCredentialService {
@@ -20,7 +22,7 @@ public class RemoveCredentialService {
     private GetCredentialByIdService getCredentialByIdService;
 
     public void removeCredential(CredentialRemoveRequest credentialRemoveRequest)
-            throws ProposalException, IOException, InvalidArgumentException {
+            throws ProposalException, IOException, InvalidArgumentException, InvalidKeySpecException, NoSuchAlgorithmException {
 
         CredentialResponse selectedCredential = getCredentialByIdService
                 .getCredential(credentialRemoveRequest.getOwnerId(), credentialRemoveRequest.getCredentialId());
