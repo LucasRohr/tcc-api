@@ -33,8 +33,12 @@ public class CryptoUtils {
             int cipherMode, SecretKey secretKey, File inputFile,
             File outputFile) throws CryptoException {
         try {
+            System.out.println("====== AQUI Ó =======\n\n");
+            System.out.println(secretKey);
+            System.out.println("\n\n=============");
+
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            cipher.init(cipherMode, secretKey);
+            cipher.init(cipherMode, secretKey, new IvParameterSpec(new byte[16]));
 
             FileInputStream inputStream = new FileInputStream(inputFile);
             byte[] inputBytes = new byte[(int) inputFile.length()];
@@ -47,7 +51,7 @@ public class CryptoUtils {
 
             inputStream.close();
             outputStream.close();
-        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | IOException ex) {
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | IOException | InvalidAlgorithmParameterException ex) {
             throw new CryptoException("Error encrypting/decrypting file", ex);
         }
     }

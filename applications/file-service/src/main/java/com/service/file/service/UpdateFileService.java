@@ -26,6 +26,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UpdateFileService {
@@ -61,9 +62,9 @@ public class UpdateFileService {
 
         List<FileHeir> fileHeirs = fileHeirRepository.getFilesHeirsByFile(updateFileRequest.getId());
 
-        List<Long> heirsIds = (List<Long>) fileHeirs.stream().map(fileHeir -> {
+        List<Long> heirsIds = fileHeirs.stream().map(fileHeir -> {
             return fileHeir.getHeir().getAccount().getId();
-        });
+        }).collect(Collectors.toList());
 
         List<FileAsset> fileAssets = getFileAssetByIdService.getFileAssetById(updateFileRequest.getId());
 
