@@ -90,11 +90,7 @@ public class SaveSingleFileService {
         ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
         Long timestamp = zonedDateTime.toInstant().toEpochMilli();
 
-        String stringKey = Base64.getEncoder().encodeToString(fileKey.getEncoded());
-        String encryptedSymmetricKey = SymmetricKeyCrypto.encryptKey(stringKey, accountAssets);
-
-        System.out.println("decrypted stringKey = " + stringKey);
-        System.out.println("encryptedSymmetricKey = " + encryptedSymmetricKey);
+        String encryptedSymmetricKey = SymmetricKeyCrypto.encryptKey(fileKey.getEncoded(), accountAssets);
 
         FileRecordModel fileRecordModel = new FileRecordModel(
                 savedFile.getId(),

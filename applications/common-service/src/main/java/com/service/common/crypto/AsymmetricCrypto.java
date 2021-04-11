@@ -12,18 +12,20 @@ public class AsymmetricCrypto {
     private static final String KEY_GENERATION_ALGORITHM = "RSA";
 
     public static KeyPair generateKeyPair(String salt) {
-        SecureRandom random = new SecureRandom(salt.getBytes(StandardCharsets.UTF_8));
+        SecureRandom random = new SecureRandom(salt.getBytes());
         KeyPairGenerator keyPairGenerator = null;
+
         try {
             keyPairGenerator = KeyPairGenerator.getInstance(KEY_GENERATION_ALGORITHM);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+
         keyPairGenerator.initialize(4096, random);
         return keyPairGenerator.generateKeyPair();
     }
 
-    public static String encrypt(String plainText, PublicKey publicKey) {
+    public static byte[] encrypt(byte[] cryptContent, PublicKey publicKey) {
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance(KEY_GENERATION_ALGORITHM);
@@ -34,23 +36,23 @@ public class AsymmetricCrypto {
         }
 
         try {
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            cipher.init(Cipher.PUBLIC_KEY, publicKey);
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         }
 
         try {
-            return new String(cipher.doFinal(plainText.getBytes()));
+            return cipher.doFinal(cryptContent);
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
             e.printStackTrace();
         }
 
-        return "";
+        return new byte[0];
     }
 
-    public static String decrypt(String cipherText, PrivateKey privateKey) {
+    public static byte[] decrypt(String cipherText, PrivateKey privateKey) {
 
         Cipher cipher  = null;
         try {
@@ -62,20 +64,20 @@ public class AsymmetricCrypto {
         }
 
         try {
-            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+            cipher.init(Cipher.PRIVATE_KEY, privateKey);
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         }
 
         byte[] result = new byte[0];
         try {
-            result = cipher.doFinal(cipherText.getBytes());
+            result = cipher.doFinal(cipherText.getBytes(StandardCharsets.ISO_8859_1));
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
             e.printStackTrace();
         }
 
-        return new String(result);
+        return result;
     }
 }

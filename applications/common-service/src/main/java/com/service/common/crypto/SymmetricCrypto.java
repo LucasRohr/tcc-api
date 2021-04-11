@@ -19,16 +19,15 @@ public class SymmetricCrypto {
 
     public static SecretKey generateKey(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
+        byte[] salt = new byte[8];
         random.nextBytes(salt);
 
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        byte[] key = factory.generateSecret(spec).getEncoded();
+        SecretKey tmp = factory.generateSecret(spec);
+        SecretKey secretKey = new SecretKeySpec(tmp.getEncoded(), KEY_GENERATION_ALGORITHM);
 
-        SecretKeySpec keySpec = new SecretKeySpec(key, KEY_GENERATION_ALGORITHM);
-
-        return keySpec;
+        return secretKey;
     }
 
     private static byte[] createInitializationVector() {

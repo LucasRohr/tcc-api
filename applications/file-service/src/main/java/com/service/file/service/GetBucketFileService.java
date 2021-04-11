@@ -58,8 +58,7 @@ public class GetBucketFileService {
         FileUtils.copyInputStreamToFile(inputStream, outputFile);
         File inputFile = FileUtils.getFile(outputFile);
 
-        String stringKey = java.util.Base64.getEncoder().encodeToString(symmetricKey.getEncoded());
-        CryptoUtils.decrypt(stringKey, inputFile, outputFile);
+        CryptoUtils.decrypt(symmetricKey, inputFile, outputFile);
 
         return convertFileToBase64(outputFile);
     }
