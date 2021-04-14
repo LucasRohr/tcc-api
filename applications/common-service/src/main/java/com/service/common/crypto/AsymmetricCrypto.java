@@ -52,7 +52,7 @@ public class AsymmetricCrypto {
         return new byte[0];
     }
 
-    public static byte[] decrypt(String cipherText, PrivateKey privateKey) {
+    public static byte[] decrypt(byte[] cryptContent, PrivateKey privateKey) {
 
         Cipher cipher  = null;
         try {
@@ -71,7 +71,7 @@ public class AsymmetricCrypto {
 
         byte[] result = new byte[0];
         try {
-            result = cipher.doFinal(cipherText.getBytes(StandardCharsets.ISO_8859_1));
+            result = cipher.doFinal(cryptContent);
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {

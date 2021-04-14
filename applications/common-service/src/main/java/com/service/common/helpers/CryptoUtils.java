@@ -33,10 +33,6 @@ public class CryptoUtils {
             int cipherMode, SecretKey secretKey, File inputFile,
             File outputFile) throws CryptoException {
         try {
-            System.out.println("====== AQUI Ó =======\n\n");
-            System.out.println(secretKey);
-            System.out.println("\n\n=============");
-
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
             cipher.init(cipherMode, secretKey, new IvParameterSpec(new byte[16]));
 

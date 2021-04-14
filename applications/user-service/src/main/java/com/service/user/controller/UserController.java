@@ -126,7 +126,7 @@ public class UserController {
     public void bootstrap() throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException, IOException {
         registerUser(new RegisterUserRequest(
                 "Carlos Vasconcellos",
-                "muan@hotmail.com",
+                "lucasrc17@live.com",
                 "354.336.510-02",
                 LocalDateTime.now().minusYears(29),
                 "Literatura2012",

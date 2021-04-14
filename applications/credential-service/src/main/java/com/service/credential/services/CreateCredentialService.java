@@ -24,7 +24,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -61,7 +60,8 @@ public class CreateCredentialService {
             accountAssets.add(accountAsset);
         });
 
-        SecretKey updateSymmetricKey = credentialKeyString != null ? SymmetricKeyCrypto.decryptKey(credentialKeyString, ownerAsset) : null;
+        SecretKey updateSymmetricKey =
+                credentialKeyString != null ? SymmetricKeyCrypto.decryptKey(credentialKeyString, ownerAsset) : null;
 
         SecretKey credentialKey =
                 updateSymmetricKey != null ? updateSymmetricKey : SymmetricCrypto.generateKey("password");
