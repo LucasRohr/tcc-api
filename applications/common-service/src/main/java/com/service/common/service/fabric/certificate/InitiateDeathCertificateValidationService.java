@@ -8,16 +8,11 @@ import com.service.common.component.fabric.ChannelClient;
 import com.service.common.domain.fabric.certificate.DeathCertificateRecordModel;
 import com.service.common.exceptions.InvalidProposalResponseException;
 import lombok.extern.slf4j.Slf4j;
-import org.hyperledger.fabric.sdk.ChaincodeResponse;
-import org.hyperledger.fabric.sdk.ProposalResponse;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
