@@ -23,9 +23,9 @@ public class SymmetricKeyCrypto {
 
         accounts.forEach(account -> {
             PublicKey accountPublicKey = convertPublicKeyString(account.getPublicKey());
-            String encryptedAccountKey = new String(AsymmetricCrypto.encrypt(key, accountPublicKey), StandardCharsets.ISO_8859_1);
+            String encryptedAccountKey = Base64.getEncoder().encodeToString(AsymmetricCrypto.encrypt(key, accountPublicKey));
 
-            encryptedKey[0] = encryptedKey[0].concat(account.getAccountId() + ":::" + encryptedAccountKey + "---");
+            encryptedKey[0] = encryptedKey[0].concat(account.getAccountId().toString() + ":::" + encryptedAccountKey + "---");
         });
 
         return encryptedKey[0];
@@ -40,10 +40,11 @@ public class SymmetricKeyCrypto {
             return accountId.equals(account.getAccountId().toString());
         }).collect(Collectors.joining());
 
-        String encryptedKey = Arrays.asList(accountEncryptedKeyPart.split(":::")).get(1).replace("---", "");
-        PrivateKey privateKey = convertPrivateKeyString(account.getPrivateKey());
+        String encryptedBase64Key = Arrays.asList(accountEncryptedKeyPart.split(":::")).get(1).replace("---", "");
+        byte[] encoded64Key = Base64.getDecoder().decode(encryptedBase64Key);
 
-        byte[] decodedKey = AsymmetricCrypto.decrypt(encryptedKey, privateKey);
+        PrivateKey privateKey = convertPrivateKeyString(account.getPrivateKey());
+        byte[] decodedKey = AsymmetricCrypto.decrypt(encoded64Key, privateKey);
 
         return new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
     }

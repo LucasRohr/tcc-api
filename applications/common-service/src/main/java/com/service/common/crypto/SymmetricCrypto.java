@@ -40,6 +40,7 @@ public class SymmetricCrypto {
     public static String encrypt(String plainText, SecretKey secretKey) {
         byte[] initializationVector = createInitializationVector();
         Cipher cipher = null;
+
         try {
             cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);
         } catch (NoSuchAlgorithmException e) {
@@ -48,10 +49,8 @@ public class SymmetricCrypto {
             e.printStackTrace();
         }
 
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(initializationVector);
-
         try {
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(new byte[16]));
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (InvalidAlgorithmParameterException e) {
@@ -72,6 +71,7 @@ public class SymmetricCrypto {
     public static String decrypt(String cipherText, SecretKey secretKey) {
         byte[] initializationVector = createInitializationVector();
          Cipher cipher = null;
+
          try {
              cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);
          } catch (NoSuchAlgorithmException e) {
@@ -83,7 +83,7 @@ public class SymmetricCrypto {
          IvParameterSpec ivParameterSpec = new IvParameterSpec(initializationVector);
 
          try {
-             cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
+             cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(new byte[16]));
          } catch (InvalidKeyException e) {
              e.printStackTrace();
          } catch (InvalidAlgorithmParameterException e) {
@@ -91,6 +91,7 @@ public class SymmetricCrypto {
          }
 
          byte[] result = new byte[0];
+
          try {
              result = cipher.doFinal(cipherText.getBytes(StandardCharsets.ISO_8859_1));
          } catch (IllegalBlockSizeException e) {
