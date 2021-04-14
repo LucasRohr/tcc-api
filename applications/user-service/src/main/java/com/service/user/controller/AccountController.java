@@ -58,6 +58,9 @@ public class AccountController {
     @Autowired
     private ValidateDeathCertificateService validateDeathCertificateService;
 
+    @Autowired
+    private ValidateCryptoPasswordService validateCryptoPasswordService;
+
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("last-update")
     public void updateLastAccess(@RequestParam("account_id") Long accountId) {
@@ -136,6 +139,14 @@ public class AccountController {
     )
             throws InvalidArgumentException, ProposalException, IOException {
         validateDeathCertificateService.validateDeathCertificate(request);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("crypto-password-validation")
+    public void validateCryptoPassword(
+            @RequestBody CryptoPasswordRequest request
+    ) {
+        validateCryptoPasswordService.validateCryptoPassword(request);
     }
 
 }
