@@ -1,28 +1,36 @@
 package com.service.common.crypto;
 
 import com.service.common.domain.fabric.account.AccountAsset;
+import com.service.common.helpers.KeysConverter;
+import com.service.common.service.account.GetAccountAssetByIdCommonService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class SymmetricKeyCrypto {
+    private static final long MASTER_KEY_ID = 0;
 
-    private static final String KEY_GENERATION_ALGORITHM = "RSA";
+    @Autowired
+    private static GetAccountAssetByIdCommonService getAccountAssetByIdCommonService;
+
+    private static AccountAsset masterAsset = getAccountAssetByIdCommonService.getAccount(MASTER_KEY_ID);
+    private static PrivateKey masterPrivateKey = KeysConverter.convertPrivateKeyString(masterAsset.getPrivateKey());
 
     public static String encryptKey(byte[] key, List<AccountAsset> accounts) {
         final String[] encryptedKey = {""};
 
         accounts.forEach(account -> {
-            PublicKey accountPublicKey = convertPublicKeyString(account.getPublicKey());
+            byte[] byte64AccountKey = Base64.getDecoder().decode(account.getPublicKey());
+            byte[] decodedPublicKeyBytes = AsymmetricCrypto.decrypt(byte64AccountKey, masterPrivateKey);
+            String stringAccountPublicKey = Base64.getEncoder().encodeToString(decodedPublicKeyBytes);
+
+            PublicKey accountPublicKey = KeysConverter.convertPublicKeyString(stringAccountPublicKey);
             String encryptedAccountKey = Base64.getEncoder().encodeToString(AsymmetricCrypto.encrypt(key, accountPublicKey));
 
             encryptedKey[0] = encryptedKey[0].concat(account.getAccountId().toString() + ":::" + encryptedAccountKey + "---");
@@ -43,52 +51,14 @@ public class SymmetricKeyCrypto {
         String encryptedBase64Key = Arrays.asList(accountEncryptedKeyPart.split(":::")).get(1).replace("---", "");
         byte[] encoded64Key = Base64.getDecoder().decode(encryptedBase64Key);
 
-        PrivateKey privateKey = convertPrivateKeyString(account.getPrivateKey());
+        byte[] byte64AccountKey = Base64.getDecoder().decode(account.getPrivateKey());
+        byte[] decodedPrivateKeyBytes = AsymmetricCrypto.decrypt(byte64AccountKey, masterPrivateKey);
+        String stringAccountPrivateKey = Base64.getEncoder().encodeToString(decodedPrivateKeyBytes);
+
+        PrivateKey privateKey = KeysConverter.convertPrivateKeyString(stringAccountPrivateKey);
         byte[] decodedKey = AsymmetricCrypto.decrypt(encoded64Key, privateKey);
 
         return new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
-    }
-
-    private static PrivateKey convertPrivateKeyString(String stringKey) {
-        PrivateKey privateKey = null;
-
-        byte[] bytePrivateKey  = Base64.getDecoder().decode(stringKey);
-        KeyFactory factory = null;
-
-        try {
-            factory = KeyFactory.getInstance(KEY_GENERATION_ALGORITHM);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            privateKey = factory.generatePrivate(new PKCS8EncodedKeySpec(bytePrivateKey));
-        } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
-        }
-
-        return privateKey;
-    }
-
-    private static PublicKey convertPublicKeyString(String stringKey) {
-        PublicKey publicKey = null;
-
-        byte[] bytePublicKey  = Base64.getDecoder().decode(stringKey);
-        KeyFactory factory = null;
-
-        try {
-            factory = KeyFactory.getInstance(KEY_GENERATION_ALGORITHM);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            publicKey = factory.generatePublic(new X509EncodedKeySpec(bytePublicKey));
-        } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
-        }
-
-        return publicKey;
     }
 
 }

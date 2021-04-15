@@ -66,17 +66,4 @@ public class GetFileByIdService {
         return "data:application/" + file.getMimeType() + ";base64," + fileBase;
     }
 
-    private AccountAsset getAccountAssetById(Long id) {
-        try {
-            return getAccountAssetByIdService.getUserAssetById(id);
-        } catch (ProposalException e) {
-            e.printStackTrace();
-        } catch (InvalidArgumentException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 }

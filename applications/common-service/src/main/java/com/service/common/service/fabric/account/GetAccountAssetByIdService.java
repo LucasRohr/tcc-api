@@ -43,7 +43,7 @@ public class GetAccountAssetByIdService {
 
         final List<AccountAsset> accountAssets = Arrays.asList(objectMapper.readValue(response, AccountAsset[].class));
 
-        return accountAssets.get(0);
+        return accountAssets.size() > 0 ? accountAssets.get(0) : null;
     }
 
     private String[] mapArguments(Long accountId) {
