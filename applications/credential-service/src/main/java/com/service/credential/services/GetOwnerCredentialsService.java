@@ -4,7 +4,7 @@ import com.service.common.crypto.SymmetricCrypto;
 import com.service.common.crypto.SymmetricKeyCrypto;
 import com.service.common.domain.fabric.account.AccountAsset;
 import com.service.common.domain.fabric.credential.CredentialAsset;
-import com.service.common.service.fabric.account.GetAccountAssetByIdService;
+import com.service.common.service.account.GetAccountAssetByIdCommonService;
 import com.service.common.service.fabric.credential.GetCredentialAssetsByOwnerIdService;
 import com.service.credential.controllers.response.CredentialResponse;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -28,14 +27,14 @@ public class GetOwnerCredentialsService {
     private GetCredentialAssetsByOwnerIdService getCredentialAssetsByOwnerIdService;
 
     @Autowired
-    private GetAccountAssetByIdService getAccountAssetByIdService;
+    private GetAccountAssetByIdCommonService getAccountAssetByIdCommonService;
 
     public List<CredentialResponse> getOwnerCredentials(Long ownerId)
             throws ProposalException, IOException, InvalidArgumentException {
         List<CredentialResponse> credentialsList = new ArrayList<>();
 
         List<CredentialAsset> allCredentials = getCredentialAssetsByOwnerIdService.getCredentialsByOwnerId(ownerId);
-        AccountAsset credentialRequester = getAccountAssetById(ownerId);
+        AccountAsset credentialRequester = getAccountAssetByIdCommonService.getAccount(ownerId);
 
         allCredentials.sort(
             new Comparator<CredentialAsset>() {
@@ -108,19 +107,6 @@ public class GetOwnerCredentialsService {
         });
 
         return credentialsList;
-    }
-
-    private AccountAsset getAccountAssetById(Long id) {
-        try {
-            return getAccountAssetByIdService.getUserAssetById(id);
-        } catch (ProposalException e) {
-            e.printStackTrace();
-        } catch (InvalidArgumentException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 }

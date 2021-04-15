@@ -7,7 +7,7 @@ import com.service.common.domain.fabric.account.AccountAsset;
 import com.service.common.domain.fabric.credential.CredentialAsset;
 import com.service.common.domain.fabric.credential.CredentialRecordModel;
 import com.service.common.repository.OwnerRepository;
-import com.service.common.service.fabric.account.GetAccountAssetByIdService;
+import com.service.common.service.account.GetAccountAssetByIdCommonService;
 import com.service.common.service.fabric.credential.GetCredentialAssetsByOwnerIdService;
 import com.service.common.service.fabric.credential.SaveCredentialAssetService;
 import com.service.credential.controllers.request.CredentialCreationRequest;
@@ -39,10 +39,11 @@ public class CreateCredentialService {
     private OwnerRepository ownerRepository;
 
     @Autowired
-    private GetAccountAssetByIdService getAccountAssetByIdService;
+    private GetAccountAssetByIdCommonService getAccountAssetByIdCommonService;
 
-    public void createCredential(CredentialCreationRequest credentialCreationRequest, boolean isActive, String credentialKeyString)
-            throws ProposalException, IOException, InvalidArgumentException, InvalidKeySpecException, NoSuchAlgorithmException {
+    public void createCredential(
+            CredentialCreationRequest credentialCreationRequest, boolean isActive, String credentialKeyString
+    ) throws ProposalException, IOException, InvalidArgumentException, InvalidKeySpecException, NoSuchAlgorithmException {
         ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
         Long createdAt = zonedDateTime.toInstant().toEpochMilli();
 
@@ -50,13 +51,13 @@ public class CreateCredentialService {
                 getCredentialAssetsByOwnerIdService.getCredentialsByOwnerId(credentialCreationRequest.getOwnerId());
 
         Owner owner = ownerRepository.findById(credentialCreationRequest.getOwnerId()).get();
-        AccountAsset ownerAsset = getAccountAssetById(owner.getId());
+        AccountAsset ownerAsset = getAccountAssetByIdCommonService.getAccount(owner.getId());
 
         List<AccountAsset> accountAssets = new ArrayList<>();
         accountAssets.add(ownerAsset);
 
         credentialCreationRequest.getHeirsIds().forEach(heirId -> {
-            AccountAsset accountAsset = getAccountAssetById(heirId);
+            AccountAsset accountAsset = getAccountAssetByIdCommonService.getAccount(heirId);
             accountAssets.add(accountAsset);
         });
 
@@ -85,19 +86,6 @@ public class CreateCredentialService {
         );
 
         saveCredentialAssetService.createTransaction(credentialRecordModel);
-    }
-
-    private AccountAsset getAccountAssetById(Long id) {
-        try {
-            return getAccountAssetByIdService.getUserAssetById(id);
-        } catch (ProposalException e) {
-            e.printStackTrace();
-        } catch (InvalidArgumentException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 }

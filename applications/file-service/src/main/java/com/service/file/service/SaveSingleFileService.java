@@ -8,7 +8,7 @@ import com.service.common.domain.fabric.file.FileRecordModel;
 import com.service.common.repository.FileHeirRepository;
 import com.service.common.repository.HeirRepository;
 import com.service.common.repository.OwnerRepository;
-import com.service.common.service.fabric.account.GetAccountAssetByIdService;
+import com.service.common.service.account.GetAccountAssetByIdCommonService;
 import com.service.common.service.fabric.file.SaveFileAssetService;
 import com.service.file.controller.request.CreateFileRequest;
 import com.service.common.repository.FileRepository;
@@ -20,14 +20,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.crypto.SecretKey;
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -49,22 +47,22 @@ public class SaveSingleFileService {
     private HeirRepository heirRepository;
 
     @Autowired
-    private GetAccountAssetByIdService getAccountAssetByIdService;
+    private SaveFileAssetService saveFileAssetService;
 
     @Autowired
-    private SaveFileAssetService saveFileAssetService;
+    private GetAccountAssetByIdCommonService getAccountAssetByIdCommonService;
 
     public void saveFile(MultipartFile file, CreateFileRequest createFileRequest)
             throws InvalidArgumentException, ProposalException, InvalidKeySpecException, NoSuchAlgorithmException {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         Owner owner = ownerRepository.findById(createFileRequest.getOwnerId()).get();
-        AccountAsset ownerAsset = getAccountAssetById(owner.getId());
+        AccountAsset ownerAsset = getAccountAssetByIdCommonService.getAccount(owner.getId());
 
         List<AccountAsset> accountAssets = new ArrayList<>();
         accountAssets.add(ownerAsset);
 
         createFileRequest.getHeirsIds().forEach(heirId -> {
-            AccountAsset accountAsset = getAccountAssetById(heirId);
+            AccountAsset accountAsset = getAccountAssetByIdCommonService.getAccount(heirId);
             accountAssets.add(accountAsset);
         });
 
@@ -111,18 +109,5 @@ public class SaveSingleFileService {
 
             fileHeirRepository.save(fileHeir);
         });
-    }
-
-    private AccountAsset getAccountAssetById(Long id) {
-        try {
-            return getAccountAssetByIdService.getUserAssetById(id);
-        } catch (ProposalException e) {
-            e.printStackTrace();
-        } catch (InvalidArgumentException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }
