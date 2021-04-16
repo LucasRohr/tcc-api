@@ -10,11 +10,13 @@ import java.time.LocalDateTime;
 public class AccountAsset {
     private Long accountId;
 
+    private String accountType;
+
+    private String cryptoPassword;
+
     private String privateKey;
 
     private String publicKey;
-
-    private String cryptoPassword;
 
     private Long timestamp;
 }

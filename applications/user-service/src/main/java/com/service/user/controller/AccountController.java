@@ -1,12 +1,12 @@
 package com.service.user.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.service.common.dto.HeirAccountResponseDto;
 import com.service.common.dto.HeirAssetCheckDto;
 import com.service.user.controller.request.*;
 import com.service.user.controller.response.AccountResponse;
 import com.service.user.dto.HeirDeactivationRequest;
 import com.service.user.dto.UpdateHeirHeritageRequest;
+import com.service.user.dto.ValidateCryptoPasswordResponse;
 import com.service.user.dto.ValidateDeathCertificateRequest;
 import com.service.user.service.GetCheckAssetsByHeirService;
 import com.service.user.service.UpdateHeirHeritagesService;
@@ -144,9 +144,9 @@ public class AccountController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("crypto-password-validation")
-    public String validateCryptoPassword(
+    public ValidateCryptoPasswordResponse validateCryptoPassword(
             @RequestBody CryptoPasswordRequest request
-    ) throws InvalidArgumentException, ProposalException, JsonProcessingException {
+    ) throws InvalidArgumentException, ProposalException, IOException {
         return validateCryptoPasswordService.validateCryptoPassword(request);
     }
 
