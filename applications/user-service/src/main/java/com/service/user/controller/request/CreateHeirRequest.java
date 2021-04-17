@@ -16,5 +16,4 @@ public class CreateHeirRequest {
     private Long ownerId;
 
     private String cryptoPassword;
-
 }
