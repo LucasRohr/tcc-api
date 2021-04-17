@@ -1,6 +1,13 @@
 package com.service.user.service.account;
 
+import com.amazonaws.encryptionsdk.AwsCrypto;
+import com.amazonaws.encryptionsdk.CommitmentPolicy;
+import com.amazonaws.encryptionsdk.CryptoResult;
+import com.amazonaws.encryptionsdk.kms.KmsMasterKey;
+import com.amazonaws.encryptionsdk.kms.KmsMasterKeyProvider;
 import com.service.common.crypto.AsymmetricCrypto;
+import com.service.common.crypto.SymmetricCrypto;
+import com.service.common.crypto.SymmetricKeyCrypto;
 import com.service.common.domain.Account;
 import com.service.common.domain.fabric.account.AccountAsset;
 import com.service.common.domain.fabric.account.AccountRecordModel;
@@ -15,16 +22,25 @@ import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.Map;
 
 @Service
 public class SaveAccountService {
-    private static final long MASTER_KEY_ID = 0;
+    private static final String keyArn = "arn:aws:kms:sa-east-1:665638235375:key/c252ed25-547c-49e0-99cd-816f44fa9726";
+
+    private final AwsCrypto awsCrypto = AwsCrypto.builder()
+            .withCommitmentPolicy(CommitmentPolicy.RequireEncryptRequireDecrypt)
+            .build();
 
     @Autowired
     private AccountRepository accountRepository;
@@ -45,7 +61,7 @@ public class SaveAccountService {
     private GetAccountAssetByIdCommonService getAccountAssetByIdCommonService;
 
     public void saveAccount(Account account, AccountTypes accountType, Long ownerId, String cryptoPassword)
-            throws ProposalException, InvalidArgumentException {
+            throws ProposalException, InvalidArgumentException, InvalidKeySpecException, NoSuchAlgorithmException {
         Account savedAccount = accountRepository.save(account);
         ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
 
@@ -55,36 +71,26 @@ public class SaveAccountService {
             saveHeirService.saveHeir(savedAccount, ownerId);
         }
 
-        AccountAsset checkedAsset = this.checkMasterKeyCreation(zonedDateTime);
+        KmsMasterKeyProvider keyProvider = KmsMasterKeyProvider.builder().buildStrict(keyArn);
+        Map<String, String> encryptionContext = Collections.singletonMap("masterKey", "masterValue");
 
-        if (checkedAsset == null) {
-            setTimeout(() -> {
-                createAccountAsset(savedAccount, accountType, zonedDateTime, cryptoPassword);
-            }, 5000);
-        } else {
-            createAccountAsset(savedAccount, accountType, zonedDateTime, cryptoPassword);
-        }
-    }
-
-    private void createAccountAsset(Account savedAccount, AccountTypes accountType, ZonedDateTime zonedDateTime, String cryptoPassword) {
         Long timestamp = zonedDateTime.toInstant().toEpochMilli();
-
         KeyPair accountKeys = AsymmetricCrypto.generateKeyPair(cryptoPassword);
 
-        AccountAsset masterAsset = getAccountAssetByIdCommonService.getAccount(MASTER_KEY_ID);
+        CryptoResult<byte[], KmsMasterKey> encryptedPrivateKeyResult =
+                awsCrypto.encryptData(keyProvider, accountKeys.getPrivate().getEncoded(), encryptionContext);
 
-        PublicKey masterPublicKey = KeysConverter.convertPublicKeyString(masterAsset.getPublicKey());
+        String encryptedPrivateKeyString = Base64.getEncoder().encodeToString(encryptedPrivateKeyResult.getResult());
 
-        byte[] bytePublicKey = AsymmetricCrypto.encrypt(accountKeys.getPublic().getEncoded(), masterPublicKey);
-        String stringPublicKey = Base64.getEncoder().encodeToString(bytePublicKey);
+        CryptoResult<byte[], KmsMasterKey> encryptedPublicKeyResult =
+                awsCrypto.encryptData(keyProvider, accountKeys.getPublic().getEncoded(), encryptionContext);
 
-        byte[] bytePrivateKey = AsymmetricCrypto.encrypt(accountKeys.getPrivate().getEncoded(), masterPublicKey);
-        String stringPrivateKey = Base64.getEncoder().encodeToString(bytePrivateKey);
+        String encryptedPublicKeyString = Base64.getEncoder().encodeToString(encryptedPublicKeyResult.getResult());
 
         AccountRecordModel accountRecord = new AccountRecordModel(
                 savedAccount.getId(),
-                stringPrivateKey,
-                stringPublicKey,
+                encryptedPrivateKeyString,
+                encryptedPublicKeyString,
                 accountType.toString(),
                 encoder.bCryptPasswordEncoder().encode(cryptoPassword),
                 timestamp
@@ -97,47 +103,6 @@ public class SaveAccountService {
         } catch (InvalidArgumentException e) {
             e.printStackTrace();
         }
-    }
-
-    private AccountAsset checkMasterKeyCreation(ZonedDateTime zonedDateTime)
-            throws InvalidArgumentException, ProposalException {
-        AccountAsset accountAsset = getAccountAssetByIdCommonService.getAccount(MASTER_KEY_ID);
-
-        KeyPair accountKeys = AsymmetricCrypto.generateKeyPair("");
-        Long timestamp = zonedDateTime.toInstant().toEpochMilli();
-
-        byte[] bytePublicKey = accountKeys.getPublic().getEncoded();
-        String stringPublicKey = Base64.getEncoder().encodeToString(bytePublicKey);
-
-        byte[] bytePrivateKey = accountKeys.getPrivate().getEncoded();
-        String stringPrivateKey = Base64.getEncoder().encodeToString(bytePrivateKey);
-
-        if (accountAsset == null) {
-            AccountRecordModel accountRecord = new AccountRecordModel(
-                    MASTER_KEY_ID,
-                    stringPrivateKey,
-                    stringPublicKey,
-                    "OWNER",
-                    "",
-                    timestamp
-            );
-
-            saveAccountAssetService.createTransaction(accountRecord);
-        }
-
-        return accountAsset;
-    }
-
-    private static void setTimeout(Runnable runnable, int delay) {
-        new Thread(() -> {
-            try {
-                Thread.sleep(delay);
-                runnable.run();
-            }
-            catch (Exception e){
-                System.err.println(e);
-            }
-        }).start();
     }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 
 @Service
@@ -23,7 +24,7 @@ public class CreateSingleOwnerAccountService {
     private SaveAccountService saveAccountService;
 
     public void createOwner(CreateOwnerRequest createOwnerRequest)
-            throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException {
+            throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException, InvalidKeySpecException {
 
         User user = userRepository.findById(createOwnerRequest.getUserId()).get();
 

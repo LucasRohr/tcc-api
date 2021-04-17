@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class UserController {
     @ExceptionHandler({ UserAlreadyExistsException.class })
     @PostMapping("register")
     public void registerUser(@RequestBody @Validated RegisterUserRequest registerUserRequest)
-            throws UserAlreadyExistsException, NoSuchAlgorithmException, ProposalException, InvalidArgumentException {
+            throws UserAlreadyExistsException, NoSuchAlgorithmException, ProposalException, InvalidArgumentException, InvalidKeySpecException {
         saveUserService.saveUser(registerUserRequest);
     }
 
@@ -123,7 +124,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("bootstrap")
-    public void bootstrap() throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException, IOException {
+    public void bootstrap() throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException, IOException, InvalidKeySpecException {
         registerUser(new RegisterUserRequest(
                 "Carlos Vasconcellos",
                 "lucasrc17@live.com",
