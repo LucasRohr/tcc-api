@@ -52,7 +52,7 @@ public class SaveUserService {
         User savedUser = userRepository.save(user);
 
         Account newAccount = new Account(
-                registerUserRequest.getAccount(),
+                registerUserRequest.getAccount().getAccountName(),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 savedUser,
@@ -63,7 +63,7 @@ public class SaveUserService {
                 newAccount,
                 registerUserRequest.getFirstAccountType(),
                 registerUserRequest.getOwnerId(),
-                ""
+                registerUserRequest.getAccount().getCryptoPassword()
         );
 
         UserRecordModel userRecordModel = new UserRecordModel(
