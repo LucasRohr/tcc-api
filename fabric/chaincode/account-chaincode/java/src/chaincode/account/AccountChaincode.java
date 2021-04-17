@@ -37,8 +37,6 @@ public class AccountChaincode extends ChaincodeBase {
                 return createAccountAsset(stub, params);
             case "queryByAccountAssetId":
                 return queryByAccountAssetId(stub, params);
-            case "setCryptoPassword":
-                return setCryptoPassword(stub, params);
             default:
                 return ResponseUtils.newErrorResponse(String.format("No such function %s exist", stub.getFunction()));
         }
@@ -59,12 +57,6 @@ public class AccountChaincode extends ChaincodeBase {
         final String query = "{ \"selector\": { \"accountId\": " + accountId + " } }";
 
         return ResponseUtils.newSuccessResponse(getQueryResult(stub, query));
-    }
-
-
-    @Transaction
-    private Response setCryptoPassword(final ChaincodeStub stub, final List<String> params) {
-        return createAccountAsset(stub, params);
     }
 
     private Account mapParamsToUser(List<String> params) {
