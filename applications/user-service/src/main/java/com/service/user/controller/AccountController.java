@@ -6,6 +6,8 @@ import com.service.user.controller.request.*;
 import com.service.user.controller.response.AccountResponse;
 import com.service.user.dto.HeirDeactivationRequest;
 import com.service.user.dto.UpdateHeirHeritageRequest;
+import com.service.user.dto.ValidateCryptoPasswordResponse;
+import com.service.user.dto.ValidateDeathCertificateRequest;
 import com.service.user.service.GetCheckAssetsByHeirService;
 import com.service.user.service.account.*;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
@@ -56,6 +58,9 @@ public class AccountController {
     @Autowired
     private ValidateDeathCertificateService validateDeathCertificateService;
 
+    @Autowired
+    private ValidateCryptoPasswordService validateCryptoPasswordService;
+
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("last-update")
     public void updateLastAccess(@RequestParam("account_id") Long accountId) {
@@ -102,7 +107,7 @@ public class AccountController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("account-update")
-    public void updateAccount(@RequestBody @Validated AccountUpdateRequest accountUpdateRequest) {
+    public void updateAccount(@RequestBody @Validated AccountUpdateRequest accountUpdateRequest) throws InvalidArgumentException, ProposalException, IOException {
         updateAccountService.update(accountUpdateRequest);
     }
 
@@ -134,6 +139,14 @@ public class AccountController {
     )
             throws InvalidArgumentException, ProposalException, IOException {
         validateDeathCertificateService.validateDeathCertificate(request);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("crypto-password-validation")
+    public ValidateCryptoPasswordResponse validateCryptoPassword(
+            @RequestBody CryptoPasswordRequest request
+    ) throws InvalidArgumentException, ProposalException, IOException {
+        return validateCryptoPasswordService.validateCryptoPassword(request);
     }
 
 }
