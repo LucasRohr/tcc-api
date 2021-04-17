@@ -11,11 +11,11 @@ public class AccountAsset {
 
     private String accountType;
 
-    private String cryptoPassword;
-
     private String privateKey;
 
     private String publicKey;
+
+    private String cryptoPassword;
 
     private Long timestamp;
 
