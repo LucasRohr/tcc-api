@@ -35,7 +35,8 @@ public class UpdateCredentialHeirsService {
                 selectedCredential.getLink(),
                 selectedCredential.getDescription(),
                 heirsUpdateRequest.getHeirsIds(),
-                heirsUpdateRequest.getOwnerId()
+                heirsUpdateRequest.getOwnerId(),
+                heirsUpdateRequest.getCryptoPassword()
         );
 
         boolean hasChangedHeirs =

@@ -29,4 +29,7 @@ public class CreateFileRequest {
     @NotNull
     private FileTypeEnum type;
 
+    @NotEmpty
+    private String cryptoPassword;
+
 }

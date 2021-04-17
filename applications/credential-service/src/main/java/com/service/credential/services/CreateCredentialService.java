@@ -66,7 +66,7 @@ public class CreateCredentialService {
                 credentialKeyString != null ? SymmetricKeyCrypto.decryptKey(credentialKeyString, ownerAsset) : null;
 
         SecretKey credentialKey =
-                updateSymmetricKey != null ? updateSymmetricKey : SymmetricCrypto.generateKey("password");
+                updateSymmetricKey != null ? updateSymmetricKey : SymmetricCrypto.generateKey(credentialCreationRequest.getCryptoPassword());
 
         String encryptedSymmetricKey = SymmetricKeyCrypto.encryptKey(credentialKey.getEncoded(), accountAssets);
 

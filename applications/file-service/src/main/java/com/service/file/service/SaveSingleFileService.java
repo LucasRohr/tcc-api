@@ -66,7 +66,7 @@ public class SaveSingleFileService {
             accountAssets.add(accountAsset);
         });
 
-        SecretKey fileKey = SymmetricCrypto.generateKey("password");
+        SecretKey fileKey = SymmetricCrypto.generateKey(createFileRequest.getCryptoPassword());
 
         String bucketUrl = uploadBucketFileService.uploadFile(
                 file, createFileRequest.getType().toString().toLowerCase(), fileKey
