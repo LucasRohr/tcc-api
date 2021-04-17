@@ -50,7 +50,8 @@ public class CreateCredentialService {
         List<CredentialAsset> credentialAssets =
                 getCredentialAssetsByOwnerIdService.getCredentialsByOwnerId(credentialCreationRequest.getOwnerId());
 
-        Owner owner = ownerRepository.findById(credentialCreationRequest.getOwnerId()).get();
+        Owner owner = ownerRepository.findByAccountId(credentialCreationRequest.getOwnerId());
+
         AccountAsset ownerAsset = getAccountAssetByIdCommonService.getAccount(owner.getId());
 
         List<AccountAsset> accountAssets = new ArrayList<>();
