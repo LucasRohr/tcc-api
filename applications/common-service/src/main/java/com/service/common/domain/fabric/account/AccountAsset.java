@@ -9,8 +9,6 @@ public class AccountAsset {
 
     private Long accountId;
 
-    private String accountType;
-
     private String privateKey;
 
     private String publicKey;

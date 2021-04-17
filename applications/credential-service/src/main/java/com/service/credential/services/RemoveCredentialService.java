@@ -35,7 +35,8 @@ public class RemoveCredentialService {
                 selectedCredential.getLink(),
                 selectedCredential.getDescription(),
                 selectedCredential.getHeirsIds(),
-                selectedCredential.getCredentialOwnerId()
+                selectedCredential.getCredentialOwnerId(),
+                credentialRemoveRequest.getCryptoPassword()
         );
 
         createCredentialService.createCredential(credentialCreationRequest, false, selectedCredential.getSymmetricKey());

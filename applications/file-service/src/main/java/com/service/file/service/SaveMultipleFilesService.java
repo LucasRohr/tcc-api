@@ -26,7 +26,8 @@ public class SaveMultipleFilesService {
                     "Minha mídia",
                     "",
                     createMultipleFilesRequest.getHeirsIds(),
-                    createMultipleFilesRequest.getType()
+                    createMultipleFilesRequest.getType(),
+                    createMultipleFilesRequest.getCryptoPassword()
             );
 
             saveSingleFileService.saveFile(multipartFile, createFileRequest);
