@@ -64,12 +64,7 @@ public class AccountChaincode extends ChaincodeBase {
 
     @Transaction
     private Response setCryptoPassword(final ChaincodeStub stub, final List<String> params) {
-        final long accountId = Long.parseLong(params.get(0));
-        final String cryptoPassword = params.get(1);
-
-        // TODO set crypto password instead of querying account
-        final String query = "{ \"selector\": { \"accountId\": " + accountId + " } }";
-        return ResponseUtils.newSuccessResponse(getQueryResult(stub, query));
+        return createAccountAsset(stub, params);
     }
 
     private Account mapParamsToUser(List<String> params) {

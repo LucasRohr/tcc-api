@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class AccountAsset {
+
     private Long accountId;
 
     private String accountType;
@@ -19,4 +20,5 @@ public class AccountAsset {
     private String publicKey;
 
     private Long timestamp;
+
 }
