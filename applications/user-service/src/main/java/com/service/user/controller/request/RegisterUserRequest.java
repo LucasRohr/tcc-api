@@ -22,7 +22,7 @@ public class RegisterUserRequest {
 
     private String password;
 
-    private String account;
+    private RegisterAccountRequest account;
 
     private AccountTypes firstAccountType;
 

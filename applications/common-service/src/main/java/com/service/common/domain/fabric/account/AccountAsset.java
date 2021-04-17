@@ -6,7 +6,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class AccountAsset {
+
     private Long accountId;
+
+    private String accountType;
 
     private String privateKey;
 
@@ -17,4 +20,5 @@ public class AccountAsset {
     private String cryptoPassword;
 
     private Long timestamp;
+
 }

@@ -131,7 +131,7 @@ public class UserController {
                 "354.336.510-02",
                 LocalDateTime.now().minusYears(29),
                 "Literatura2012",
-                "Carlos Vasconcellos",
+                new RegisterAccountRequest("Carlos Vasconcellos", "Criptosenha1"),
                 AccountTypes.OWNER,
                 null
         ));
@@ -144,7 +144,7 @@ public class UserController {
                 "882.338.300-54",
                 LocalDateTime.now().minusYears(34),
                 "Senha123",
-                "Ronaldo Marques",
+                new RegisterAccountRequest("Ronaldo Marques", "Criptosenha2"),
                 AccountTypes.HEIR,
                 ownerId
         ));
