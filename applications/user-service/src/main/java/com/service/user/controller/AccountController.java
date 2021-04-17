@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
 @RestController
@@ -82,14 +83,14 @@ public class AccountController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("heir/heir-creation")
     public void createHeir(@RequestBody CreateHeirRequest createHeirRequest)
-            throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException {
+            throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException, InvalidKeySpecException {
         buildHeirAccountService.buildAccount(createHeirRequest);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("owner/owner-creation")
     public void createOwner(@RequestBody CreateOwnerRequest createOwnerRequest)
-            throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException {
+            throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException, InvalidKeySpecException {
         createSingleOwnerAccountService.createOwner(createOwnerRequest);
     }
 
