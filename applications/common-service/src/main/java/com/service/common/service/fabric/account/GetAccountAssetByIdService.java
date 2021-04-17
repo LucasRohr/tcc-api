@@ -51,7 +51,8 @@ public class GetAccountAssetByIdService {
         if (accountAssets.size() > 0) {
             return accountAssets.get(0);
         }
-        throw new Error("No accountAsset found");
+        
+        return null;
     }
 
     private String[] mapArguments(Long accountId) {

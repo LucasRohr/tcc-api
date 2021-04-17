@@ -9,11 +9,11 @@ public class AccountAsset {
 
     private Long accountId;
 
-    private String accountType;
-
     private String privateKey;
 
     private String publicKey;
+
+    private String accountType;
 
     private String cryptoPassword;
 

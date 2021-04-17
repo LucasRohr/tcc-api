@@ -10,6 +10,7 @@ import com.service.user.controller.request.AccountUpdateRequest;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -29,6 +30,9 @@ public class UpdateAccountService {
     @Autowired
     private GetAccountAssetByIdService getAccountAssetByIdService;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptEncoder;
+
     public void update(AccountUpdateRequest accountUpdateRequest) throws InvalidArgumentException, ProposalException, IOException {
         Account account = accountRepository.findById(accountUpdateRequest.getAccountId()).get();
 
@@ -42,7 +46,10 @@ public class UpdateAccountService {
             AccountAsset currentAccountState =
                     getAccountAssetByIdService.getUserAssetById(accountUpdateRequest.getAccountId());
 
-            if (!currentAccountState.getCryptoPassword().equals(accountUpdateRequest.getCryptoPassword())) {
+            boolean isSamePassword =
+                    bCryptEncoder.matches(accountUpdateRequest.getCryptoPassword(), currentAccountState.getCryptoPassword());
+
+            if (!isSamePassword) {
                 throw new Error("A senha inserida não é a atual");
             }
 

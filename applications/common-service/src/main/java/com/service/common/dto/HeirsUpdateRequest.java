@@ -17,4 +17,6 @@ public class HeirsUpdateRequest {
 
     private List<Long> heirsIds;
 
+    private String cryptoPassword;
+
 }

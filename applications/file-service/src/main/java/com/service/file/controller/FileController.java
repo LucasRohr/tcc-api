@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
 @RestController
@@ -65,7 +67,7 @@ public class FileController {
     public void uploadSingleFile(
             @RequestPart(value = "file-content") MultipartFile file,
             @RequestPart(value = "file-info") CreateFileRequest createFileRequest
-    ) throws ProposalException, InvalidArgumentException {
+    ) throws ProposalException, InvalidArgumentException, InvalidKeySpecException, NoSuchAlgorithmException {
         saveSingleFileService.saveFile(file, createFileRequest);
     }
 
@@ -74,7 +76,7 @@ public class FileController {
     public void uploadSingleFile(
             @RequestPart(value = "file-content") MultipartFile[] files,
             @RequestPart(value = "file-info") CreateMultipleFilesRequest createMultipleFilesRequest
-    ) throws InvalidArgumentException, ProposalException {
+    ) throws InvalidArgumentException, ProposalException, InvalidKeySpecException, NoSuchAlgorithmException {
         saveMultipleFilesService.saveFiles(files, createMultipleFilesRequest);
     }
 
@@ -89,7 +91,7 @@ public class FileController {
     public void updateFile(
             @RequestPart("file-content") MultipartFile file,
             @RequestPart("file-info") UpdateFileRequest updateFileRequest
-    ) {
+    ) throws ProposalException, IOException, InvalidArgumentException {
         updateFileService.updateFile(file, updateFileRequest);
     }
 
@@ -114,7 +116,7 @@ public class FileController {
     @GetMapping("file-to-download")
     public String getFileToDownload(
             @RequestParam("file_id") Long fileId
-    ) throws IOException, CryptoException {
+    ) throws IOException, CryptoException, ProposalException, InvalidArgumentException {
         return getFileByIdService.getfile(fileId);
     }
 

@@ -25,4 +25,6 @@ public class CredentialCreationRequest {
     private List<Long> heirsIds;
 
     private Long ownerId;
+
+    private String cryptoPassword;
 }

@@ -71,6 +71,7 @@ public class CredentialChaincode extends ChaincodeBase {
 		final String heirsIds =	params.get(7);
 		final Boolean isActive = Boolean.parseBoolean(params.get(8));
 		final Long createdAt = Long.parseLong(params.get(9));
+		final String symmetricKey = params.get(10);
 
 		return Credential
 				.builder()
@@ -84,6 +85,7 @@ public class CredentialChaincode extends ChaincodeBase {
 				.heirsIds(heirsIds)
 				.isActive(isActive)
 				.createdAt(createdAt)
+				.symmetricKey(symmetricKey)
 				.build();
 	}
 
