@@ -18,6 +18,8 @@ public class AccountUpdateRequest {
     @NotEmpty
     private String accountName;
 
-    // TODO add cryptoPassword
+    private String cryptoPassword;
+
+    private String newCryptoPassword;
 
 }

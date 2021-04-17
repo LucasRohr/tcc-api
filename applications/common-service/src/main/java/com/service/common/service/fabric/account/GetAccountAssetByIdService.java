@@ -44,7 +44,6 @@ public class GetAccountAssetByIdService {
                 .getMessage());
 
         final List<AccountAsset> accountAssets = Arrays.asList(objectMapper.readValue(response, AccountAsset[].class));
-
         accountAssets.sort(
                 (accountA, accountB) -> accountA.getTimestamp() > accountB.getTimestamp() ? -1 : 1
         );

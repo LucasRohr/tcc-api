@@ -106,7 +106,7 @@ public class AccountController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping("account-update")
-    public void updateAccount(@RequestBody @Validated AccountUpdateRequest accountUpdateRequest) {
+    public void updateAccount(@RequestBody @Validated AccountUpdateRequest accountUpdateRequest) throws InvalidArgumentException, ProposalException, IOException {
         updateAccountService.update(accountUpdateRequest);
     }
 
