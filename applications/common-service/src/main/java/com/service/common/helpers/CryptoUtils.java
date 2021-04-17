@@ -2,10 +2,8 @@ package com.service.common.helpers;
 
 import com.service.common.exceptions.CryptoException;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,25 +16,25 @@ import java.util.List;
 
 public class CryptoUtils {
     private static final String ALGORITHM = "AES";
-    private static final String TRANSFORMATION = "AES";
+    private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding";
     private static final String keyValue = "crypto_key_value";
 
-    public static void encrypt(String key, File inputFile, File outputFile)
+    public static void encrypt(SecretKey secretKey, File inputFile, File outputFile)
             throws CryptoException {
-        doCrypto(Cipher.ENCRYPT_MODE, key, inputFile, outputFile);
+        doCrypto(Cipher.ENCRYPT_MODE, secretKey, inputFile, outputFile);
     }
 
-    public static void decrypt(String key, File inputFile, File outputFile)
+    public static void decrypt(SecretKey secretKey, File inputFile, File outputFile)
             throws CryptoException {
-        doCrypto(Cipher.DECRYPT_MODE, key, inputFile, outputFile);
+        doCrypto(Cipher.DECRYPT_MODE, secretKey, inputFile, outputFile);
     }
 
-    private static void doCrypto(int cipherMode, String key, File inputFile,
-                                             File outputFile) throws CryptoException {
+    private static void doCrypto(
+            int cipherMode, SecretKey secretKey, File inputFile,
+            File outputFile) throws CryptoException {
         try {
-            Key secretKey = new SecretKeySpec(key.getBytes(), ALGORITHM);
             Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            cipher.init(cipherMode, secretKey);
+            cipher.init(cipherMode, secretKey, new IvParameterSpec(new byte[16]));
 
             FileInputStream inputStream = new FileInputStream(inputFile);
             byte[] inputBytes = new byte[(int) inputFile.length()];
@@ -49,18 +47,9 @@ public class CryptoUtils {
 
             inputStream.close();
             outputStream.close();
-        } catch (NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidKeyException | BadPaddingException
-                | IllegalBlockSizeException | IOException ex) {
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | IOException | InvalidAlgorithmParameterException ex) {
             throw new CryptoException("Error encrypting/decrypting file", ex);
         }
-    }
-
-    public static KeyPair generateKeyPair() throws NoSuchAlgorithmException {
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        keyGen.initialize(512);
-
-        return keyGen.genKeyPair();
     }
 
     public static String encryptSimpleString(String text) {

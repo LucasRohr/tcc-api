@@ -25,4 +25,6 @@ public class CredentialAsset {
     private Boolean isActive;
 
     private Long createdAt;
+
+    private String symmetricKey;
 }

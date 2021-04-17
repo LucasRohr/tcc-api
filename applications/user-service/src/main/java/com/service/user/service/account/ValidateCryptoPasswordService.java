@@ -7,6 +7,7 @@ import com.service.user.dto.ValidateCryptoPasswordResponse;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,15 +18,17 @@ public class ValidateCryptoPasswordService {
     @Autowired
     private GetAccountAssetByIdService getAccountAssetByIdService;
 
-    public ValidateCryptoPasswordResponse validateCryptoPassword(CryptoPasswordRequest request) throws InvalidArgumentException, ProposalException, IOException {
+    @Autowired
+    private BCryptPasswordEncoder bCryptEncoder;
 
+    public ValidateCryptoPasswordResponse validateCryptoPassword(CryptoPasswordRequest request)
+            throws InvalidArgumentException, ProposalException, IOException {
         AccountAsset accountAsset = getAccountAssetByIdService.getUserAssetById(request.getAccountId());
 
-        if (accountAsset.getCryptoPassword().equals(request.getCryptoPassword())) {
-            return new ValidateCryptoPasswordResponse(true);
-        }
+        boolean isPasswordValid =
+                bCryptEncoder.matches(request.getCryptoPassword(), accountAsset.getCryptoPassword());
 
-        return new ValidateCryptoPasswordResponse(false);
+        return new ValidateCryptoPasswordResponse(isPasswordValid);
     }
 
 }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 @Service
 public class UpdateCredentialHeirsService {
@@ -20,7 +22,7 @@ public class UpdateCredentialHeirsService {
     private CreateCredentialService createCredentialService;
 
     public void updateHeirs(HeirsUpdateRequest heirsUpdateRequest)
-            throws ProposalException, IOException, InvalidArgumentException {
+            throws ProposalException, IOException, InvalidArgumentException, InvalidKeySpecException, NoSuchAlgorithmException {
 
         CredentialResponse selectedCredential = getCredentialByIdService
                 .getCredential(heirsUpdateRequest.getOwnerId(), heirsUpdateRequest.getCredentialId());
@@ -33,10 +35,15 @@ public class UpdateCredentialHeirsService {
                 selectedCredential.getLink(),
                 selectedCredential.getDescription(),
                 heirsUpdateRequest.getHeirsIds(),
-                heirsUpdateRequest.getOwnerId()
+                heirsUpdateRequest.getOwnerId(),
+                heirsUpdateRequest.getCryptoPassword()
         );
 
-        createCredentialService.createCredential(credentialCreationRequest, true);
+        boolean hasChangedHeirs =
+                !selectedCredential.getHeirsIds().toString().equals(heirsUpdateRequest.getHeirsIds().toString());
+        String symmetricKey = hasChangedHeirs ? null : selectedCredential.getSymmetricKey();
+
+        createCredentialService.createCredential(credentialCreationRequest, true, symmetricKey);
     }
 
 }

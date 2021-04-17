@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.time.LocalDateTime;
 
 @Service
@@ -38,7 +39,7 @@ public class SaveUserService {
     private ValidateIfUserAlreadyExistsComponent validateIfUserAlreadyExistsComponent;
 
     public void saveUser(RegisterUserRequest registerUserRequest)
-            throws UserAlreadyExistsException, NoSuchAlgorithmException, ProposalException, InvalidArgumentException {
+            throws UserAlreadyExistsException, NoSuchAlgorithmException, ProposalException, InvalidArgumentException, InvalidKeySpecException {
         validateIfUserAlreadyExistsComponent.validateUser(registerUserRequest.getEmail());
 
         User user = new User(

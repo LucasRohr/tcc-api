@@ -1,5 +1,6 @@
 package com.service.credential.controllers.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,4 +30,7 @@ public class CredentialResponse {
     private Boolean isActive;
 
     private Long createdAt;
+
+    @JsonIgnore
+    private String symmetricKey;
 }

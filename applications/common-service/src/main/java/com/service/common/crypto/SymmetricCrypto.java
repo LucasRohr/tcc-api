@@ -2,39 +2,45 @@ package com.service.common.crypto;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 
 public class SymmetricCrypto {
 
     private static final String KEY_GENERATION_ALGORITHM = "AES";
-    private static final String AES_CIPHER_ALGORITHM = "AES/CBC/PKCS5PADDING";
+    private static final String AES_CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
 
-    public static SecretKey generateKey(String password) {
-        SecureRandom secureRandom = new SecureRandom(password.getBytes(StandardCharsets.UTF_8));
-        KeyGenerator keygenerator = null;
-        try {
-            keygenerator = KeyGenerator.getInstance(KEY_GENERATION_ALGORITHM);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        keygenerator.init(256, secureRandom);
-        SecretKey key = keygenerator.generateKey();
-        return key;
+    public static SecretKey generateKey(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[8];
+        random.nextBytes(salt);
+
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
+        SecretKey tmp = factory.generateSecret(spec);
+        SecretKey secretKey = new SecretKeySpec(tmp.getEncoded(), KEY_GENERATION_ALGORITHM);
+
+        return secretKey;
     }
 
-    public static byte[] createInitializationVector() {
+    private static byte[] createInitializationVector() {
         byte[] initializationVector = new byte[16];
         SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(initializationVector);
         return initializationVector;
     }
 
-    public String encrypt(String plainText, SecretKey secretKey, byte[] initializationVector) {
+    public static String encrypt(String plainText, SecretKey secretKey) {
+        byte[] initializationVector = createInitializationVector();
         Cipher cipher = null;
+
         try {
             cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);
         } catch (NoSuchAlgorithmException e) {
@@ -43,10 +49,8 @@ public class SymmetricCrypto {
             e.printStackTrace();
         }
 
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(initializationVector);
-
         try {
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(new byte[16]));
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         } catch (InvalidAlgorithmParameterException e) {
@@ -54,7 +58,7 @@ public class SymmetricCrypto {
         }
 
         try {
-            return new String(cipher.doFinal(plainText.getBytes()));
+            return new String(cipher.doFinal(plainText.getBytes()), StandardCharsets.ISO_8859_1);
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
@@ -64,8 +68,10 @@ public class SymmetricCrypto {
         return "";
     }
 
-     static String decrypt(String cipherText, SecretKey secretKey, byte[] initializationVector) {
+    public static String decrypt(String cipherText, SecretKey secretKey) {
+        byte[] initializationVector = createInitializationVector();
          Cipher cipher = null;
+
          try {
              cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);
          } catch (NoSuchAlgorithmException e) {
@@ -77,7 +83,7 @@ public class SymmetricCrypto {
          IvParameterSpec ivParameterSpec = new IvParameterSpec(initializationVector);
 
          try {
-             cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
+             cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(new byte[16]));
          } catch (InvalidKeyException e) {
              e.printStackTrace();
          } catch (InvalidAlgorithmParameterException e) {
@@ -85,8 +91,9 @@ public class SymmetricCrypto {
          }
 
          byte[] result = new byte[0];
+
          try {
-             result = cipher.doFinal(cipherText.getBytes());
+             result = cipher.doFinal(cipherText.getBytes(StandardCharsets.ISO_8859_1));
          } catch (IllegalBlockSizeException e) {
              e.printStackTrace();
          } catch (BadPaddingException e) {

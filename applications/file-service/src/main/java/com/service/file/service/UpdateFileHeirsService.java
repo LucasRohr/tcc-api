@@ -40,14 +40,20 @@ public class UpdateFileHeirsService {
                 }
             });
 
-            selectedHeirsIds.forEach(heirId -> {
-                boolean isNewHeir = !heirsWithFileIds.contains(heirId);
-
-                if(isNewHeir) {
-                    saveNewFileHeir(fileId, heirId);
-                }
-            });
+            saveFileHeirsList(selectedHeirsIds, heirsWithFileIds, fileId);
+        } else {
+            saveFileHeirsList(selectedHeirsIds, heirsWithFileIds, fileId);
         }
+    }
+
+    private void saveFileHeirsList(List<Long> selectedHeirsIds, List<Long> heirsWithFileIds, Long fileId) {
+        selectedHeirsIds.forEach(heirId -> {
+            boolean isNewHeir = !heirsWithFileIds.contains(heirId);
+
+            if(isNewHeir) {
+                saveNewFileHeir(fileId, heirId);
+            }
+        });
     }
 
     private void saveNewFileHeir(Long fileId, Long heirId) {

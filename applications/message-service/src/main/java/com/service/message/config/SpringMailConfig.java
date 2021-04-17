@@ -23,7 +23,7 @@ public class SpringMailConfig {
         mailSender.setProtocol("smtp");
 
         mailSender.setUsername("lucasrc17@live.com");
-        mailSender.setPassword("ifao3000");
+        mailSender.setPassword("#Ifao300");
 
         Properties mailProperties = new Properties();
         mailProperties.put("mail.smtp.host", "smtp-mail.outlook.com");

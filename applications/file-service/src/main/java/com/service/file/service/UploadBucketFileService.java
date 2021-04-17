@@ -14,9 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import javax.crypto.SecretKey;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Date;
 
 @Service
@@ -60,24 +62,23 @@ public class UploadBucketFileService {
                 .withCannedAcl(CannedAccessControlList.BucketOwnerFullControl));
     }
 
-    private File encryptFile(File file) throws CryptoException {
-        //TO DO: use blockchain user private key
-        String privateKey = "some private key";
+    private File encryptFile(File file, SecretKey symmetricKey) throws CryptoException {
         String randomFileName = new RandomCode(FILE_NAME_LENGTH).nextString();
 
         String filePath = System.getenv("FILE_PATH") + randomFileName + ".enc";
 
         File outputFile = new File(filePath);
-        CryptoUtils.encrypt(privateKey, file, outputFile);
+        CryptoUtils.encrypt(symmetricKey, file, outputFile);
+
         return outputFile;
     }
 
-    public String uploadFile(MultipartFile multipartFile, String fileFolder) {
+    public String uploadFile(MultipartFile multipartFile, String fileFolder, SecretKey symmetricKey) {
         String fileUrl = "";
 
         try {
             File file = convertMultiPartToFile(multipartFile);
-            File encryptFile = encryptFile(file);
+            File encryptFile = encryptFile(file, symmetricKey);
 
             String fileName = fileFolder + "/" + generateFileName(encryptFile);
             fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
