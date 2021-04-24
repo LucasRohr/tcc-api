@@ -36,15 +36,15 @@ eureka:
     fetchRegistry: true
     registerWithEureka: false
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: https://localhost:8761/eureka/
   instance:
     hostname: localhost
     nonSecurePortEnabled: false
     securePortEnabled: true
     securePort: ${server.port}
-    statusPageUrl: http://localhost:${server.port}/info
-    healthCheckUrl: http://localhost:${server.port}/health
-    homePageUrl: http://localhost:${server.port}/
+    statusPageUrl: https://localhost:${server.port}/info
+    healthCheckUrl: https://localhost:${server.port}/health
+    homePageUrl: https://localhost:${server.port}/
 
 #zuul.prefix=/api
 

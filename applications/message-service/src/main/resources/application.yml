@@ -24,7 +24,7 @@ eureka:
   client:
     fetchRegistry: true
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: https://localhost:8761/eureka
 
 amazonProperties:
   endpointUrl: https://s3.sa-east-1.amazonaws.com

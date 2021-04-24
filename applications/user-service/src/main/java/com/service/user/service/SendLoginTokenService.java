@@ -20,7 +20,7 @@ public class SendLoginTokenService {
     private RestTemplate restTemplate;
 
     private static final String LOGIN_MESSAGE_KEY = "LOGIN_AUTH";
-    private static final String LOGIN_MESSAGE_URL = "http://message-service/messages/email/login-auth";
+    private static final String LOGIN_MESSAGE_URL = "https://message-service/messages/email/login-auth";
 
     public void sendToken(String email, String token) {
         User user = getUserByEmailService.getUserByEmail(email);

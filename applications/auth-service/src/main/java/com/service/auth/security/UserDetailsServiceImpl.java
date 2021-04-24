@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private static final String GET_USER_URL = "http://user-service/users/user-by-email?email=%s";
+    private static final String GET_USER_URL = "https://user-service/users/user-by-email?email=%s";
 
     @Autowired
     private RestTemplate restTemplate;

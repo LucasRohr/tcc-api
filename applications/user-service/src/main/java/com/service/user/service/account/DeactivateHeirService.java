@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 public class DeactivateHeirService {
 
     private static final String NOTIFICATION_URL =
-            "http://notification-service/notification-creation";
+            "https://notification-service/notification-creation";
 
     @Autowired
     private HeirRepository heirRepository;
