@@ -12,7 +12,12 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/tcc
+    url: jdbc:postgresql://localhost:5432/tcc?
+      ssl=true&
+      sslmode=verify-ca&
+      sslcert=${DATABASE_CERT_PATH}&
+      sslkey=${DATABASE_KEY_PATH}&
+      sslrootcert=${DATABASE_CA_PATH}
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
 
