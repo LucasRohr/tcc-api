@@ -23,8 +23,20 @@ spring:
 
 server:
   port: 8200
+  ssl:
+    enabled: true
+    keyStoreType: PKCS12
+    keyStore: keystore.p12
+    keyStorePassword: password
+    keyAlias: bootifulsecurity
+    clientAuth: want
 
 eureka:
+  instance:
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
+    secureVirtualHostName: ${spring.application.name}
   client:
     serviceUrl:
       defaultZone: https://localhost:8761/eureka

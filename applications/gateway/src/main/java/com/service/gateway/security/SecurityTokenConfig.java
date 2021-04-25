@@ -33,7 +33,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                     "/user-service/users/register"
                 ).permitAll()
             .antMatchers(
-                   HttpMethod.POST,
+                   HttpMethod.GET,
                    "/user-service/users/bootstrap"
                 ).permitAll()
             .antMatchers(
@@ -52,7 +52,8 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                     HttpMethod.GET,
                     "/invite-service/invites/invite-by-id"
             ).permitAll()
-            .anyRequest().authenticated();
+            .anyRequest().authenticated()
+            .and().requiresChannel().anyRequest().requiresSecure();
     }
 
     @Bean

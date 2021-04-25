@@ -4,6 +4,12 @@ spring:
 
 server:
   port: 8761
+  ssl:
+    enabled: true
+    keyStoreType: PKCS12
+    keyStore: keystore.p12
+    keyStorePassword: password
+    keyAlias: bootifulsecurity
 
 eureka:
   client:

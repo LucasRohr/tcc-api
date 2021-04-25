@@ -1,5 +1,12 @@
 server:
   port: 8600
+  ssl:
+    enabled: true
+    keyStoreType: PKCS12
+    keyStore: keystore.p12
+    keyStorePassword: password
+    keyAlias: bootifulsecurity
+    clientAuth: want
 
 spring:
   main:
@@ -21,6 +28,11 @@ spring:
     password: ${DATABASE_PASSWORD}
 
 eureka:
+  instance:
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
+    secureVirtualHostName: ${spring.application.name}
   client:
     fetchRegistry: true
     serviceUrl:

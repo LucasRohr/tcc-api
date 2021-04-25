@@ -1,3 +1,13 @@
+server:
+  port: 9400
+  ssl:
+    enabled: true
+    keyStoreType: PKCS12
+    keyStore: keystore.p12
+    keyStorePassword: password
+    keyAlias: bootifulsecurity
+    clientAuth: want
+
 spring:
   main:
     allow-bean-definition-overriding: true
@@ -17,10 +27,12 @@ spring:
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
 
-server:
-  port: 9400
-
 eureka:
+  instance:
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
+    secureVirtualHostName: ${spring.application.name}
   client:
     serviceUrl:
       defaultZone: https://localhost:8761/eureka

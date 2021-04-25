@@ -1,10 +1,12 @@
 server:
   port: 8763
   ssl:
+    enabled: true
     keyStoreType: PKCS12
-    keyStore: classpath:keystore.p12
+    keyStore: keystore.p12
     keyStorePassword: password
-    keyAlias: tomcat
+    keyAlias: bootifulsecurity
+    clientAuth: want
 
 spring:
   application:
@@ -22,6 +24,12 @@ spring:
     url: jdbc:postgresql://localhost:5432/tcc
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
+
+  cloud:
+    gateway:
+      httpclient:
+        ssl:
+          useInsecureTrustManager: true
 
   servlet:
     multipart:
@@ -108,6 +116,7 @@ hystrix:
 
 ribbon:
   ReadTimeout: 60000
+  IsSecure: true
 
 niws:
   loadbalancer:
