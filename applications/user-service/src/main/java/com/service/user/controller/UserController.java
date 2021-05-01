@@ -123,7 +123,7 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("bootstrap")
+    @GetMapping("bootstrap")
     public void bootstrap() throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException, IOException, InvalidKeySpecException {
         registerUser(new RegisterUserRequest(
                 "Carlos Vasconcellos",
@@ -135,9 +135,11 @@ public class UserController {
                 AccountTypes.OWNER,
                 null
         ));
+
         List<User> users = allUsersService.getAllUsers();
         Long carlosId = users.get(users.size() - 1).getId();
         Long ownerId = getAllUserAccountsService.getAccounts(carlosId).get(0).getId();
+
         saveUserService.saveUser(new RegisterUserRequest(
                 "Ronaldo Marques",
                 "papaibesteira@click21.com",
@@ -145,6 +147,17 @@ public class UserController {
                 LocalDateTime.now().minusYears(34),
                 "Senha123",
                 new RegisterAccountRequest("Ronaldo Marques", "Criptosenha2"),
+                AccountTypes.HEIR,
+                ownerId
+        ));
+
+        saveUserService.saveUser(new RegisterUserRequest(
+                "Roberto Remor",
+                "bonita_historia@mail.com",
+                "882.338.300-54",
+                LocalDateTime.now().minusYears(34),
+                "Senha123",
+                new RegisterAccountRequest("Remor herdeiro", "Criptosenha2"),
                 AccountTypes.HEIR,
                 ownerId
         ));

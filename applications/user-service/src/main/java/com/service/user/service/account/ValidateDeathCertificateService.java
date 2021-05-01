@@ -50,7 +50,7 @@ public class ValidateDeathCertificateService {
         boolean isHashCodeValid =
                 validationResponse.getHashCodeValidation() != null && validationResponse.getHashCodeValidation() != 0;
 
-        if(isHashCodeValid) {
+        if(!isHashCodeValid) {
             passOwnerAwayService.passAway(owner);
             activateHeirsHeritagesServices.activateHeirs(owner.getId());
         } else {

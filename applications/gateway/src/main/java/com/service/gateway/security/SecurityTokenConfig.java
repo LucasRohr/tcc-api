@@ -33,7 +33,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
                     "/user-service/users/register"
                 ).permitAll()
             .antMatchers(
-                   HttpMethod.POST,
+                   HttpMethod.GET,
                    "/user-service/users/bootstrap"
                 ).permitAll()
             .antMatchers(
