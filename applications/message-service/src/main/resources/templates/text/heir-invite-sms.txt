@@ -1,6 +1,6 @@
 Olá [(${receiverName})]
 
-Bem-vindo(a) ao Sistema de Herança Digital.
+Bem-vindo(a) ao Memora.
 Você está recebendo um convite para ser um herdeiro da herança digital de [(${ownerName})].
 
 Por favor, confirme este desejo antecipadamente com esta pessoa antes de seguir no processo de herança.
