@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-@FeignClient(value = "credential", url = "http://localhost:8500/credentials")
+@FeignClient(value = "credential", url = "https://localhost:8500/credentials")
 public interface CredentialClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/owner-credentials?owner_id={ownerId}")

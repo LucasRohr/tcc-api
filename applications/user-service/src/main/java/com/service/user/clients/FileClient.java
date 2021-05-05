@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-@FeignClient(value = "file", url = "http://localhost:8200")
+@FeignClient(value = "file", url = "https://localhost:8200")
 public interface FileClient {
     @RequestMapping(method = RequestMethod.GET, value = "/files/heir-file/all?heir_id={heirId}")
     List<FileHeirDto> getAllFilesByHeir(@PathVariable("heirId") Long heirId);

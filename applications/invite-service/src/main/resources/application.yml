@@ -1,5 +1,12 @@
 server:
   port: 9700
+  ssl:
+    enabled: true
+    keyStoreType: PKCS12
+    keyStore: keystore.p12
+    keyStorePassword: password
+    keyAlias: bootifulsecurity
+    clientAuth: want
 
 spring:
   main:
@@ -26,9 +33,14 @@ spring:
     password: ${DATABASE_PASSWORD}
 
 eureka:
+  instance:
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: ${server.port}
+    secureVirtualHostName: ${spring.application.name}
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: https://localhost:8761/eureka
 
 amazonProperties:
   endpointUrl: https://s3.sa-east-1.amazonaws.com

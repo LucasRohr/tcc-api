@@ -1,10 +1,12 @@
 server:
   port: 8763
   ssl:
+    enabled: true
     keyStoreType: PKCS12
-    keyStore: classpath:keystore.p12
+    keyStore: keystore.p12
     keyStorePassword: password
-    keyAlias: tomcat
+    keyAlias: bootifulsecurity
+    clientAuth: want
 
 spring:
   application:
@@ -28,6 +30,12 @@ spring:
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
 
+  cloud:
+    gateway:
+      httpclient:
+        ssl:
+          useInsecureTrustManager: true
+
   servlet:
     multipart:
       maxFileSize: 200MB
@@ -41,15 +49,15 @@ eureka:
     fetchRegistry: true
     registerWithEureka: false
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: https://localhost:8761/eureka/
   instance:
     hostname: localhost
     nonSecurePortEnabled: false
     securePortEnabled: true
     securePort: ${server.port}
-    statusPageUrl: http://localhost:${server.port}/info
-    healthCheckUrl: http://localhost:${server.port}/health
-    homePageUrl: http://localhost:${server.port}/
+    statusPageUrl: https://localhost:${server.port}/info
+    healthCheckUrl: https://localhost:${server.port}/health
+    homePageUrl: https://localhost:${server.port}/
 
 #zuul.prefix=/api
 
@@ -113,6 +121,7 @@ hystrix:
 
 ribbon:
   ReadTimeout: 60000
+  IsSecure: true
 
 niws:
   loadbalancer:

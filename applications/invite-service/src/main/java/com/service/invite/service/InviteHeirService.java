@@ -24,10 +24,10 @@ import java.util.List;
 public class InviteHeirService {
 
     private static final String INVITE_MESSAGE_KEY = "HEIR_INVITE";
-    private static final String INVITE_EMAIL_MESSAGE_URL = "http://message-service/messages/email/heir-invite";
-    private static final String INVITE_SMS_MESSAGE_URL = "http://message-service/messages/sms";
+    private static final String INVITE_EMAIL_MESSAGE_URL = "https://message-service/messages/email/heir-invite";
+    private static final String INVITE_SMS_MESSAGE_URL = "https://message-service/messages/sms";
     private static final String NOTIFICATION_URL =
-            "http://notification-service/notification-creation";
+            "https://notification-service/notification-creation";
 
     @Autowired
     private GetUserByEmailService getUserByEmailService;

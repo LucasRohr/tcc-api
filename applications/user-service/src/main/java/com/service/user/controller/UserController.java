@@ -123,7 +123,7 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("bootstrap")
+    @GetMapping("bootstrap")
     public void bootstrap() throws NoSuchAlgorithmException, ProposalException, InvalidArgumentException, IOException, InvalidKeySpecException {
         registerUser(new RegisterUserRequest(
                 "Carlos Vasconcellos",

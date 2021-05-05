@@ -15,7 +15,7 @@ import java.util.List;
 public class ActivateHeirsHeritagesServices {
 
     private static final String NOTIFICATION_URL =
-            "http://notification-service/notification-creation";
+            "https://notification-service/notification-creation";
 
     @Autowired
     private HeirRepository heirRepository;

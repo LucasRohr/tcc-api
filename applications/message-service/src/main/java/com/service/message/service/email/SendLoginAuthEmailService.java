@@ -18,7 +18,7 @@ import java.io.IOException;
 @Service
 public class SendLoginAuthEmailService {
     private static final int codeLength = 6;
-    private static final String UPDATE_TOKEN_URL = "http://user-service/users/login-token-update";
+    private static final String UPDATE_TOKEN_URL = "https://user-service/users/login-token-update";
 
     @Autowired
     JavaMailSender mailSender;
