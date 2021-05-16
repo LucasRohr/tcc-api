@@ -32,7 +32,7 @@ public class ChannelClient {
 		request.setArgs(baseChaincode.getFunction().getArguments());
 		request.setChaincodeLanguage(TransactionRequest.Type.JAVA);
 		request.setChaincodeVersion(baseChaincode.getVersion());
-		request.setProposalWaitTime(20000);
+		request.setProposalWaitTime(30000);
 
 		final Collection<ProposalResponse> response = channel.sendTransactionProposal(request, channel.getPeers());
 		channel.sendTransaction(response);
@@ -51,7 +51,7 @@ public class ChannelClient {
 		request.setArgs(baseChaincode.getFunction().getArguments());
 		request.setChaincodeLanguage(TransactionRequest.Type.JAVA);
 		request.setChaincodeVersion(baseChaincode.getVersion());
-		request.setProposalWaitTime(20000);
+		request.setProposalWaitTime(30000);
 
 		return channel.queryByChaincode(request);
 	}

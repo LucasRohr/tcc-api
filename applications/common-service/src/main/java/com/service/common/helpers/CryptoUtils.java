@@ -10,9 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.*;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 
 public class CryptoUtils {
     private static final String ALGORITHM = "AES";
@@ -47,7 +45,10 @@ public class CryptoUtils {
 
             inputStream.close();
             outputStream.close();
-        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException | IOException | InvalidAlgorithmParameterException ex) {
+        } catch (
+                NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException |
+                BadPaddingException | IllegalBlockSizeException | IOException | InvalidAlgorithmParameterException ex
+        ) {
             throw new CryptoException("Error encrypting/decrypting file", ex);
         }
     }
