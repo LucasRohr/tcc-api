@@ -30,7 +30,7 @@ public class SendSmsService {
                 "http://localhost:3000/convites-herdeiro"
                 : "http://localhost:3000/registro?code=" + linkCode + "&invite=" + smsRequest.getInviteId();
 
-        String message = "Convite da herança digital de " + smsRequest.getOwnerName() + "." +
+        String message = "Convite do legado digital de " + smsRequest.getOwnerName() + "." +
                 "\\nMais detalhes no link.\\nAt, equipe Herança Digital.\\n\\n" + link;
 
         URL url = new URL(smsApiUrl);

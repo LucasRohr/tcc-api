@@ -14,14 +14,14 @@ public enum NotificationTypesEnum {
     ACCEPTED_HEIR_INVITE(true) {
         @Override
         public String getMessage(String invitedHeirName) {
-            return invitedHeirName + " agora é herdeiro da sua herança digital";
+            return invitedHeirName + " agora é herdeiro do seu legado digital";
         }
     },
 
     ACTIVATED_HERITAGE(false) {
         @Override
         public String getMessage(String string) {
-            return "A herança digital relacionada à esta conta foi ativada";
+            return "O legado digital relacionado à esta conta foi ativado";
         }
     },
 
