@@ -154,6 +154,7 @@ public class UserController {
         saveUserService.saveUser(new RegisterUserRequest(
                 "Flávia dos Santos",
                 "flavia@mail.com",
+
                 "882.338.300-54",
                 LocalDateTime.now().minusYears(34),
                 "Senha123",

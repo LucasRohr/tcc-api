@@ -1,12 +1,12 @@
 Olá [(${receiverName})]
 
 Bem-vindo(a) ao Memora.
-Você está recebendo um convite para ser um herdeiro da herança digital de [(${ownerName})].
+Você está recebendo um convite para ser um herdeiro do legado digital de [(${ownerName})].
 
-Por favor, confirme este desejo antecipadamente com esta pessoa antes de seguir no processo de herança.
+Por favor, confirme este desejo antecipadamente com esta pessoa antes de seguir no processo de legado.
 Ao confirmar, acesse nossa plataforma clicando no link abaixo.
 
-Você será diretamente direcionado para a criação de um usuário. Após, você deverá criar uma conta ligada à herança em questão para recebê-la no futuro.
+Você será diretamente direcionado para a criação de um usuário. Após, você deverá criar uma conta ligada ao legado em questão para recebê-la no futuro.
 
 Acesse mais detalhes em nossa plataforma.
 Att, equipe Herança Digital.
